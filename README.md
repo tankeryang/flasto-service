@@ -1,8 +1,8 @@
 # flasto-service
 
-> presto 查询接口
+> presto 集群服务
 
-基于 `flask`，`gunicorn`，`gevent` presto 查询服务
+基于 `flask`，`gunicorn`，`gevent` 调用 presto 资源进行查询或其它操作
 
 ## Installation
 
@@ -24,50 +24,35 @@
     (venv) > $ pip3 install --no-cache-dir -r requirements.txt
     ```
     
-* 功能程序按照目录结构进行对应开发
-    ```text
-    query_api
-    ├── <project name>
-    │   ├── __init__.py
-    │   ├── db_utils <数据库工具模块>
-    │   │   ├── __init__.py
-    │   │   └── <your module>.py
-    │   ├── entity <flask-restplus 解析的实体>
-    │   │   ├── dto <request 参数实体>
-    │   │   │   ├── __init__.py
-    │   │   │   └── xxx_req_dto.py
-    │   │   └── po <response 结果实体>
-    │   │       ├── __init__.py
-    │   │       └── <your response name>.py
-    │   └── service <服务接口>
-    │       └── xxx_service.py
-    └── resources <资源文件，包括查询 sql 和 pandas 的 dtype 字典>
-        └── <project name>
-            ├── dtypes
-            │   ├── __init__.py
-            │   └── dtypes_<your response name>_data.py
-            └── query_sql
-                ├── __init__.py
-                └── query_<your response name>_data.py
+* 目录结构
+    ```yaml
+    # 带 '-' 的为文件
+    docker_compose: docker-compose 文件
+    query_service: 查询服务
+      query_api: 查询接口定义
+      query_biz: 查询接口实现
+      query_web: web服务
+        - config.py: web app 配置
+      - gun_query_app: gunicorn 配置
+      - query_app: web app 启动脚本
+      resource: 资源文件
+    test: 测试脚本
     ```
-    
-* `config.py`: flask app 配置
-
-* `gun.py`: gunicorn 配置
 
 ## Start Up
 
 ### local
 
 ```shell
-cd predict-service
-gunicorn -c gun.py application:app
+> $ cd flasto-service
+> $ source venv/bin/activate
+> $ gunicorn -c query_service/gun_query_app.py query_app:app
 ```
 
 ### docker
 
 ```shell
-docker-compose up -d
+> $ docker-compose -f docker_compose/docker-compose.local.yml up -d
 ```
 
 ## Usage
