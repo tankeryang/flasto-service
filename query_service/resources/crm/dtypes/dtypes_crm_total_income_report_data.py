@@ -1,4 +1,4 @@
-DTYPE_CRM_MEMBER_TOTAL_INCOME_REPORT_DATA = {
+DTYPE_CRM_TOTAL_INCOME_REPORT_DATA = {
     'member_type': str,
     'sales_income': float,
     'sales_income_proportion': float,

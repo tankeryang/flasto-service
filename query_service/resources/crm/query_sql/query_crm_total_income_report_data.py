@@ -1,4 +1,4 @@
-SQL_CRM_MEMBER_TOTAL_INCOME_REPORT_DATA = """
+SQL_CRM_TOTAL_INCOME_REPORT_DATA = """
     SELECT DISTINCT
         matl.all  AS member_type,
         cast(COALESCE(sm.si, 0) AS DECIMAL(10, 3)) AS sales_income,

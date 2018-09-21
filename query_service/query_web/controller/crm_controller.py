@@ -5,7 +5,13 @@ from query_service.query_web import api
 ns = Namespace('crm', description='crm 业绩分析模块 api')
 
 from query_service.query_api.crm.entity.dto import crm_member_analyse_req_dto_model
-from query_service.query_api.crm.entity.po import crm_member_total_income_report_list_model
+from query_service.query_api.crm.entity.po import (
+    crm_total_income_report_list_model,
+    crm_member_nowbefroe_income_report_list_model,
+    crm_member_newold_income_report_list_model,
+    crm_member_level_income_report_list_model,
+    crm_member_muldim_income_report_list_model,
+)
 
 
 @ns.route('/CrmTotalIncomeReport')
@@ -14,7 +20,7 @@ class CrmTotalIncomeReportController(Resource):
     crm_service = CrmServiceImpl()
     
     @ns.expect(crm_member_analyse_req_dto_model)
-    @ns.marshal_with(crm_member_total_income_report_list_model)
+    @ns.marshal_with(crm_total_income_report_list_model)
     def post(self):
         """
         查询整体收入分析
@@ -32,7 +38,7 @@ class CrmMemberNowBeforeIncomeReportController(Resource):
     crm_service = CrmServiceImpl()
     
     @ns.expect(crm_member_analyse_req_dto_model)
-    @ns.marshal_with(crm_member_total_income_report_list_model)
+    @ns.marshal_with(crm_member_nowbefroe_income_report_list_model)
     def post(self):
         """
         查询会员收入分析
@@ -50,7 +56,7 @@ class CrmMemberNewOldIncomeReportController(Resource):
     crm_service = CrmServiceImpl()
     
     @ns.expect(crm_member_analyse_req_dto_model)
-    @ns.marshal_with(crm_member_total_income_report_list_model)
+    @ns.marshal_with(crm_member_newold_income_report_list_model)
     def post(self):
         """
         查询新老会员收入分析
@@ -68,7 +74,7 @@ class CrmMemberLevelIncomeReportController(Resource):
     crm_service = CrmServiceImpl()
     
     @ns.expect(crm_member_analyse_req_dto_model)
-    @ns.marshal_with(crm_member_total_income_report_list_model)
+    @ns.marshal_with(crm_member_level_income_report_list_model)
     def post(self):
         """
         查询会员等级收入分析
@@ -86,7 +92,7 @@ class CrmMemberMulDimIncomeReportController(Resource):
     crm_service = CrmServiceImpl()
     
     @ns.expect(crm_member_analyse_req_dto_model)
-    @ns.marshal_with(crm_member_total_income_report_list_model)
+    @ns.marshal_with(crm_member_muldim_income_report_list_model)
     def post(self):
         """
         查询多维度收入分析

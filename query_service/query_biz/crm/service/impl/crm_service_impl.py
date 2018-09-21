@@ -7,14 +7,14 @@ from query_service.query_biz.crm.db_utils import (
 
 # resources
 from query_service.resources.crm.query_sql import (
-    SQL_CRM_MEMBER_TOTAL_INCOME_REPORT_DATA,
+    SQL_CRM_TOTAL_INCOME_REPORT_DATA,
     SQL_CRM_MEMBER_NOWBEFORE_INCOME_REPORT_DATA,
     SQL_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA,
     SQL_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA,
     SQL_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA,
 )
 from query_service.resources.crm.dtypes import (
-    DTYPE_CRM_MEMBER_TOTAL_INCOME_REPORT_DATA,
+    DTYPE_CRM_TOTAL_INCOME_REPORT_DATA,
     DTYPE_CRM_MEMBER_NOWBEFORE_INCOME_REPORT_DATA,
     DTYPE_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA,
     DTYPE_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA,
@@ -30,14 +30,14 @@ class CrmServiceImpl(CrmService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = format_sql(SQL_CRM_MEMBER_TOTAL_INCOME_REPORT_DATA, dto)
+        sql = format_sql(SQL_CRM_TOTAL_INCOME_REPORT_DATA, dto)
         if sql is None:
             return dict(success=False, data="参数错误")
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
 
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(DTYPE_CRM_MEMBER_TOTAL_INCOME_REPORT_DATA)
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(DTYPE_CRM_TOTAL_INCOME_REPORT_DATA)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'))
         
         return resp_dict
