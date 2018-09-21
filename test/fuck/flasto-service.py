@@ -26,6 +26,7 @@ class Language(Resource):
     @api.expect(a_language)
     def post(self):
         language = api.payload
+        print(language.keys())
         languages.append(language)
         return {'result': '{} language added'.format(language)}, 200
 

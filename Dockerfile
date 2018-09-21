@@ -1,11 +1,8 @@
-FROM python:3.6 AS build
+FROM python:3.6-slim
 MAINTAINER youngsyang@outlook.com
-WORKDIR /opt/project
-COPY . ./
-RUN mkdir log && pip3 install --no-cache-dir -r requirements.txt
-CMD ["gunicorn -c gun.py application:app"]
-
-FROM scratch AS prod
-COPY --from=build /opt/project/flasto-service ./
-CMD ["gunicorn -c gun.py application:app"]
+RUN mkdir /opt/flasto-service
+WORKDIR /opt/flasto-service
+COPY ./ ./
+RUN pwd && ls -la && mkdir query_service/log && ls -la query_service && pip3 install --no-cache-dir -r requirements.txt
+CMD ["gunicorn", "-c", "query_service/gun_query_app.py", "query_app:app"]
 EXPOSE 5678
