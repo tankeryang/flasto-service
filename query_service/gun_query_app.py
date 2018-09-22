@@ -17,7 +17,7 @@ access_log_format = '%(t)s %(p)s %(h)s "%(r)s" %(s)s %(L)s %(b)s %(f)s" "%(a)s"'
 errorlog = '%s/log/%s.error.log' % (current_dir_path, project_name)
 
 # process naming
-proc_name = 'flasto'
+proc_name = 'query_service'
 
 # server socket
 bind = '0.0.0.0:5678'
