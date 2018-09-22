@@ -29,18 +29,18 @@
     ```
     
 * 目录结构
-    ```yaml
-    # 带 '-' 的为文件
-    docker_compose: docker-compose 文件
-    query_service (查询服务):
-      query_api: 查询接口定义
-      query_biz: 查询接口实现
-      query_web (web服务):
-        - config.py: web app 配置
-      - gun_query_app: gunicorn 配置
-      - query_app: web app 启动脚本
-      resource: 资源文件
-    test: 测试脚本
+    ```
+    flasto-service
+    ├── docker_compose: docker-compose 文件
+    ├── query_service: 查询服务
+    │   ├── query_api: 查询接口定义
+    │   ├── query_biz: 查询接口实现
+    │   ├── query_web (web服务):
+    │   │   └── config.py: web app 配置
+    │   ├── resource: 资源文件
+    │   ├── gun_query_app.py: gunicorn 配置
+    │   └── query_app.py: web app 启动脚本
+    └── test: 测试脚本
     ```
 
 ## Start Up
@@ -51,7 +51,7 @@
     ```shell
     > $ cd flasto-service
     > $ source venv/bin/activate
-    > $ gunicorn -c query_service/gun_query_app.py query_app:app
+    (venv) > $ gunicorn -c query_service/gun_query_app.py query_app:app
     ```
 
 ### docker
