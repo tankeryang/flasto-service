@@ -48,6 +48,7 @@
 ### local
 
 * __query service__
+
     ```shell
     > $ cd flasto-service
     > $ source venv/bin/activate
