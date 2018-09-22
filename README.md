@@ -6,10 +6,14 @@
 
 ## Installation
 
-### git
+### git & virtualenv
 
 ```shell
 > $ git clone http://gitlab.fp.bd14.com/bigdata/flasto-service.git
+> $ cd flasto-service
+> $ virtualenv -p <path-to-python3-interpreter> --no-site-packages venv
+> $ source venv/bin/activate
+(venv) > $ pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir -r requirements.txt
 ```
 
 ## Development
@@ -21,17 +25,17 @@
     > $ cd flasto-service
     > $ virtualenv -p <path-to-python3-interpreter> --no-site-packages venv
     > $ source venv/bin/activate
-    (venv) > $ pip3 install --no-cache-dir -r requirements.txt
+    (venv) > $ pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir -r requirements.txt
     ```
     
 * 目录结构
     ```yaml
     # 带 '-' 的为文件
     docker_compose: docker-compose 文件
-    query_service: 查询服务
+    query_service (查询服务):
       query_api: 查询接口定义
       query_biz: 查询接口实现
-      query_web: web服务
+      query_web (web服务):
         - config.py: web app 配置
       - gun_query_app: gunicorn 配置
       - query_app: web app 启动脚本
@@ -43,18 +47,32 @@
 
 ### local
 
-```shell
-> $ cd flasto-service
-> $ source venv/bin/activate
-> $ gunicorn -c query_service/gun_query_app.py query_app:app
-```
+* __query service__
+    ```shell
+    > $ cd flasto-service
+    > $ source venv/bin/activate
+    > $ gunicorn -c query_service/gun_query_app.py query_app:app
+    ```
 
 ### docker
 
-```shell
-> $ docker-compose -f docker_compose/docker-compose.local.yml up -d
-```
+* __build & run__
+    ```shell
+    > $ docker-compose -f docker_compose/docker-compose.build.yml up -d
+    ```
+
+* __local testing__
+    ```shell
+    > $ docker-compose -f docker_compose/docker-compose.local.yml up -d
+    ```
+
+* __prod deploy__
+    ```shell
+    > $ docker-compose -f docker_compose/docker-compose.yml up -d
+    ```
 
 ## Usage
 
-访问 `http://<服务启动机器的ip>:5678/flasto/api` 查看 API 文档
+* __query service__
+
+    访问 `http://<host ip>:5678/flasto/query/api` 查看 API 文档
