@@ -13,4 +13,4 @@ services:
     ports:
       - "5678:5678"
     volumes:
-      - .:/opt/flasto-service
+      - ..:/opt/flasto-service

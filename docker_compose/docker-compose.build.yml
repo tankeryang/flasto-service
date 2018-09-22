@@ -2,8 +2,11 @@ version: '3'
 
 services:
   flasto-service:
-    container_name: flasto-service
+    build:
+      context: ../
+      dockerfile: Dockerfile
     image: flasto-service:1.0
+    container_name: flasto-service
     ports:
       - "5678:5678"
     volumes:

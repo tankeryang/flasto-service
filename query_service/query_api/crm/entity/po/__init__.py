@@ -1,4 +1,8 @@
-from .crm_member_total_income_report import (
+from .crm_daily_report import (
+    crm_daily_report_model,
+    crm_daily_report_list_model,
+)
+from .crm_total_income_report import (
     crm_total_income_report_model,
     crm_total_income_report_list_model,
 )

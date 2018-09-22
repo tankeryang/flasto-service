@@ -3,6 +3,6 @@ MAINTAINER youngsyang@outlook.com
 RUN mkdir /opt/flasto-service
 WORKDIR /opt/flasto-service
 COPY ./ ./
-RUN pwd && ls -la && mkdir query_service/log && ls -la query_service && pip3 install --no-cache-dir -r requirements.txt
-CMD ["gunicorn", "-c", "query_service/gun_query_app.py", "query_app:app"]
+RUN mkdir query_service/log && pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir -r requirements.txt
+ENTRYPOINT ["./entrypoint.sh"]
 EXPOSE 5678
