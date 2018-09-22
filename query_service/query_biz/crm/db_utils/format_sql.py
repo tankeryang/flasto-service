@@ -94,7 +94,7 @@ def crm_daily_report_format_sql(sql, payload):
             mtl_store_code = 'NULL'
             zone_index = 'country'
             zone = 'country'
-            zones = str(payload['sales_area']).strip('[').strip(']')
+            zones = str(payload['sales_areas']).strip('[').strip(']')
         else:
             return None
         
