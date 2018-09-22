@@ -18,6 +18,8 @@ def crm_member_income_analyse_format_sql(sql, payload):
     
     if not valid_resp_dto(necessary_param, payload):
         return None
+    elif len(payload['start_date']) == 0 or len(payload['end_date']) == 0:
+        return None
     else:
         if len(payload['cities']) > 0:
             zone = 'city'
@@ -65,6 +67,8 @@ def crm_daily_report_format_sql(sql, payload):
     necessary_param = {'sales_areas', 'cities', 'store_codes', 'start_date', 'end_date'}
     
     if not valid_resp_dto(necessary_param, payload):
+        return None
+    elif len(payload['start_date']) == 0 or len(payload['end_date']) == 0:
         return None
     else:
         if len(payload['store_codes']) > 0:
