@@ -2,8 +2,8 @@ from flask import Flask, Blueprint
 from flask_restplus import Api
 from query_service.query_web.config import config
 
-flasto = Blueprint('flasto', __name__, url_prefix='/flasto/query/api')
-api = Api(flasto, version='1.0', prefix='/v1', title="Presto Query Api", description="Presto 查询服务")
+flasto = Blueprint('flasto', __name__, url_prefix='/flasto/api')
+api = Api(flasto, version='1.0', prefix='/query', title="Presto Query Api", description="Presto 查询服务")
 
 
 def register_api():
