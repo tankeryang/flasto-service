@@ -26,7 +26,7 @@ crm_daily_report_model = ns_2.model('CrmDailyReportModel', {
     'order_amount_per_member': fields.Float(readOnly=True, description="人均次"),
 })
 
-crm_daily_report_list_model = ns_2.model('CrmMemberLevelIncomeReportListModel', {
+crm_daily_report_list_model = ns_2.model('CrmDailyReportListModel', {
     'data': fields.List(fields.Nested(crm_daily_report_model)),
     'success': fields.Boolean(description="查询是否成功")
 })
