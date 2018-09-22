@@ -1,8 +1,8 @@
 from flask_restplus import fields
-from query_service.query_web.controller.crm_controller import ns_1
+from query_service.query_web.controller.crm_controller import ns_2
 
 
-crm_member_analyse_req_dto_model = ns_1.model('CrmMemberAnalyseReqDtoModel', {
+crm_member_analyse_req_dto_model = ns_2.model('CrmMemberAnalyseReqDtoModel', {
     'sales_modes': fields.List(fields.String(description="门店类别", example='正价'), required=True),
     'store_types': fields.List(fields.String(description="门店类型", example='MALL'), required=True),
     'store_levels': fields.List(fields.String(description="门店等级", example='A'), required=True),

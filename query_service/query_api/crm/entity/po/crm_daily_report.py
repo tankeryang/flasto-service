@@ -1,7 +1,7 @@
 from flask_restplus import fields
-from query_service.query_web.controller.crm_controller import ns_2
+from query_service.query_web.controller.crm_controller import ns_1
 
-crm_daily_report_model = ns_2.model('CrmDailyReportModel', {
+crm_daily_report_model = ns_1.model('CrmDailyReportModel', {
     'sales_area': fields.String(readOnly=True, description="区域"),
     'city': fields.String(readOnly=True, description="城市"),
     'store_code': fields.String(readOnly=True, description='门店'),
@@ -26,7 +26,7 @@ crm_daily_report_model = ns_2.model('CrmDailyReportModel', {
     'order_amount_per_member': fields.Float(readOnly=True, description="人均次"),
 })
 
-crm_daily_report_list_model = ns_2.model('CrmDailyReportListModel', {
+crm_daily_report_list_model = ns_1.model('CrmDailyReportListModel', {
     'data': fields.List(fields.Nested(crm_daily_report_model)),
     'success': fields.Boolean(description="查询是否成功")
 })
