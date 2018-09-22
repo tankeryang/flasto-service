@@ -16,7 +16,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
         cast(COALESCE(TRY(sm.ma * 1.0 / lmr.ma), 0) AS DECIMAL(18, 4)) AS second_trade_rate,
         cast(COALESCE(new_vip.ma, 0) AS INTEGER) AS new_vip_member_amount,
         cast(COALESCE(new_normal.ma, 0) AS INTEGER) AS new_normal_member_amount,
-        cast(COALESCE(ugm.uma, 0) AS INTEGER) AS upgraded_member_amount,
+        cast(COALESCE(ugm.ma, 0) AS INTEGER) AS upgraded_member_amount,
         cast(COALESCE(stm.sa, 0) AS INTEGER) AS store_amount,
         cast(COALESCE(TRY(sm.ma * 1.0 / stm.sa), 0) AS DECIMAL(18, 2)) AS member_amount_per_store,
         cast(COALESCE(TRY(sm.sa * 1.0 /sm.ma), 0) AS DECIMAL(18, 2)) AS sales_amount_per_member,
