@@ -71,26 +71,30 @@ def crm_daily_report_format_sql(sql, payload):
             mtl_sales_area = 'mtl.sales_area'
             mtl_city = 'mtl.city'
             mtl_store_code = 'mtl.store_code'
+            zone_index = 'sales_area, city, store_code'
             zone = 'store_code'
             zones = str(payload['store_codes']).strip('[').strip(']')
         elif len(payload['cities']) > 0:
             mtl_sales_area = 'mtl.sales_area'
             mtl_city = 'mtl.city'
             mtl_store_code = 'NULL'
+            zone_index = 'sales_area, city'
             zone = 'city'
             zones = str(payload['cities']).strip('[').strip(']')
         elif len(payload['sales_areas']) > 0 and payload['sales_areas'][0] != '全国':
             mtl_sales_area = 'mtl.sales_area'
             mtl_city = 'NULL'
             mtl_store_code = 'NULL'
+            zone_index = 'sales_area'
             zone = 'sales_area'
             zones = str(payload['sales_areas']).strip('[').strip(']')
         elif len(payload['sales_areas']) > 0 and payload['sales_areas'][0] == '全国':
             mtl_sales_area = 'mtl.country'
             mtl_city = 'NULL'
             mtl_store_code = 'NULL'
+            zone_index = 'country'
             zone = 'country'
-            zones = str(payload['country']).strip('[').strip(']')
+            zones = str(payload['sales_area']).strip('[').strip(']')
         else:
             return None
         
@@ -99,5 +103,5 @@ def crm_daily_report_format_sql(sql, payload):
         
         return sql.format(
             mtl_sales_area=mtl_sales_area, mtl_city=mtl_city, mtl_store_code=mtl_store_code,
-            zone=zone, zones=zones, start_date=start_date, end_date=end_date
+            zone_index=zone_index, zone=zone, zones=zones, start_date=start_date, end_date=end_date
         )

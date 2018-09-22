@@ -24,7 +24,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
         cast(COALESCE(TRY(sm.siq * 1.0 / sm.oa), 0) AS DECIMAL(18, 2)) AS su_per_member,
         cast(COALESCE(TRY(sm.oa * 1.0 / sm.ma), 0) AS DECIMAL(18, 2)) AS order_amount_per_member
     FROM (
-        SELECT DISTINCT {zone}, member_type
+        SELECT DISTINCT {zone_index}, member_type
         FROM cdm_crm.member_type_label
     ) mtl
 
