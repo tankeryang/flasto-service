@@ -7,7 +7,8 @@ api = Api(app, prefix="/v1", title="Users", description="Users CURD api.")
 
 
 a_language = api.model('language', {
-    'language': fields.List(fields.String('TheLanguage'))
+    'language': fields.List(fields.String('TheLanguage')),
+    'num': fields.Integer(required=True)
 })
 
 
@@ -23,7 +24,7 @@ class Language(Resource):
     def get(self):
         return languages
 
-    @api.expect(a_language)
+    @api.expect(a_language, validate=True)
     def post(self):
         language = api.payload
         print(language.keys())

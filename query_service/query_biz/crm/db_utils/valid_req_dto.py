@@ -1,4 +1,4 @@
-def valid_resp_dto(ns_param, payload):
+def valid_req_dto(ns_param, payload):
     """
     api 参数校验
     :param payload: restplus.Api.payload
@@ -7,6 +7,7 @@ def valid_resp_dto(ns_param, payload):
     """
 
     param = set(payload.keys())
+    ns_param = set(ns_param)
     
     if len(ns_param) != len(param) \
             or len(ns_param.difference(param)) != 0 \

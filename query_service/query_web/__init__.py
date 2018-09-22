@@ -1,10 +1,19 @@
 from flask import Flask, Blueprint
 from flask_restplus import Api
+from jsonschema import FormatChecker
 from query_service.query_web.config import config
 
 
 flasto = Blueprint('flasto', __name__, url_prefix='/flasto/api')
-api = Api(flasto, version='1.0', prefix='/query', title="Presto Query Api", description="Presto 查询服务")
+api = Api(
+    flasto,
+    version='1.0',
+    prefix='/query',
+    title="Presto Query Api",
+    description="Presto 查询服务",
+    validate=True,
+    format_checker=FormatChecker(formats=("date-time", "date",))
+)
 
 
 def register_api():

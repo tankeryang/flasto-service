@@ -1,4 +1,6 @@
-from .valid_resp_dto import valid_resp_dto
+from .valid_req_dto import valid_req_dto
+import query_service.query_api.crm.entity.dto as dto
+
 
 def crm_member_income_analyse_format_sql(sql, payload):
     """
@@ -10,15 +12,9 @@ def crm_member_income_analyse_format_sql(sql, payload):
     """
     
     # 校验参数
-    necessary_param = {
-        'sales_modes', 'store_types', 'store_levels', 'channel_types', 'order_channels',
-        'country', 'sales_areas', 'sales_districts', 'provinces', 'cities',
-        'start_date', 'end_date'
-    }
+    necessary_param = dto.crm_member_analyse_req_dto_model.keys()
     
-    if not valid_resp_dto(necessary_param, payload):
-        return None
-    elif len(payload['start_date']) == 0 or len(payload['end_date']) == 0:
+    if not valid_req_dto(necessary_param, payload):
         return None
     else:
         if len(payload['cities']) > 0:
@@ -64,9 +60,9 @@ def crm_daily_report_format_sql(sql, payload):
     """
     
     # 校验参数
-    necessary_param = {'sales_areas', 'cities', 'store_codes', 'start_date', 'end_date'}
+    necessary_param = dto.crm_daily_report_req_dto_model.keys()
     
-    if not valid_resp_dto(necessary_param, payload):
+    if not valid_req_dto(necessary_param, payload):
         return None
     elif len(payload['start_date']) == 0 or len(payload['end_date']) == 0:
         return None

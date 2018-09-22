@@ -1,9 +1,11 @@
 from flask_restplus import Resource, Namespace
+ns_1 = Namespace('CRM 报表中心', path='crm', description='日报月报api')
+ns_2 = Namespace('CRM 业绩分析', path='crm', description='业绩分析api')
+
+
 from query_service.query_biz.crm.service.impl import CrmServiceImpl
 from query_service.query_web import api
 
-ns_1 = Namespace('CRM 报表中心', path='crm', description='日报月报api')
-ns_2 = Namespace('CRM 业绩分析', path='crm', description='业绩分析api')
 
 from query_service.query_api.crm.entity.dto import (
     crm_member_analyse_req_dto_model,
@@ -24,7 +26,7 @@ class CrmDailyReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_1.expect(crm_daily_report_req_dto_model)
+    @ns_1.expect(crm_daily_report_req_dto_model, validate=True)
     @ns_1.marshal_with(crm_daily_report_list_model)
     def post(self):
         """
@@ -42,7 +44,7 @@ class CrmTotalIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_2.expect(crm_member_analyse_req_dto_model)
+    @ns_2.expect(crm_member_analyse_req_dto_model, validate=True)
     @ns_2.marshal_with(crm_total_income_report_list_model)
     def post(self):
         """
@@ -60,7 +62,7 @@ class CrmMemberNowBeforeIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_2.expect(crm_member_analyse_req_dto_model)
+    @ns_2.expect(crm_member_analyse_req_dto_model, validate=True)
     @ns_2.marshal_with(crm_member_nowbefroe_income_report_list_model)
     def post(self):
         """
@@ -78,7 +80,7 @@ class CrmMemberNewOldIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_2.expect(crm_member_analyse_req_dto_model)
+    @ns_2.expect(crm_member_analyse_req_dto_model, validate=True)
     @ns_2.marshal_with(crm_member_newold_income_report_list_model)
     def post(self):
         """
@@ -96,7 +98,7 @@ class CrmMemberLevelIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_2.expect(crm_member_analyse_req_dto_model)
+    @ns_2.expect(crm_member_analyse_req_dto_model, validate=True)
     @ns_2.marshal_with(crm_member_level_income_report_list_model)
     def post(self):
         """
@@ -114,7 +116,7 @@ class CrmMemberMulDimIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_2.expect(crm_member_analyse_req_dto_model)
+    @ns_2.expect(crm_member_analyse_req_dto_model, validate=True)
     @ns_2.marshal_with(crm_member_muldim_income_report_list_model)
     def post(self):
         """
