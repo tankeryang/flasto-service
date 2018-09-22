@@ -138,5 +138,5 @@ SQL_CRM_DAILY_REPORT_DATA = """
     ON mtl.{zone} = stm.{zone}
 
     WHERE mtl.member_type != '非会员'
-    AND mtl.{zone} IN {zones}
+    AND mtl.{zone} IN ({zones})
 """
