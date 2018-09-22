@@ -76,4 +76,4 @@
 
 * __query service__
 
-    访问 `http://<host ip>:5678/flasto/query/api` 查看 API 文档
+    访问 `http://<host ip>:5678/flasto/api` 查看 API 文档
