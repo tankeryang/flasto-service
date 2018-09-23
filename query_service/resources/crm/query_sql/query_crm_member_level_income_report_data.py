@@ -145,7 +145,7 @@ SQL_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = """
         cast(COALESCE(TRY(SUM(t1.si - t1.lyst_si) * 100.0 / SUM(t1.lyst_si)), 0) AS DECIMAL(10, 2)) sales_income_growth
     FROM t1 GROUP BY t1.member_type
     UNION SELECT DISTINCT
-        t2.member_level_type AS member_type,
+        t2.member_type AS member_type,
         cast(COALESCE(SUM(t2.si), 0) AS DECIMAL(10, 3)) AS sales_income,
         cast(COALESCE(TRY(SUM(t2.si) * 100.0 / SUM(t2.ttsi)), 0) AS DECIMAL(10, 2)) AS sales_income_proportion,
         cast(COALESCE(SUM(t2.ca), 0) AS INTEGER) AS customer_amount,

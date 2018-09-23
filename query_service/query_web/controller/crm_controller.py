@@ -6,8 +6,6 @@ ns_2 = Namespace('CRM 业绩分析', path='/crm', description='业绩分析api')
 from datetime import datetime
 
 from query_service.query_biz.crm.service.impl import CrmServiceImpl
-from query_service.query_web import api
-
 
 from query_service.query_api.crm.entity.dto import (
     crm_member_analyse_req_dto_model,
