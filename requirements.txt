@@ -8,3 +8,4 @@ sqlalchemy==1.2.11
 pyhive==0.6.1
 jsonschema==2.6.0
 isodate==0.6.0
+openpyxl==2.5.7
