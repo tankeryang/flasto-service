@@ -3,6 +3,8 @@ ns_1 = Namespace('CRM 报表中心', path='crm', description='日报月报api')
 ns_2 = Namespace('CRM 业绩分析', path='crm', description='业绩分析api')
 
 
+from datetime import datetime
+
 from query_service.query_biz.crm.service.impl import CrmServiceImpl
 from query_service.query_web import api
 
@@ -37,6 +39,27 @@ class CrmDailyReportController(Resource):
         resp_dict = CrmDailyReportController.crm_service.get_daily_report_data(dto)
         
         return resp_dict
+
+
+@ns_1.route('/CrmDailyReportExcel')
+class CrmDailyReportExcelController(Resource):
+    
+    crm_service = CrmServiceImpl()
+    
+    @ns_1.expect(crm_daily_report_req_dto_model, validate=True)
+    def post(self):
+        """
+        日报excel表格导出
+        格式为: yyyy-MM-dd hh:mm:ss(当前时间) 日报数据.xlsx
+        """
+        dto = api.payload
+        now_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        resp = CrmDailyReportExcelController.crm_service.get_daily_report_excel(now_timestamp, dto)
+        
+        # 删除服务器的生成文件
+        CrmDailyReportExcelController.crm_service.del_local_daily_report_excel(now_timestamp)
+        
+        return resp
 
 
 @ns_2.route('/CrmTotalIncomeReport')

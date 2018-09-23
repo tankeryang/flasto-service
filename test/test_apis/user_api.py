@@ -1,7 +1,7 @@
 from flask_restplus import Resource, fields, Namespace
 
 from .model import User
-from test import api
+from test.test_apis import api
 
 ns = Namespace("users", description="Users CURD api.")
 

@@ -15,6 +15,25 @@ class CrmService:
         pass
     
     @abstractclassmethod
+    def get_daily_report_excel(self, timestamp, dto):
+        """
+        日报excel导出
+        :param timestamp: 当前查询时间
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def del_local_daily_report_excel(self, timestamp):
+        """
+        删除服务器上的excel文件
+        :param timestamp: 生成时间
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
     def get_crm_total_income_report_data(self, dto):
         """
         查询整体收入分析

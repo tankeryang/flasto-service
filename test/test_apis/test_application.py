@@ -1,4 +1,4 @@
-from test import create_app
+from test.test_apis import create_app
 
 app = create_app()
 
