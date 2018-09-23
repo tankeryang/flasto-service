@@ -35,7 +35,7 @@ class CrmDailyReportController(Resource):
         日报查询
         全国，大区，城市，门店
         """
-        dto = api.payload
+        dto = ns_1.payload
         resp_dict = CrmDailyReportController.crm_service.get_daily_report_data(dto)
         
         return resp_dict
@@ -52,7 +52,7 @@ class CrmDailyReportExcelController(Resource):
         日报excel表格导出
         格式为: yyyy-MM-dd hh:mm:ss(当前时间) 日报数据.xlsx
         """
-        dto = api.payload
+        dto = ns_1.payload
         now_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         resp = CrmDailyReportExcelController.crm_service.get_daily_report_excel(now_timestamp, dto)
         
@@ -74,7 +74,7 @@ class CrmTotalIncomeReportController(Resource):
         查询整体收入分析
         整体，会员，非会员
         """
-        dto = api.payload
+        dto = ns_2.payload
         resp_dict = CrmTotalIncomeReportController.crm_service.get_crm_total_income_report_data(dto)
         
         return resp_dict
@@ -92,8 +92,9 @@ class CrmMemberNowBeforeIncomeReportController(Resource):
         查询会员收入分析
         会员，当月会员，当年会员，往年会员
         """
-        dto = api.payload
-        resp_dict = CrmMemberNowBeforeIncomeReportController.crm_service.get_crm_member_now_before_income_report_data(dto)
+        dto = ns_2.payload
+        resp_dict = CrmMemberNowBeforeIncomeReportController\
+            .crm_service.get_crm_member_now_before_income_report_data(dto)
         
         return resp_dict
 
@@ -110,7 +111,7 @@ class CrmMemberNewOldIncomeReportController(Resource):
         查询新老会员收入分析
         会员，新会员，老会员
         """
-        dto = api.payload
+        dto = ns_2.payload
         resp_dict = CrmMemberNewOldIncomeReportController.crm_service.get_crm_member_new_old_income_report_data(dto)
         
         return resp_dict
@@ -128,7 +129,7 @@ class CrmMemberLevelIncomeReportController(Resource):
         查询会员等级收入分析
         会员，普通会员，VIP会员
         """
-        dto = api.payload
+        dto = ns_2.payload
         resp_dict = CrmMemberLevelIncomeReportController.crm_service.get_crm_member_level_income_report_data(dto)
         
         return resp_dict
@@ -146,7 +147,7 @@ class CrmMemberMulDimIncomeReportController(Resource):
         查询多维度收入分析
         新会员: {普通会员, VIP会员} 老会员:{普通会员, VIP会员}
         """
-        dto = api.payload
-        resp_dict = CrmMemberMulDimIncomeReportController.crm_service.get_crm_total_income_report_data(dto)
+        dto = ns_2.payload
+        resp_dict = CrmMemberMulDimIncomeReportController.crm_service.get_crm_member_mul_dim_income_report_data(dto)
         
         return resp_dict

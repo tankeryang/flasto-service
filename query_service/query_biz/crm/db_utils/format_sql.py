@@ -31,7 +31,7 @@ def crm_member_income_analyse_format_sql(sql, payload):
             zones = str(payload['sales_district']).strip('[').strip(']')
         elif len(payload['country']) == 1 and payload['country'][0] == '全国':
             zone = 'country'
-            zones = str(payload['country']).strip('[').strip(']')
+            zones = str(['中国']).strip('[').strip(']')
         else:
             return None
         
