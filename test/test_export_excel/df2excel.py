@@ -12,17 +12,25 @@ api = Api(app, version='1.0', title='Test Export Excel API',
 
 ns = api.namespace('ex', description='export excel test')
 
+p = ns.model('p', {
+    'download': fields.String(example="true")
+})
+
 @ns.route('/ExportExcel')
 class ExportExcelController(Resource):
     
-    def get(self):
-        arrays = [['bar', 'bar', 'baz', 'baz', 'foo', 'foo', ],
-                  ['one', 'two', 'one', 'two', 'one', 'two', ]]
-        df = pd.DataFrame(np.random.randn(8, 6), columns=arrays)
-        output = BytesIO()
-        df.to_excel('df.xlsx')
-        output.seek(0)
-        return send_file(output, attachment_filename="df.xlsx", as_attachment=True)
+    @ns.expect(p)
+    def post(self):
+        if api.payload['download'] == 'true':
+            arrays = [['bar', 'bar', 'baz', 'baz', 'foo', 'foo', ],
+                      ['one', 'two', 'one', 'two', 'one', 'two', ]]
+            df = pd.DataFrame(np.random.randn(8, 6), columns=arrays)
+            output = BytesIO()
+            df.to_excel('df.xlsx')
+            output.seek(0)
+            return send_file(output, attachment_filename="df.xlsx", as_attachment=True)
+        else:
+            return None
     
     
 if __name__ == '__main__':
