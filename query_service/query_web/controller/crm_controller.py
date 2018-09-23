@@ -1,6 +1,6 @@
 from flask_restplus import Resource, Namespace
-ns_1 = Namespace('CRM 报表中心', path='crm', description='日报月报api')
-ns_2 = Namespace('CRM 业绩分析', path='crm', description='业绩分析api')
+ns_1 = Namespace('CRM 报表中心', path='/crm', description='日报月报api')
+ns_2 = Namespace('CRM 业绩分析', path='/crm', description='业绩分析api')
 
 
 from datetime import datetime
