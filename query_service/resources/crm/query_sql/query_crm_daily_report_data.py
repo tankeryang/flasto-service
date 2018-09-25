@@ -35,7 +35,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
         count(distinct drb.outer_order_no) AS oa,
         sum(drb.order_item_quantity)       AS siq,
         count(distinct drb.member_no)      AS ma
-        FROM cdm_crm.daliy_report_base drb
+        FROM cdm_crm.daily_report_base drb
         WHERE date(drb.order_deal_time) <= date('{end_date}')
         AND date(drb.order_deal_time) >= date('{start_date}')
         GROUP BY drb.{zone}, drb.member_type
@@ -46,7 +46,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
     LEFT JOIN (
         SELECT drb.{zone},
         sum(drb.order_fact_amount) AS sa
-        FROM cdm_crm.daliy_report_base drb
+        FROM cdm_crm.daily_report_base drb
         WHERE date(drb.order_deal_time) <= date('{end_date}')
         AND date(drb.order_deal_time) >= date('{start_date}')
         GROUP BY drb.{zone}
@@ -56,7 +56,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
     LEFT JOIN (
         SELECT drb.{zone},
         sum(drb.order_fact_amount) AS sa
-        FROM cdm_crm.daliy_report_base drb
+        FROM cdm_crm.daily_report_base drb
         WHERE date(drb.order_deal_time) <= date('{end_date}')
         AND date(drb.order_deal_time) >= date('{start_date}')
         AND drb.member_type != '非会员'
@@ -67,7 +67,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
     LEFT JOIN (
         SELECT drb.{zone}, drb.member_type,
         sum(drb.order_fact_amount) AS sa
-        FROM cdm_crm.daliy_report_base drb
+        FROM cdm_crm.daily_report_base drb
         WHERE date(drb.order_deal_time) <= date(date('{end_date}') - interval '1' year)
         AND date(drb.order_deal_time) >= date(date('{start_date}') - interval '1' year)
         GROUP BY drb.{zone}, drb.member_type
@@ -78,7 +78,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
     LEFT JOIN (
         SELECT drb.{zone}, drb.member_type,
         count(distinct drb.member_no) AS ma
-        FROM cdm_crm.daliy_report_base drb
+        FROM cdm_crm.daily_report_base drb
         WHERE drb.member_type IN ('普通会员', 'VIP会员')
         AND date(drb.order_deal_time) <= date(date('{start_date}') - interval '1' day)
         AND date(drb.order_deal_time) >= date(date('{start_date}') - interval '12' month)
@@ -90,7 +90,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
     LEFT JOIN (
         SELECT drb.{zone}, drb.member_type,
         count(distinct drb.member_no) AS ma
-        FROM cdm_crm.daliy_report_base drb
+        FROM cdm_crm.daily_report_base drb
         WHERE drb.member_type = '新会员'
         AND date(drb.member_register_time) = date(drb.order_deal_time)
         AND drb.last_grade_change_time IS NOT NULL
@@ -104,7 +104,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
     LEFT JOIN (
         SELECT drb.{zone}, drb.member_type,
         count(distinct drb.member_no) AS ma
-        FROM cdm_crm.daliy_report_base drb
+        FROM cdm_crm.daily_report_base drb
         WHERE drb.member_type = '新会员'
         AND drb.last_grade_change_time IS NULL
         AND date(drb.order_deal_time) <= date('{end_date}')
@@ -117,7 +117,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
     LEFT JOIN (
         SELECT drb.{zone}, drb.member_type,
         count(distinct drb.member_no) AS ma
-        FROM cdm_crm.daliy_report_base drb
+        FROM cdm_crm.daily_report_base drb
         WHERE drb.member_type IN ('新会员', '普通会员')
         AND date(drb.last_grade_change_time) = date(drb.order_deal_time)
         AND date(drb.order_deal_time) <= date('{end_date}')
@@ -130,7 +130,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
     LEFT JOIN (
         SELECT drb.{zone},
         count(distinct drb.store_code) AS sa
-        FROM cdm_crm.daliy_report_base drb
+        FROM cdm_crm.daily_report_base drb
         WHERE date(drb.order_deal_time) <= date('{end_date}')
         AND date(drb.order_deal_time) >= date('{start_date}')
         GROUP BY drb.{zone}
