@@ -8,7 +8,7 @@ SQL_CRM_MEMBER_AMOUNT_DETAIL_DATA = """
             {zone}, order_channel, sales_mode, store_type, store_level, channel_type
         FROM cdm_crm.member_analyse_type_label
     ) matl
-    
+
     LEFT JOIN (
         SELECT {zone}, order_channel, sales_mode, store_type, store_level, channel_type,
         COALESCE(SUM(mra.member_amount), 0) AS ma
@@ -22,7 +22,7 @@ SQL_CRM_MEMBER_AMOUNT_DETAIL_DATA = """
     AND matl.store_type = mrac.store_type
     AND matl.store_level = mrac.store_level
     AND matl.channel_type = mrac.channel_type
-    
+
     LEFT JOIN (
         SELECT {zone}, order_channel, sales_mode, store_type, store_level, channel_type,
         count(distinct mab.member_no) AS ma
@@ -36,7 +36,7 @@ SQL_CRM_MEMBER_AMOUNT_DETAIL_DATA = """
     AND matl.store_type = mcac.store_type
     AND matl.store_level = mcac.store_level
     AND matl.channel_type = mcac.channel_type
-    
+
     WHERE matl.{zone} IN ({zones})
     AND matl.order_channel IN ({order_channels})
     AND matl.sales_mode IN ({sales_modes})

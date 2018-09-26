@@ -43,6 +43,24 @@ class CrmService:
         pass
     
     @abstractclassmethod
+    def get_crm_total_daily_income_detail_data(self, dto):
+        """
+        查询整体收入每日趋势
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_crm_total_monthly_income_detail_data(self, dto):
+        """
+        查询整体收入每月趋势
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
     def get_crm_member_now_before_income_report_data(self, dto):
         """
         查询会员，当月，当年，往年收入分析

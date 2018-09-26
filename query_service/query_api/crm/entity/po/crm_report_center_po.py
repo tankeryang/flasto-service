@@ -28,5 +28,6 @@ crm_daily_report_model = ns_1.model('CrmDailyReportModel', {
 
 crm_daily_report_list_model = ns_1.model('CrmDailyReportListModel', {
     'data': fields.List(fields.Nested(crm_daily_report_model)),
-    'success': fields.Boolean(description="查询是否成功")
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
 })

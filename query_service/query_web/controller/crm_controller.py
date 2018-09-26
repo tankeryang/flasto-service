@@ -66,13 +66,48 @@ class CrmTotalIncomeReportController(Resource):
         return resp_dict
 
 
+@ns_2.route('/TotalDailyIncomeDetail')
+class CrmTotalDailyIncomeDetailController(Resource):
+    
+    crm_service = CrmServiceImpl()
+    
+    @ns_2.expect(dto.crm_member_analyse_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_total_daily_income_detail_list_model)
+    def post(self):
+        """
+        查询整体收入每日趋势
+        整体销售收入，同比，日期
+        """
+        resp_dict = CrmTotalDailyIncomeDetailController.crm_service.get_crm_total_daily_income_detail_data(ns_2.payload)
+        
+        return resp_dict
+
+
+@ns_2.route('/TotalMonthlyIncomeDetail')
+class CrmTotalMonthlyIncomeDetailController(Resource):
+    
+    crm_service = CrmServiceImpl()
+    
+    @ns_2.expect(dto.crm_member_analyse_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_total_monthly_income_detail_list_model)
+    def post(self):
+        """
+        查询整体收入每月趋势
+        整体销售收入，同比，月份
+        """
+        resp_dict = CrmTotalMonthlyIncomeDetailController.crm_service\
+            .get_crm_total_monthly_income_detail_data(ns_2.payload)
+        
+        return resp_dict
+
+
 @ns_2.route('/MemberNowBeforeIncomeReport')
 class CrmMemberNowBeforeIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
     @ns_2.expect(dto.crm_member_analyse_req_dto_model, validate=True)
-    @ns_2.marshal_with(po.crm_member_nowbefroe_income_report_list_model)
+    @ns_2.marshal_with(po.crm_member_nowbefore_income_report_list_model)
     def post(self):
         """
         查询会员收入分析

@@ -8,7 +8,8 @@ crm_member_amount_detail_model = ns_3.model('CrmMemberAmountDetailModel', {
     'member_unconsumed_cumulative_amount': fields.Integer(readOnly=True, description="未消费会员")
 })
 
-crm_member_amount_detail_list_model = ns_3.model('MemberLevelIncomeReportListModel', {
+crm_member_amount_detail_list_model = ns_3.model('MemberAmountDetailListModel', {
     'data': fields.List(fields.Nested(crm_member_amount_detail_model)),
-    'success': fields.Boolean(description="查询是否成功")
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
 })
