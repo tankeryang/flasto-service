@@ -2,7 +2,7 @@ from flask_restplus import fields
 from query_service.query_web.controller.crm_controller import ns_2
 
 
-crm_member_muldim_income_report_model = ns_2.model('CrmMemberMulDimIncomeReportModel', {
+crm_member_muldim_income_report_model = ns_2.model('MemberMulDimIncomeReportModel', {
     'member_newold_type': fields.String(readOnly=True, description="新老会员类型"),
     'member_level_type': fields.String(readOnly=True, description="会员等级类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(万元)"),
@@ -16,7 +16,7 @@ crm_member_muldim_income_report_model = ns_2.model('CrmMemberMulDimIncomeReportM
     'sales_income_growth': fields.Float(readOnly=True, description="同比增长(%)")
 })
 
-crm_member_muldim_income_report_list_model = ns_2.model('CrmMemberMulDimIncomeReportListModel', {
+crm_member_muldim_income_report_list_model = ns_2.model('MemberMulDimIncomeReportListModel', {
     'data': fields.List(fields.Nested(crm_member_muldim_income_report_model)),
     'success': fields.Boolean(description="查询是否成功")
 })

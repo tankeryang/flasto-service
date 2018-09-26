@@ -1,58 +1,47 @@
 from flask_restplus import Resource, Namespace
-ns_1 = Namespace('CRM 报表中心', path='/crm', description='日报月报api')
-ns_2 = Namespace('CRM 业绩分析', path='/crm', description='业绩分析api')
+ns_1 = Namespace('CRM 报表中心', path='/crm/report', description='日报月报api')
+ns_2 = Namespace('CRM 业绩分析', path='/crm/income', description='业绩分析api')
+ns_3 = Namespace('CRM 客户资产', path='/crm/asset', description='客户资产api')
 
 
 from datetime import datetime
 
 from query_service.query_biz.crm.service.impl import CrmServiceImpl
 
-from query_service.query_api.crm.entity.dto import (
-    crm_member_analyse_req_dto_model,
-    crm_daily_report_req_dto_model,
-)
-from query_service.query_api.crm.entity.po import (
-    crm_total_income_report_list_model,
-    crm_member_nowbefroe_income_report_list_model,
-    crm_member_newold_income_report_list_model,
-    crm_member_level_income_report_list_model,
-    crm_member_muldim_income_report_list_model,
-    crm_daily_report_list_model,
-)
+import query_service.query_api.crm.entity.dto as dto
+import query_service.query_api.crm.entity.po as po
 
 
-@ns_1.route('/CrmDailyReport')
+@ns_1.route('/DailyReport')
 class CrmDailyReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_1.expect(crm_daily_report_req_dto_model, validate=True)
-    @ns_1.marshal_with(crm_daily_report_list_model)
+    @ns_1.expect(dto.crm_daily_report_req_dto_model, validate=True)
+    @ns_1.marshal_with(po.crm_daily_report_list_model)
     def post(self):
         """
         日报查询
         全国，大区，城市，门店
         """
-        dto = ns_1.payload
-        resp_dict = CrmDailyReportController.crm_service.get_daily_report_data(dto)
+        resp_dict = CrmDailyReportController.crm_service.get_daily_report_data(ns_1.payload)
         
         return resp_dict
 
 
-@ns_1.route('/CrmDailyReportExcel')
+@ns_1.route('/DailyReportExcel')
 class CrmDailyReportExcelController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_1.expect(crm_daily_report_req_dto_model, validate=True)
+    @ns_1.expect(dto.crm_daily_report_req_dto_model, validate=True)
     def post(self):
         """
         日报excel表格导出
         格式为: yyyy-MM-dd hh:mm:ss(当前时间) 日报数据.xlsx
         """
-        dto = ns_1.payload
         now_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        resp = CrmDailyReportExcelController.crm_service.get_daily_report_excel(now_timestamp, dto)
+        resp = CrmDailyReportExcelController.crm_service.get_daily_report_excel(now_timestamp, ns_1.payload)
         
         # 删除服务器的生成文件
         CrmDailyReportExcelController.crm_service.del_local_daily_report_excel(now_timestamp)
@@ -60,92 +49,107 @@ class CrmDailyReportExcelController(Resource):
         return resp
 
 
-@ns_2.route('/CrmTotalIncomeReport')
+@ns_2.route('/TotalIncomeReport')
 class CrmTotalIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_2.expect(crm_member_analyse_req_dto_model, validate=True)
-    @ns_2.marshal_with(crm_total_income_report_list_model)
+    @ns_2.expect(dto.crm_member_analyse_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_total_income_report_list_model)
     def post(self):
         """
         查询整体收入分析
         整体，会员，非会员
         """
-        dto = ns_2.payload
-        resp_dict = CrmTotalIncomeReportController.crm_service.get_crm_total_income_report_data(dto)
+        resp_dict = CrmTotalIncomeReportController.crm_service.get_crm_total_income_report_data(ns_2.payload)
         
         return resp_dict
 
 
-@ns_2.route('/CrmMemberNowBeforeIncomeReport')
+@ns_2.route('/MemberNowBeforeIncomeReport')
 class CrmMemberNowBeforeIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_2.expect(crm_member_analyse_req_dto_model, validate=True)
-    @ns_2.marshal_with(crm_member_nowbefroe_income_report_list_model)
+    @ns_2.expect(dto.crm_member_analyse_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_member_nowbefroe_income_report_list_model)
     def post(self):
         """
         查询会员收入分析
         会员，当月会员，当年会员，往年会员
         """
-        dto = ns_2.payload
         resp_dict = CrmMemberNowBeforeIncomeReportController\
-            .crm_service.get_crm_member_now_before_income_report_data(dto)
+            .crm_service.get_crm_member_now_before_income_report_data(ns_2.payload)
         
         return resp_dict
 
 
-@ns_2.route('/CrmMemberNewOldIncomeReport')
+@ns_2.route('/MemberNewOldIncomeReport')
 class CrmMemberNewOldIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_2.expect(crm_member_analyse_req_dto_model, validate=True)
-    @ns_2.marshal_with(crm_member_newold_income_report_list_model)
+    @ns_2.expect(dto.crm_member_analyse_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_member_newold_income_report_list_model)
     def post(self):
         """
         查询新老会员收入分析
         会员，新会员，老会员
         """
-        dto = ns_2.payload
-        resp_dict = CrmMemberNewOldIncomeReportController.crm_service.get_crm_member_new_old_income_report_data(dto)
+        resp_dict = CrmMemberNewOldIncomeReportController.crm_service\
+            .get_crm_member_new_old_income_report_data(ns_2.payload)
         
         return resp_dict
 
 
-@ns_2.route('/CrmMemberLevelIncomeReport')
+@ns_2.route('/MemberLevelIncomeReport')
 class CrmMemberLevelIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_2.expect(crm_member_analyse_req_dto_model, validate=True)
-    @ns_2.marshal_with(crm_member_level_income_report_list_model)
+    @ns_2.expect(dto.crm_member_analyse_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_member_level_income_report_list_model)
     def post(self):
         """
         查询会员等级收入分析
         会员，普通会员，VIP会员
         """
-        dto = ns_2.payload
-        resp_dict = CrmMemberLevelIncomeReportController.crm_service.get_crm_member_level_income_report_data(dto)
+        resp_dict = CrmMemberLevelIncomeReportController.crm_service\
+            .get_crm_member_level_income_report_data(ns_2.payload)
         
         return resp_dict
 
 
-@ns_2.route('/CrmMemberMulDimIncomeReport')
+@ns_2.route('/MemberMulDimIncomeReport')
 class CrmMemberMulDimIncomeReportController(Resource):
     
     crm_service = CrmServiceImpl()
     
-    @ns_2.expect(crm_member_analyse_req_dto_model, validate=True)
-    @ns_2.marshal_with(crm_member_muldim_income_report_list_model)
+    @ns_2.expect(dto.crm_member_analyse_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_member_muldim_income_report_list_model)
     def post(self):
         """
         查询多维度收入分析
         新会员: {普通会员, VIP会员} 老会员:{普通会员, VIP会员}
         """
-        dto = ns_2.payload
-        resp_dict = CrmMemberMulDimIncomeReportController.crm_service.get_crm_member_mul_dim_income_report_data(dto)
+        resp_dict = CrmMemberMulDimIncomeReportController.crm_service\
+            .get_crm_member_mul_dim_income_report_data(ns_2.payload)
+        
+        return resp_dict
+
+
+@ns_3.route('/MemberAmountDetail')
+class CrmMemberAmountDetailController(Resource):
+    
+    crm_service = CrmServiceImpl()
+    
+    @ns_3.expect(dto.crm_member_analyse_req_dto_model)
+    @ns_3.marshal_with(po.crm_member_amount_detail_list_model)
+    def post(self):
+        """
+        查询会员计数详情
+        当前全部会员，有消费会员，未消费会员
+        """
+        resp_dict = CrmMemberAmountDetailController.crm_service.get_crm_member_amount_detail(ns_3.payload)
         
         return resp_dict

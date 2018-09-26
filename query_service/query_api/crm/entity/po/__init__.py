@@ -22,3 +22,7 @@ from .crm_member_muldim_income_report import (
     crm_member_muldim_income_report_model,
     crm_member_muldim_income_report_list_model,
 )
+from .crm_member_amount_detail import (
+    crm_member_amount_detail_model,
+    crm_member_amount_detail_list_model,
+)
