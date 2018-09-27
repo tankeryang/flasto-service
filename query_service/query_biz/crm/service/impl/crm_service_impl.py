@@ -97,6 +97,24 @@ class CrmServiceImpl(CrmService):
         
         return resp_dict
 
+    def get_crm_store_total_income_report_data(self, dto):
+        """
+        查询门店整体收入分析
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = crm_member_income_analyse_format_sql(query_sql.SQL_CRM_STORE_TOTAL_INCOME_REPORT_DATA, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.DTYPE_CRM_TOTAL_INCOME_REPORT_DATA)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+
+        return resp_dict
+
     def get_crm_total_daily_income_detail_data(self, dto):
         """
         查询整体每日收入趋势
@@ -115,6 +133,24 @@ class CrmServiceImpl(CrmService):
         
         return resp_dict
 
+    def get_crm_store_total_daily_income_detail_data(self, dto):
+        """
+        查询门店整体每日收入取数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = crm_member_income_analyse_format_sql(query_sql.SQL_CRM_STORE_TOTAL_DAILY_INCOME_DETAIL_DATA, dto)
+        if sql is None:
+            return dict(sucess=False, message="参数错误")
+
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.DTYPE_CRM_TOTAL_DAILY_INCOME_DETAIL_DATA)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+
+        return resp_dict
+
     def get_crm_total_monthly_income_detail_data(self, dto):
         """
         查询整体每月收入趋势
@@ -122,6 +158,24 @@ class CrmServiceImpl(CrmService):
         :return: response dict
         """
         sql = crm_member_income_analyse_format_sql(query_sql.SQL_CRM_TOTAL_MONTHLY_INCOME_DETAIL_DATA, dto)
+        if sql is None:
+            return dict(sucess=False, message="参数错误")
+
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.DTYPE_CRM_TOTAL_MONTHLY_INCOME_DETAIL_DATA)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+
+        return resp_dict
+
+    def get_crm_store_total_monthly_income_detail_data(self, dto):
+        """
+        查询门店整体每月收入趋势
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = crm_member_income_analyse_format_sql(query_sql.SQL_CRM_STORE_TOTAL_MONTHLY_INCOME_DETAIL_DATA, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
 

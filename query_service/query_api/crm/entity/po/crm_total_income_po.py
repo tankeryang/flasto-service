@@ -3,6 +3,8 @@ from query_service.query_web.controller.crm_controller import ns_2
 
 
 crm_total_income_report_model = ns_2.model('MemberTotalIncomeReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
@@ -22,6 +24,8 @@ crm_total_income_report_list_model = ns_2.model('MemberTotalIncomeReportListMode
 })
 
 crm_total_daily_income_detail_model = ns_2.model('MemberTotalDailyIncomeDetailModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
     'date': fields.String(readOnly=True, description="日期")
@@ -34,6 +38,8 @@ crm_total_daily_income_detail_list_model = ns_2.model('MemberTotalDailyIncomeDet
 })
 
 crm_total_monthly_income_detail_model = ns_2.model('MemberTotalMonthlyIncomeDetailModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
     'month': fields.String(readOnly=True, description="月份")

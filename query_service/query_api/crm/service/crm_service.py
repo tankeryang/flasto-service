@@ -43,6 +43,15 @@ class CrmService:
         pass
     
     @abstractclassmethod
+    def get_crm_store_total_income_report_data(self, dto):
+        """
+        查询门店整体收入分析
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
     def get_crm_total_daily_income_detail_data(self, dto):
         """
         查询整体收入每日趋势
@@ -52,9 +61,27 @@ class CrmService:
         pass
     
     @abstractclassmethod
+    def get_crm_store_total_daily_income_detail_data(self, dto):
+        """
+        查询门店整体收入每日趋势
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
     def get_crm_total_monthly_income_detail_data(self, dto):
         """
         查询整体收入每月趋势
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_crm_store_total_monthly_income_detail_data(self, dto):
+        """
+        查询门店整体收入每日趋势
         :param dto: restplus.Api.payload
         :return:
         """

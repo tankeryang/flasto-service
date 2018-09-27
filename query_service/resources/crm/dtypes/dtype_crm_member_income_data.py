@@ -1,4 +1,6 @@
 DTYPE_CRM_MEMBER_NOWBEFORE_INCOME_REPORT_DATA = {
+    'brand': str,
+    'zone': str,
     'member_type': str,
     'sales_income': float,
     'sales_income_proportion': float,
@@ -11,6 +13,8 @@ DTYPE_CRM_MEMBER_NOWBEFORE_INCOME_REPORT_DATA = {
 }
 
 DTYPE_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = {
+    'brand': str,
+    'zone': str,
     'member_type': str,
     'sales_income': float,
     'sales_income_proportion': float,
@@ -24,6 +28,8 @@ DTYPE_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = {
 }
 
 DTYPE_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = {
+    'brand': str,
+    'zone': str,
     'member_newold_type': str,
     'member_level_type': str,
     'sales_income': float,
@@ -38,6 +44,8 @@ DTYPE_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = {
 }
 
 DTYPE_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = {
+    'brand': str,
+    'zone': str,
     'member_type': str,
     'sales_income': float,
     'sales_income_proportion': float,

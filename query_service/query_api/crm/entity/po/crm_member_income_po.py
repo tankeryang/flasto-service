@@ -3,6 +3,8 @@ from query_service.query_web.controller.crm_controller import ns_2
 
 
 crm_member_nowbefore_income_report_model = ns_2.model('MemberNowBeforeIncomeReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
@@ -21,6 +23,8 @@ crm_member_nowbefore_income_report_list_model = ns_2.model('MemberNowBeforeIncom
 })
 
 crm_member_newold_income_report_model = ns_2.model('MemberNewOldIncomeReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
@@ -40,6 +44,8 @@ crm_member_newold_income_report_list_model = ns_2.model('MemberNewOldIncomeRepor
 })
 
 crm_member_muldim_income_report_model = ns_2.model('MemberMulDimIncomeReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
     'member_newold_type': fields.String(readOnly=True, description="新老会员类型"),
     'member_level_type': fields.String(readOnly=True, description="会员等级类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
@@ -60,6 +66,8 @@ crm_member_muldim_income_report_list_model = ns_2.model('MemberMulDimIncomeRepor
 })
 
 crm_member_level_income_report_model = ns_2.model('MemberLevelIncomeReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),

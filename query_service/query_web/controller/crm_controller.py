@@ -66,6 +66,23 @@ class CrmTotalIncomeReportController(Resource):
         return resp_dict
 
 
+@ns_2.route('/StoreTotalIncomeReport')
+class CrmStoreTotalIncomeReportController(Resource):
+    
+    crm_service = CrmServiceImpl()
+    
+    @ns_2.expect(dto.crm_member_analyse_store_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_total_income_report_list_model)
+    def post(self):
+        """
+        查询门店整体收入分析
+        整体，会员，非会员
+        """
+        resp_dict = CrmStoreTotalIncomeReportController.crm_service.get_crm_store_total_income_report_data(ns_2.payload)
+        
+        return resp_dict
+
+
 @ns_2.route('/TotalDailyIncomeDetail')
 class CrmTotalDailyIncomeDetailController(Resource):
     
@@ -79,6 +96,24 @@ class CrmTotalDailyIncomeDetailController(Resource):
         整体销售收入，同比，日期
         """
         resp_dict = CrmTotalDailyIncomeDetailController.crm_service.get_crm_total_daily_income_detail_data(ns_2.payload)
+        
+        return resp_dict
+
+
+@ns_2.route('/StoreTotalDailyIncomeDetail')
+class CrmStoreTotalDailyIncomeDetailController(Resource):
+    
+    crm_service = CrmServiceImpl()
+    
+    @ns_2.expect(dto.crm_member_analyse_store_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_total_daily_income_detail_list_model)
+    def post(self):
+        """
+        查询门店整体收入每日趋势
+        整体销售收入，同比，日期
+        """
+        resp_dict = CrmStoreTotalDailyIncomeDetailController.crm_service\
+            .get_crm_store_total_daily_income_detail_data(ns_2.payload)
         
         return resp_dict
 
@@ -97,6 +132,24 @@ class CrmTotalMonthlyIncomeDetailController(Resource):
         """
         resp_dict = CrmTotalMonthlyIncomeDetailController.crm_service\
             .get_crm_total_monthly_income_detail_data(ns_2.payload)
+        
+        return resp_dict
+
+
+@ns_2.route('/TotalMonthlyIncomeDetail')
+class CrmStoreTotalMonthlyIncomeDetailController(Resource):
+    
+    crm_service = CrmServiceImpl()
+    
+    @ns_2.expect(dto.crm_member_analyse_store_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_total_monthly_income_detail_list_model)
+    def post(self):
+        """
+        查询门店整体收入每月趋势
+        整体销售收入，同比，月份
+        """
+        resp_dict = CrmStoreTotalMonthlyIncomeDetailController.crm_service \
+            .get_crm_store_total_monthly_income_detail_data(ns_2.payload)
         
         return resp_dict
 
