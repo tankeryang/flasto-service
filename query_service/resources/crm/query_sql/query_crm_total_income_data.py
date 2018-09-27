@@ -57,7 +57,7 @@ SQL_CRM_TOTAL_INCOME_REPORT_DATA = """
 SQL_CRM_TOTAL_DAILY_INCOME_DETAIL_DATA = """
     WITH lyst_t AS (
         SELECT cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income, t.date
-        FROM ads_crm.member_analyse_daily_sales_detail t
+        FROM ads_crm.member_analyse_daily_income_detail t
         WHERE t.date <= date(date('{end_date}') - interval '1' year)
         AND t.date >= date(date('{start_date}') - interval '1' year)
         AND t.{zone} IN ({zones})
@@ -72,7 +72,7 @@ SQL_CRM_TOTAL_DAILY_INCOME_DETAIL_DATA = """
         cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
         cast(COALESCE(TRY(SUM(t.sales_income) / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
         t.date AS date
-    FROM ads_crm.member_analyse_daily_sales_detail t
+    FROM ads_crm.member_analyse_daily_income_detail t
     LEFT JOIN lyst_t ON t.date - interval '1' year = lyst_t.date
     WHERE t.date <= date('{end_date}')
     AND t.date >= date('{start_date}')
@@ -90,7 +90,7 @@ SQL_CRM_TOTAL_DAILY_INCOME_DETAIL_DATA = """
 SQL_CRM_TOTAL_MONTHLY_INCOME_DETAIL_DATA = """
     WITH lyst_t AS (
         SELECT cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income, year(t.date) AS year, month(t.date) AS month
-        FROM ads_crm.member_daily_sales_detail t
+        FROM ads_crm.member_analyse_daily_income_detail t
         WHERE t.date <= date(date('{end_date}') - interval '1' year)
         AND t.date >= date(date('{start_date}') - interval '1' year)
         AND t.{zone} IN ({zones})
@@ -105,7 +105,7 @@ SQL_CRM_TOTAL_MONTHLY_INCOME_DETAIL_DATA = """
         cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
         cast(COALESCE(TRY(SUM(t.sales_income) / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
         cast(month(t.date) AS VARCHAR) AS month
-    FROM ads_crm.member_daily_sales_detail t
+    FROM ads_crm.member_analyse_daily_income_detail t
     LEFT JOIN lyst_t ON year(t.date) - 1 = lyst_t.year AND month(t.date) = lyst_t.month
     WHERE t.date <= date('{end_date}')
     AND t.date >= date('{start_date}')
