@@ -26,7 +26,7 @@ SQL_CRM_MEMBER_NOWBEFORE_INCOME_REPORT_DATA = """
             IF( year(member_register_time) = year(date('{end_date}')),
                 IF(month(member_register_time) = month(date('{end_date}')), '当月会员', '当年会员'),
                 IF(year(member_register_time) < year(date('{end_date}')), '往年会员', NULL)) member_nowbefore_type
-            FROM cdm_ccommon.crm_order_info_detail ) _t
+            FROM cdm_common.crm_order_info_detail ) _t
         ON date(t_.member_register_time) = _t.member_register_date
         WHERE t_.member_type = '会员'
     ), t1 AS (
@@ -154,8 +154,7 @@ SQL_CRM_MEMBER_NOWBEFORE_INCOME_REPORT_DATA = """
 
 SQL_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = """
     WITH tt AS (
-        SELECT {zone}, order_channel, sales_mode, store_type, store_level, channel_type,
-            cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
+        SELECT {zone}, cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
         FROM ads_crm.member_analyse_fold_daily_income_detail
         WHERE member_newold_type = '会员' AND member_type IS NULL AND member_level_type IS NULL
         AND {zone} IN ({zones})
@@ -166,10 +165,9 @@ SQL_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = """
         AND channel_type IN ({channel_types})
         AND date <= date('{end_date}')
         AND date >= date('{start_date}')
-        GROUP BY {zone}, order_channel, sales_mode, store_type, store_level, channel_type
+        GROUP BY {zone}
     ), lyst AS (
-        SELECT {zone}, order_channel, sales_mode, store_type, store_level, channel_type, member_newold_type,
-            cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
+        SELECT {zone}, member_newold_type, cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
         FROM ads_crm.member_analyse_fold_daily_income_detail
         WHERE member_newold_type IS NOT NULL AND member_type IS NULL AND member_level_type IS NULL
         AND {zone} IN ({zones})
@@ -180,7 +178,7 @@ SQL_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = """
         AND channel_type IN ({channel_types})
         AND date <= date(date('{end_date}') - interval '1' year)
         AND date >= date(date('{start_date}') - interval '1' year)
-        GROUP BY {zone}, order_channel, sales_mode, store_type, store_level, channel_type, member_newold_type
+        GROUP BY {zone}, member_newold_type
     )
     SELECT DISTINCT
         f.member_newold_type AS member_type,
@@ -194,11 +192,8 @@ SQL_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = """
         cast(COALESCE(TRY(sum(f.sales_item_quantity) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
         cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
     FROM ads_crm.member_analyse_fold_daily_income_detail f
-    LEFT JOIN tt ON f.{zone} = tt.{zone} AND f.order_channel = tt.order_channel AND f.sales_mode = tt.sales_mode
-    AND f.store_type = tt.store_type AND f.store_level = tt.store_level AND f.channel_type = tt.channel_type
-    LEFT JOIN lyst ON f.{zone} = lyst.{zone} AND f.order_channel = lyst.order_channel
-    AND f.sales_mode = lyst.sales_mode AND f.store_type = lyst.store_type AND f.store_level = lyst.store_level
-    AND f.channel_type = lyst.channel_type AND f.member_newold_type = lyst.member_newold_type
+    LEFT JOIN tt ON f.{zone} = tt.{zone}
+    LEFT JOIN lyst ON f.{zone} = lyst.{zone} AND f.member_newold_type = lyst.member_newold_type
     WHERE f.member_newold_type IS NOT NULL AND f.member_type IS NULL AND f.member_level_type IS NULL
     AND f.{zone} IN ({zones})
     AND f.order_channel IN ({order_channels})
@@ -215,8 +210,7 @@ SQL_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = """
 
 SQL_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = """
     WITH tt AS (
-        SELECT {zone}, order_channel, sales_mode, store_type, store_level, channel_type,
-            cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
+        SELECT {zone}, cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
         FROM ads_crm.member_analyse_fold_daily_income_detail
         WHERE member_type = '会员' AND member_newold_type IS NULL AND member_level_type IS NULL
         AND {zone} IN ({zones})
@@ -227,10 +221,9 @@ SQL_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = """
         AND channel_type IN ({channel_types})
         AND date <= date('{end_date}')
         AND date >= date('{start_date}')
-        GROUP BY {zone}, order_channel, sales_mode, store_type, store_level, channel_type
+        GROUP BY {zone}
     ), lyst AS (
-        SELECT {zone}, order_channel, sales_mode, store_type, store_level, channel_type, member_newold_type, member_level_type,
-            cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
+        SELECT {zone}, member_newold_type, member_level_type, cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
         FROM ads_crm.member_analyse_fold_daily_income_detail
         WHERE member_newold_type IS NOT NULL AND member_level_type IS NOT NULL AND member_type IS NULL
         AND {zone} IN ({zones})
@@ -241,7 +234,7 @@ SQL_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = """
         AND channel_type IN ({channel_types})
         AND date <= date(date('{end_date}') - interval '1' year)
         AND date >= date(date('{start_date}') - interval '1' year)
-        GROUP BY {zone}, order_channel, sales_mode, store_type, store_level, channel_type, member_newold_type, member_level_type
+        GROUP BY {zone}, member_newold_type, member_level_type
     )
     SELECT DISTINCT
         f.member_newold_type,
@@ -256,11 +249,8 @@ SQL_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = """
         cast(COALESCE(TRY(sum(f.sales_item_quantity) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
         cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
     FROM ads_crm.member_analyse_fold_daily_income_detail f
-    LEFT JOIN tt ON f.{zone} = tt.{zone} AND f.order_channel = tt.order_channel AND f.sales_mode = tt.sales_mode
-    AND f.store_type = tt.store_type AND f.store_level = tt.store_level AND f.channel_type = tt.channel_type
-    LEFT JOIN lyst ON f.{zone} = lyst.{zone} AND f.order_channel = lyst.order_channel AND f.sales_mode = lyst.sales_mode
-    AND f.store_type = lyst.store_type AND f.store_level = lyst.store_level AND f.channel_type = lyst.channel_type
-    AND f.member_newold_type = lyst.member_newold_type AND f.member_level_type = lyst.member_level_type
+    LEFT JOIN tt ON f.{zone} = tt.{zone}
+    LEFT JOIN lyst ON f.{zone} = lyst.{zone} AND f.member_newold_type = lyst.member_newold_type AND f.member_level_type = lyst.member_level_type
     WHERE f.member_newold_type IS NOT NULL AND f.member_level_type IS NOT NULL AND f.member_type IS NULL
     AND f.{zone} IN ({zones})
     AND f.order_channel IN ({order_channels})
@@ -277,8 +267,7 @@ SQL_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = """
 
 SQL_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = """
     WITH tt AS (
-        SELECT {zone}, order_channel, sales_mode, store_type, store_level, channel_type,
-            cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
+        SELECT {zone}, cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
         FROM ads_crm.member_analyse_fold_daily_income_detail
         WHERE member_level_type = '会员' AND member_type IS NULL AND member_newold_type IS NULL
         AND {zone} IN ({zones})
@@ -289,10 +278,9 @@ SQL_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = """
         AND channel_type IN ({channel_types})
         AND date <= date('{end_date}')
         AND date >= date('{start_date}')
-        GROUP BY {zone}, order_channel, sales_mode, store_type, store_level, channel_type
+        GROUP BY {zone}
     ), lyst AS (
-        SELECT {zone}, order_channel, sales_mode, store_type, store_level, channel_type, member_level_type,
-            cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
+        SELECT {zone}, member_level_type, cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
         FROM ads_crm.member_analyse_fold_daily_income_detail
         WHERE member_level_type IS NOT NULL AND member_type IS NULL AND member_newold_type IS NULL
         AND {zone} IN ({zones})
@@ -303,7 +291,7 @@ SQL_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = """
         AND channel_type IN ({channel_types})
         AND date <= date(date('{end_date}') - interval '1' year)
         AND date >= date(date('{start_date}') - interval '1' year)
-        GROUP BY {zone}, order_channel, sales_mode, store_type, store_level, channel_type, member_level_type
+        GROUP BY {zone}, member_level_type
     )
     SELECT DISTINCT
         f.member_level_type AS member_type,
@@ -317,11 +305,8 @@ SQL_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = """
         cast(COALESCE(TRY(sum(f.sales_item_quantity) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
         cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
     FROM ads_crm.member_analyse_fold_daily_income_detail f
-    LEFT JOIN tt ON f.{zone} = tt.{zone} AND f.order_channel = tt.order_channel AND f.sales_mode = tt.sales_mode
-    AND f.store_type = tt.store_type AND f.store_level = tt.store_level AND f.channel_type = tt.channel_type
-    LEFT JOIN lyst ON f.{zone} = lyst.{zone} AND f.order_channel = lyst.order_channel
-    AND f.sales_mode = lyst.sales_mode AND f.store_type = lyst.store_type AND f.store_level = lyst.store_level
-    AND f.channel_type = lyst.channel_type AND f.member_level_type = lyst.member_level_type
+    LEFT JOIN tt ON f.{zone} = tt.{zone}
+    LEFT JOIN lyst ON f.{zone} = lyst.{zone} AND f.member_level_type = lyst.member_level_type
     WHERE f.member_level_type IS NOT NULL AND f.member_type IS NULL AND f.member_newold_type IS NULL
     AND f.{zone} IN ({zones})
     AND f.order_channel IN ({order_channels})

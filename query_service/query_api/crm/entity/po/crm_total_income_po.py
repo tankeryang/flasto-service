@@ -23,7 +23,7 @@ crm_total_income_report_list_model = ns_2.model('MemberTotalIncomeReportListMode
 
 crm_total_daily_income_detail_model = ns_2.model('MemberTotalDailyIncomeDetailModel', {
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
-    'sales_income_growth': fields.Float(readOnly=True, description="同比增长"),
+    'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
     'date': fields.String(readOnly=True, description="日期")
 })
 
@@ -35,7 +35,7 @@ crm_total_daily_income_detail_list_model = ns_2.model('MemberTotalDailyIncomeDet
 
 crm_total_monthly_income_detail_model = ns_2.model('MemberTotalMonthlyIncomeDetailModel', {
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
-    'sales_income_growth': fields.Float(readOnly=True, description="同比增长"),
+    'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
     'month': fields.String(readOnly=True, description="月份")
 })
 
