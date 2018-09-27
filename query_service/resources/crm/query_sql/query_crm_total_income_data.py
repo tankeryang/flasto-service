@@ -70,6 +70,20 @@ SQL_CRM_STORE_TOTAL_INCOME_REPORT_DATA = """
         AND date <= date('{end_date}')
         AND date >= date('{start_date}')
         GROUP BY brand_name, store_code
+    ), lyst AS (
+        SELECT brand_name, store_code, member_type, cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
+        FROM ads_crm.member_analyse_fold_daily_income_detail
+        WHERE member_type IS NOT NULL AND member_newold_type IS NULL AND member_level_type IS NULL
+        AND brand_name IN ({brands})
+        AND store_code IN ({zones})
+        AND order_channel IN ({order_channels})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date <= date(date('{end_date}') - interval '1' year)
+        AND date >= date(date('{start_date}') - interval '1' year)
+        GROUP BY brand_name, store_code, member_type
     )
     SELECT DISTINCT
         f.brand_name AS brand,
@@ -83,7 +97,7 @@ SQL_CRM_STORE_TOTAL_INCOME_REPORT_DATA = """
         cast(COALESCE(TRY(sum(f.sales_income) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
         cast(COALESCE(TRY(sum(f.sales_income) / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
         cast(COALESCE(TRY(sum(f.sales_item_quantity) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / SUM(f.lyst_sales_income)), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
+        cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.store_code = tt.store_code
     WHERE f.member_type IS NOT NULL AND f.member_newold_type IS NULL AND f.member_level_type IS NULL
@@ -92,7 +106,7 @@ SQL_CRM_STORE_TOTAL_INCOME_REPORT_DATA = """
     AND f.order_channel IN ({order_channels})
     AND f.date <= date('{end_date}')
     AND f.date >= date('{start_date}')
-    GROUP BY f.brand_name, f.store_code, f.member_type, tt.sales_income
+    GROUP BY f.brand_name, f.store_code, f.member_type, tt.sales_income, lyst.sales_income
 """
 
 ########################################################################################################################
@@ -135,11 +149,25 @@ SQL_CRM_TOTAL_DAILY_INCOME_DETAIL_DATA = """
 ########################################################################################################################
 
 SQL_CRM_STORE_TOTAL_DAILY_INCOME_DETAIL_DATA = """
+    WITH lyst_t AS (
+        SELECT t.brand_name, t.store_code, cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income, t.date
+        FROM ads_crm.member_analyse_daily_income_detail t
+        WHERE t.brand_name IN ({brands})
+        AND t.store_code IN ({zones})
+        AND t.order_channel IN ({order_channels})
+        AND t.sales_mode IN ({sales_modes})
+        AND t.store_type IN ({store_types})
+        AND t.store_level IN ({store_levels})
+        AND t.channel_type IN ({channel_types})
+        AND t.date <= date(date('{end_date}') - interval '1' year)
+        AND t.date >= date(date('{start_date}') - interval '1' year)
+        GROUP BY t.brand_name, t.store_code, t.date
+    )
     SELECT
         t.brand_name AS brand,
         t.store_code AS zone,
         cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(SUM(t.sales_income) / SUM(t.lyst_sales_income)), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
+        cast(COALESCE(TRY(SUM(t.sales_income) / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
         t.date AS date
     FROM ads_crm.member_analyse_daily_income_detail t
     WHERE t.brand_name IN ({brands})
@@ -190,11 +218,25 @@ SQL_CRM_TOTAL_MONTHLY_INCOME_DETAIL_DATA = """
 ########################################################################################################################
 
 SQL_CRM_STORE_TOTAL_MONTHLY_INCOME_DETAIL_DATA = """
+    WITH lyst_t AS (
+        SELECT t.brand_name, t.store_code, cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income, year(t.date) AS year, month(t.date) AS month
+        FROM ads_crm.member_analyse_daily_income_detail t
+        WHERE t.brand_name IN ({brands})
+        AND t.store_code IN ({zones})
+        AND t.order_channel IN ({order_channels})
+        AND t.sales_mode IN ({sales_modes})
+        AND t.store_type IN ({store_types})
+        AND t.store_level IN ({store_levels})
+        AND t.channel_type IN ({channel_types})
+        AND t.date <= date(date('{end_date}') - interval '1' year)
+        AND t.date >= date(date('{start_date}') - interval '1' year)
+        GROUP BY t.brand_name, t.store_code, year(t.date), month(t.date)
+    )
     SELECT
         t.brand_name AS brand,
         t.store_code AS zone,
         cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(SUM(t.sales_income) / SUM(t.lyst_sales_income)), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
+        cast(COALESCE(TRY(SUM(t.sales_income) / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
         cast(month(t.date) AS VARCHAR) AS month
     FROM ads_crm.member_analyse_daily_income_detail t
     WHERE t.brand_name IN ({brands})
