@@ -182,8 +182,8 @@ SQL_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = """
     )
     SELECT DISTINCT
         f.member_newold_type AS member_type,
-        cast(sum(f.sales_income) AS DECIMAL(18, 2)) AS sales_income,
-        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 3)) AS sales_income_proportion,
+        cast(sum(f.sales_income) AS DECIMAL(18, 3)) AS sales_income,
+        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
         cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS customer_amount,
         cast(sum(f.order_amount) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(sum(f.order_amount) / cardinality(array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS consumption_frequency,
@@ -239,8 +239,8 @@ SQL_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = """
     SELECT DISTINCT
         f.member_newold_type,
         f.member_level_type,
-        cast(sum(f.sales_income) AS DECIMAL(18, 2)) AS sales_income,
-        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 3)) AS sales_income_proportion,
+        cast(sum(f.sales_income) AS DECIMAL(18, 3)) AS sales_income,
+        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
         cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS customer_amount,
         cast(sum(f.order_amount) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(sum(f.order_amount) / cardinality(array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS consumption_frequency,
@@ -295,8 +295,8 @@ SQL_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = """
     )
     SELECT DISTINCT
         f.member_level_type AS member_type,
-        cast(sum(f.sales_income) AS DECIMAL(18, 2)) AS sales_income,
-        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 3)) AS sales_income_proportion,
+        cast(sum(f.sales_income) AS DECIMAL(18, 3)) AS sales_income,
+        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
         cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS customer_amount,
         cast(sum(f.order_amount) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(sum(f.order_amount) / cardinality(array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS consumption_frequency,
