@@ -38,6 +38,7 @@ def crm_member_income_analyse_format_sql(sql, payload):
         else:
             return None
         
+        brands = str(payload['brands']).strip('[').strip(']')
         order_channels = str(payload['order_channels']).strip('[').strip(']')
         sales_modes = str(payload['sales_modes']).strip('[').strip(']')
         store_types = str(payload['store_types']).strip('[').strip(']')
@@ -47,12 +48,13 @@ def crm_member_income_analyse_format_sql(sql, payload):
         end_date = payload['end_date']
         
         return sql.format(
-            zone=zone, zones=zones, start_date=start_date, end_date=end_date,
+            brands=brands, zone=zone, zones=zones, start_date=start_date, end_date=end_date,
             order_channels=order_channels, sales_modes=sales_modes, store_types=store_types,
             store_levels=store_levels, channel_types=channel_types
         )
     
     else:
+        zones = ''
         if len(payload['brands']) < 1:
             return None
         if len(payload['store_codes']) > 0:
@@ -61,7 +63,7 @@ def crm_member_income_analyse_format_sql(sql, payload):
         start_date = payload['start_date']
         end_date = payload['end_date']
         
-        return sql.format(zones=zones, start_date=start_date, end_date=end_date)
+        return sql.format(brands=brands, zones=zones, start_date=start_date, end_date=end_date)
 
 
 def crm_daily_report_format_sql(sql, payload):
