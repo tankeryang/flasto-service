@@ -10,14 +10,12 @@ def crm_member_income_analyse_format_sql(sql, payload):
     :param payload: restplus.Api.payload 传入参数
     :return: 填充参数后的sql
     """
-    
-    # 校验参数
-    necessary_param = dto.crm_member_analyse_req_dto_model.keys()
-    
-    if not valid_req_dto(necessary_param, payload):
-        return None
-    
     if 'store_codes' not in payload.keys():
+        # 校验参数
+        necessary_param = dto.crm_member_analyse_req_dto_model.keys()
+        if not valid_req_dto(necessary_param, payload):
+            return None
+        
         if len(payload['brands']) < 1:
             return None
         elif len(payload['cities']) > 0:
@@ -53,7 +51,12 @@ def crm_member_income_analyse_format_sql(sql, payload):
             store_levels=store_levels, channel_types=channel_types
         )
     
-    if 'store_codes' in payload.keys():
+    else:
+        # 校验参数
+        necessary_param = dto.crm_member_analyse_store_req_dto_model.keys()
+        if not valid_req_dto(necessary_param, payload):
+            return None
+        
         if len(payload['brands']) < 1:
             return None
         elif len(payload['store_codes']) > 0:
