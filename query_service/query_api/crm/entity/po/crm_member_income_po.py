@@ -30,7 +30,7 @@ crm_member_newold_income_report_model = ns_2.model('MemberNewOldIncomeReportMode
     'sales_income_per_order': fields.Float(readOnly=True, description="客单价(元)"),
     'sales_income_per_item': fields.Float(readOnly=True, description="件单价(元)"),
     'sales_item_per_order': fields.Float(readOnly=True, description="客单件(件)"),
-    'sales_income_growth': fields.Float(readOnly=True, description="同比增长")
+    'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
 })
 
 crm_member_newold_income_report_list_model = ns_2.model('MemberNewOldIncomeReportListModel', {
@@ -50,7 +50,7 @@ crm_member_muldim_income_report_model = ns_2.model('MemberMulDimIncomeReportMode
     'sales_income_per_order': fields.Float(readOnly=True, description="客单价(元)"),
     'sales_income_per_item': fields.Float(readOnly=True, description="件单价(元)"),
     'sales_item_per_order': fields.Float(readOnly=True, description="客单件(件)"),
-    'sales_income_growth': fields.Float(readOnly=True, description="同比增长")
+    'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
 })
 
 crm_member_muldim_income_report_list_model = ns_2.model('MemberMulDimIncomeReportListModel', {
@@ -69,7 +69,7 @@ crm_member_level_income_report_model = ns_2.model('MemberLevelIncomeReportModel'
     'sales_income_per_order': fields.Float(readOnly=True, description="客单价(元)"),
     'sales_income_per_item': fields.Float(readOnly=True, description="件单价(元)"),
     'sales_item_per_order': fields.Float(readOnly=True, description="客单件(件)"),
-    'sales_income_growth': fields.Float(readOnly=True, description="同比增长")
+    'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
 })
 
 crm_member_level_income_report_list_model = ns_2.model('MemberLevelIncomeReportListModel', {

@@ -12,8 +12,7 @@ crm_total_income_report_model = ns_2.model('MemberTotalIncomeReportModel', {
     'sales_income_per_order': fields.Float(readOnly=True, description="客单价(元)"),
     'sales_income_per_item': fields.Float(readOnly=True, description="件单价(元)"),
     'sales_item_per_order': fields.Float(readOnly=True, description="客单件(件)"),
-    'sales_income_growth': fields.Float(readOnly=True, description="同比增长"),
-    'register_proportion': fields.Float(readOnly=True, description="登记率")
+    'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
 })
 
 crm_total_income_report_list_model = ns_2.model('MemberTotalIncomeReportListModel', {

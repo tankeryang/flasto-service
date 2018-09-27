@@ -20,7 +20,7 @@ DTYPE_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = {
     'sales_income_per_order': float,
     'sales_income_per_item': float,
     'sales_item_per_order': float,
-    'sales_income_growth': float
+    'compared_with_lyst': float
 }
 
 DTYPE_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = {
@@ -34,7 +34,7 @@ DTYPE_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = {
     'sales_income_per_order': float,
     'sales_income_per_item': float,
     'sales_item_per_order': float,
-    'sales_income_growth': float
+    'compared_with_lyst': float
 }
 
 DTYPE_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = {
@@ -47,5 +47,5 @@ DTYPE_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = {
     'sales_income_per_order': float,
     'sales_income_per_item': float,
     'sales_item_per_order': float,
-    'sales_income_growth': float
+    'compared_with_lyst': float
 }

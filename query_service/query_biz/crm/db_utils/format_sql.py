@@ -17,7 +17,10 @@ def crm_member_income_analyse_format_sql(sql, payload):
     if not valid_req_dto(necessary_param, payload):
         return None
     else:
-        if len(payload['cities']) > 0:
+        if len(payload['store_codes'] > 0):
+            zone = 'store_code'
+            zones = str(payload['store_codes']).strip('[').strip(']')
+        elif len(payload['cities']) > 0:
             zone = 'city'
             zones = str(payload['cities']).strip('[').strip(']')
         elif len(payload['provinces']) > 0:
@@ -29,9 +32,9 @@ def crm_member_income_analyse_format_sql(sql, payload):
         elif len(payload['sales_districts']) > 0:
             zone = 'sales_district'
             zones = str(payload['sales_district']).strip('[').strip(']')
-        elif len(payload['country']) == 1 and payload['country'][0] == '全国':
+        elif len(payload['country']) > 0:
             zone = 'country'
-            zones = str(['中国']).strip('[').strip(']')
+            zones = str(['country']).strip('[').strip(']')
         else:
             return None
         
@@ -94,7 +97,7 @@ def crm_daily_report_format_sql(sql, payload):
             mtl_store_code = 'NULL'
             zone_index = 'country'
             zone = 'country'
-            zones = str(payload['sales_areas']).strip('[').strip(']')
+            zones = str(payload['中国']).strip('[').strip(']')
         else:
             return None
         
