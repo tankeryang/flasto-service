@@ -32,7 +32,7 @@ SQL_CRM_TOTAL_INCOME_REPORT_DATA = """
         f.member_type AS member_type,
         cast(sum(f.sales_income) AS DECIMAL(18, 2)) AS sales_income,
         cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 3)) AS sales_income_proportion,
-        cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS costomer_amount,
+        cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS customer_amount,
         cast(sum(f.order_amount) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(sum(f.order_amount) / cardinality(array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS consumption_frequency,
         cast(COALESCE(TRY(sum(f.sales_income) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
