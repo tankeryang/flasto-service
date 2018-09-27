@@ -65,10 +65,13 @@ def crm_member_income_analyse_format_sql(sql, payload):
             return None
 
         brands = str(payload['brands']).strip('[').strip(']')
+        order_channels = str(payload['order_channels']).strip('[').strip(']')
         start_date = payload['start_date']
         end_date = payload['end_date']
         
-        return sql.format(brands=brands, zones=zones, start_date=start_date, end_date=end_date)
+        return sql.format(
+            brands=brands, zones=zones, order_channels=order_channels, start_date=start_date, end_date=end_date
+        )
 
 
 def crm_daily_report_format_sql(sql, payload):
