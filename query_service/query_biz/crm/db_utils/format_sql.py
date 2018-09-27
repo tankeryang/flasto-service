@@ -54,11 +54,12 @@ def crm_member_income_analyse_format_sql(sql, payload):
         )
     
     else:
-        zones = ''
         if len(payload['brands']) < 1:
             return None
-        if len(payload['store_codes']) > 0:
+        elif len(payload['store_codes']) > 0:
             zones = str(payload['store_codes']).strip('[').strip(']')
+        else:
+            return None
 
         brands = str(payload['brands']).strip('[').strip(']')
         start_date = payload['start_date']
