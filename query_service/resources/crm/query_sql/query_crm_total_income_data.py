@@ -8,7 +8,7 @@ SQL_CRM_TOTAL_INCOME_REPORT_DATA = """
         AND order_channel IN ({order_channels})
         AND sales_mode IN ({sales_modes})
         AND store_type IN ({store_types})
-        AND store_level IN (store_levels)
+        AND store_level IN ({store_levels})
         AND channel_type IN ({channel_types})
         AND date <= date('{end_date}')
         AND date >= date('{start_date}')
