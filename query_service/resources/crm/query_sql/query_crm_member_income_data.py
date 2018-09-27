@@ -347,5 +347,5 @@ SQL_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = """
     AND f.channel_type IN ({channel_types})
     AND f.date <= date('{end_date}')
     AND f.date >= date('{start_date}')
-    GROUP BY f.member_level_type, tt.sales_income, lyst.sales_income
+    GROUP BY f.brand_name, f.{zone}, f.member_level_type, tt.sales_income, lyst.sales_income
 """
