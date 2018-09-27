@@ -34,7 +34,7 @@ def crm_member_income_analyse_format_sql(sql, payload):
             zones = str(payload['sales_district']).strip('[').strip(']')
         elif len(payload['country']) > 0:
             zone = 'country'
-            zones = str(['country']).strip('[').strip(']')
+            zones = str(payload['country']).strip('[').strip(']')
         else:
             return None
         
@@ -97,7 +97,7 @@ def crm_daily_report_format_sql(sql, payload):
             mtl_store_code = 'NULL'
             zone_index = 'country'
             zone = 'country'
-            zones = str(payload['中国']).strip('[').strip(']')
+            zones = str(['中国']).strip('[').strip(']')
         else:
             return None
         
