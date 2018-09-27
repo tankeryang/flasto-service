@@ -28,7 +28,7 @@ SQL_CRM_MEMBER_NOWBEFORE_INCOME_REPORT_DATA = """
                 IF(year(member_register_time) < year(date('{end_date}')), '往年会员', NULL)) member_nowbefore_type
             FROM cdm_common.crm_order_info_detail ) _t
         ON date(t_.member_register_time) = _t.member_register_date
-        WHERE t_.member_type = '会员'
+        WHERE t_.member_type = '会员' AND date(t_.order_deal_time) <= date('{end_date}')
     ), t1 AS (
         SELECT DISTINCT
             cmail.member_type AS member_type,
