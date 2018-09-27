@@ -136,7 +136,7 @@ class CrmTotalMonthlyIncomeDetailController(Resource):
         return resp_dict
 
 
-@ns_2.route('/TotalMonthlyIncomeDetail')
+@ns_2.route('/StoreTotalMonthlyIncomeDetail')
 class CrmStoreTotalMonthlyIncomeDetailController(Resource):
     
     crm_service = CrmServiceImpl()
