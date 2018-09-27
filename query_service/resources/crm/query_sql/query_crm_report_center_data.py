@@ -3,7 +3,7 @@ SQL_CRM_DAILY_REPORT_DATA = """
         {cmail_sales_area} AS sales_area,
         {cmail_city} AS city,
         {cmail_store_code} AS store_code,
-        cmail.dr_member_type AS dr_member_type,
+        cmail.dr_member_type AS member_type,
         cast(COALESCE(sm.sa, 0) AS DECIMAL(18, 2)) AS sales_amount,
         cast(COALESCE(TRY(sm.sa * 1.0 / sm_tt.sa), 0) AS DECIMAL(18, 4)) AS sales_amount_proportion,
         cast(COALESCE(TRY(sm_mb_tt.sa * 1.0 / sm_tt.sa), 0) AS DECIMAL(18, 4)) AS sales_amount_proportion_total,
