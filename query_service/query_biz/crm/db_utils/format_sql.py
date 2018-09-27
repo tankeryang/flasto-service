@@ -17,7 +17,7 @@ def crm_member_income_analyse_format_sql(sql, payload):
     if not valid_req_dto(necessary_param, payload):
         return None
     else:
-        if len(payload['store_codes'] > 0):
+        if len(payload['store_codes']) > 0:
             zone = 'store_code'
             zones = str(payload['store_codes']).strip('[').strip(']')
         elif len(payload['cities']) > 0:
