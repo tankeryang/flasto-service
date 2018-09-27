@@ -314,7 +314,7 @@ SQL_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = """
         cast(COALESCE(TRY(SUM(t1.si) / SUM(t1.oa)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
         cast(COALESCE(TRY(SUM(t1.si) / SUM(t1.siq)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
         cast(COALESCE(TRY(SUM(t1.siq) / SUM(t1.oa)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
-        cast(COALESCE(TRY(SUM(t1.si - t1.lyst_si) / SUM(t1.lyst_si)), 0) AS DECIMAL(18, 2)) AS sales_income_growth
+        cast(COALESCE(TRY(SUM(t1.si - t1.lyst_si) / SUM(t1.lyst_si)), 0) AS DECIMAL(18, 4)) AS sales_income_growth
     FROM t1 GROUP BY t1.member_type
     UNION SELECT DISTINCT
         t2.member_type AS member_type,

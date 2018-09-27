@@ -194,12 +194,7 @@ SQL_CRM_TOTAL_INCOME_REPORT_DATA = """
 """
 
 SQL_CRM_TOTAL_DAILY_INCOME_DETAIL_DATA = """
-    SELECT
-        cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY((SUM(t.sales_income) - lyst_t.sales_income) / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_growth,
-        t.date AS date
-    FROM ads_crm.member_daily_sales_detail t
-    LEFT JOIN (
+    WITH lyst_t AS (
         SELECT
             cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
             t.date
@@ -213,8 +208,31 @@ SQL_CRM_TOTAL_DAILY_INCOME_DETAIL_DATA = """
         AND t.store_level IN ({store_levels})
         AND t.channel_type IN ({channel_types})
         GROUP BY t.date
-    ) lyst_t
-    ON t.date - interval '1' year = lyst_t.date
+    ),
+    m AS (
+        SELECT
+            cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
+            m.member_type,
+            m.date
+        FROM ads_crm.member_daily_sales_detail m
+        WHERE m.date <= date('{end_date}')
+        AND m.date >= date('{start_date}')
+        AND m.{zone} IN ({zones})
+        AND m.order_channel IN ({order_channels})
+        AND m.sales_mode IN ({sales_modes})
+        AND m.store_type IN ({store_types})
+        AND m.store_level IN ({store_levels})
+        AND m.channel_type IN ({channel_types})
+        GROUP BY m.member_type, m.date
+    )
+    SELECT
+        cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
+        cast(COALESCE(TRY((SUM(t.sales_income) - lyst_t.sales_income) / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_growth,
+        CASE m.member_type WHEN '会员' THEN
+        t.date AS date
+    FROM ads_crm.member_daily_sales_detail t
+    LEFT JOIN lyst_t ON t.date - interval '1' year = lyst_t.date
+    LEFT JOIN m ON t.date = m.date
     WHERE t.date <= date('{end_date}')
     AND t.date >= date('{start_date}')
     AND t.{zone} IN ({zones})
