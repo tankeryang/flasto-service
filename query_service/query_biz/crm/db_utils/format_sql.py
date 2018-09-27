@@ -53,7 +53,7 @@ def crm_member_income_analyse_format_sql(sql, payload):
             store_levels=store_levels, channel_types=channel_types
         )
     
-    else:
+    if 'store_codes' in payload.keys():
         if len(payload['brands']) < 1:
             return None
         elif len(payload['store_codes']) > 0:
