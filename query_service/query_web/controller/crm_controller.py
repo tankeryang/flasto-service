@@ -29,24 +29,24 @@ class CrmDailyReportController(Resource):
         return resp_dict
 
 
-@ns_1.route('/DailyReportExcel')
-class CrmDailyReportExcelController(Resource):
-    
-    crm_service = CrmServiceImpl()
-    
-    @ns_1.expect(dto.crm_daily_report_req_dto_model, validate=True)
-    def post(self):
-        """
-        日报excel表格导出
-        格式为: yyyy-MM-dd hh:mm:ss(当前时间) 日报数据.xlsx
-        """
-        now_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        resp = CrmDailyReportExcelController.crm_service.get_daily_report_excel(now_timestamp, ns_1.payload)
-        
-        # 删除服务器的生成文件
-        CrmDailyReportExcelController.crm_service.del_local_daily_report_excel(now_timestamp)
-        
-        return resp
+# @ns_1.route('/DailyReportExcel')
+# class CrmDailyReportExcelController(Resource):
+#
+#     crm_service = CrmServiceImpl()
+#
+#     @ns_1.expect(dto.crm_daily_report_req_dto_model, validate=True)
+#     def post(self):
+#         """
+#         日报excel表格导出
+#         格式为: yyyy-MM-dd hh:mm:ss(当前时间) 日报数据.xlsx
+#         """
+#         now_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+#         resp = CrmDailyReportExcelController.crm_service.get_daily_report_excel(now_timestamp, ns_1.payload)
+#
+#         # 删除服务器的生成文件
+#         CrmDailyReportExcelController.crm_service.del_local_daily_report_excel(now_timestamp)
+#
+#         return resp
 
 
 @ns_2.route('/TotalIncomeReport')
