@@ -15,16 +15,22 @@ api = Api(
     format_checker=FormatChecker(formats=("date-time", "date",))
 )
 
+# ns_1 = Namespace('CRM 报表中心', path='/crm/report', description='日报月报api')
+# ns_2 = Namespace('CRM 业绩分析', path='/crm/income', description='业绩分析api')
+# ns_3 = Namespace('CRM 客户资产', path='/crm/asset', description='客户资产api')
 
 def register_api():
-    from query_service.query_web.controller.crm_controller import ns_1 as crm_daily_report
-    from query_service.query_web.controller.crm_controller import ns_2 as crm_sales_analyse
-    from query_service.query_web.controller.crm_controller import ns_3 as crm_asset_analyse
+    from query_service.query_web.crm.controller import ns_1 as report_center
+    from query_service.query_web.crm.controller import ns_2 as income_analyse
+    from query_service.query_web.crm.controller import ns_3 as asset_analyse
+    # from query_service.query_web import ns_1 as report_center
+    # from query_service.query_web import ns_2 as income_analyse
+    # from query_service.query_web import ns_3 as asset_analyse
     from query_service.query_web import api
     
-    api.add_namespace(crm_daily_report)
-    api.add_namespace(crm_sales_analyse)
-    api.add_namespace(crm_asset_analyse)
+    api.add_namespace(report_center)
+    api.add_namespace(income_analyse)
+    api.add_namespace(asset_analyse)
     api.namespaces.pop(0)
 
 

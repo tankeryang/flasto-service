@@ -1,0 +1,1 @@
+from .po import DAILY_LIST
