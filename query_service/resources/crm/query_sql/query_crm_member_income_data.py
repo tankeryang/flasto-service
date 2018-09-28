@@ -142,26 +142,26 @@ SQL_CRM_MEMBER_NOWBEFORE_INCOME_REPORT_DATA = """
         t1.zone        AS zone,
         t1.member_type AS member_type,
         cast(COALESCE(SUM(t1.si), 0) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(SUM(t1.si) / SUM(t1.ttsi)), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
+        cast(COALESCE(TRY(SUM(t1.si) * 1.0 / SUM(t1.ttsi)), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
         cast(COALESCE(SUM(t1.ca), 0) AS INTEGER) AS customer_amount,
         cast(COALESCE(SUM(t1.oa), 0) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(SUM(t1.oa) / SUM(t1.ca)), 0) AS INTEGER) AS consumption_frequency,
-        cast(COALESCE(TRY(SUM(t1.si) / SUM(t1.oa)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
-        cast(COALESCE(TRY(SUM(t1.si) / SUM(t1.siq)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
-        cast(COALESCE(TRY(SUM(t1.siq) / SUM(t1.oa)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order
+        cast(COALESCE(TRY(SUM(t1.si) * 1.0 / SUM(t1.oa)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
+        cast(COALESCE(TRY(SUM(t1.si) * 1.0 / SUM(t1.siq)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
+        cast(COALESCE(TRY(SUM(t1.siq) * 1.0 / SUM(t1.oa)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order
     FROM t1 GROUP BY t1.brand, t1.zone, t1.member_type
     UNION SELECT DISTINCT
         t2.brand       AS brand,
         t2.zone        AS zone,
         t2.member_type AS member_type,
         cast(COALESCE(SUM(t2.si), 0) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(SUM(t2.si) / SUM(t2.ttsi)), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
+        cast(COALESCE(TRY(SUM(t2.si) * 1.0 / SUM(t2.ttsi)), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
         cast(COALESCE(SUM(t2.ca), 0) AS INTEGER) AS customer_amount,
         cast(COALESCE(SUM(t2.oa), 0) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(SUM(t2.oa) / SUM(t2.ca)), 0) AS INTEGER) AS consumption_frequency,
-        cast(COALESCE(TRY(SUM(t2.si) / SUM(t2.oa)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
-        cast(COALESCE(TRY(SUM(t2.si) / SUM(t2.siq)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
-        cast(COALESCE(TRY(SUM(t2.siq) / SUM(t2.oa)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order
+        cast(COALESCE(TRY(SUM(t2.si) * 1.0 / SUM(t2.oa)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
+        cast(COALESCE(TRY(SUM(t2.si) * 1.0 / SUM(t2.siq)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
+        cast(COALESCE(TRY(SUM(t2.siq) * 1.0 / SUM(t2.oa)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order
     FROM t2 GROUP BY t2.brand, t2.zone, t2.member_type
 """
 
@@ -202,14 +202,14 @@ SQL_CRM_MEMBER_NEWOLD_INCOME_REPORT_DATA = """
         f.{zone}             AS zone,
         f.member_newold_type AS member_type,
         cast(sum(f.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
         cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS customer_amount,
         cast(sum(f.order_amount) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(sum(f.order_amount) / cardinality(array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS consumption_frequency,
-        cast(COALESCE(TRY(sum(f.sales_income) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
-        cast(COALESCE(TRY(sum(f.sales_item_quantity) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
+        cast(COALESCE(TRY(sum(f.sales_item_quantity) * 1.0 / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
     LEFT JOIN lyst ON f.brand_name = lyst.brand_name AND f.{zone} = lyst.{zone} AND f.member_newold_type = lyst.member_newold_type
@@ -264,14 +264,14 @@ SQL_CRM_MEMBER_MULDIM_INCOME_REPORT_DATA = """
         f.member_newold_type,
         f.member_level_type,
         cast(sum(f.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
         cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS customer_amount,
         cast(sum(f.order_amount) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(sum(f.order_amount) / cardinality(array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS consumption_frequency,
-        cast(COALESCE(TRY(sum(f.sales_income) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
-        cast(COALESCE(TRY(sum(f.sales_item_quantity) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
+        cast(COALESCE(TRY(sum(f.sales_item_quantity) * 1.0 / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
     LEFT JOIN lyst ON f.brand_name = lyst.brand_name AND f.{zone} = lyst.{zone}
@@ -326,14 +326,14 @@ SQL_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = """
         f.{zone}            AS zone,
         f.member_level_type AS member_type,
         cast(sum(f.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
         cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS customer_amount,
         cast(sum(f.order_amount) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(sum(f.order_amount) / cardinality(array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS consumption_frequency,
-        cast(COALESCE(TRY(sum(f.sales_income) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
-        cast(COALESCE(TRY(sum(f.sales_item_quantity) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
+        cast(COALESCE(TRY(sum(f.sales_item_quantity) * 1.0 / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
     LEFT JOIN lyst ON f.brand_name = lyst.brand_name AND f.{zone} = lyst.{zone} AND f.member_level_type = lyst.member_level_type
@@ -348,4 +348,45 @@ SQL_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = """
     AND f.date <= date('{end_date}')
     AND f.date >= date('{start_date}')
     GROUP BY f.brand_name, f.{zone}, f.member_level_type, tt.sales_income, lyst.sales_income
+"""
+
+########################################################################################################################
+
+SQL_CRM_MEMBER_REGISTER_PROPORTION_REPORT_DATA = """
+    WITH ne_m AS (
+        SELECT brand_name, {zone}, cast(sum(order_amount) AS INTEGER) AS order_amount
+        FROM ads_crm.member_analyse_fold_daily_income_detail
+        WHERE member_type IS NULL AND member_newold_type = '新会员' AND member_level_type IS NULL
+        AND brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND order_channel IN ({order_channels})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date <= date('{end_date}')
+        AND date >= date('{start_date}')
+        GROUP BY brand_name, {zone}
+    ), no_m AS (
+        SELECT brand_name, {zone}, cast(sum(order_amount) AS INTEGER) AS order_amount
+        FROM ads_crm.member_analyse_fold_daily_income_detail
+        WHERE member_type = '非会员' AND member_newold_type IS NULL AND member_level_type IS NULL
+        AND brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND order_channel IN ({order_channels})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date <= date('{end_date}')
+        AND date >= date('{start_date}')
+        GROUP BY brand_name, {zone}
+    )
+    SELECT DISTINCT
+        cmail.brand_name AS brand,
+        cmail.{zone}     AS zone,
+        cast(COALESCE(TRY(ne_m.order_amount * 1.0 / no_m.order_amount), 0) AS DECIMAL(18, 4)) AS register_proportion
+    FROM cdm_common.crm_member_analyse_index_label cmail
+    RIGHT JOIN ne_m ON cmail.brand_name = ne_m.brand_name AND cmail.{zone} = ne_m.{zone}
+    RIGHT JOIN no_m ON cmail.brand_name = no_m.brand_name AND cmail.{zone} = no_m.{zone}
 """

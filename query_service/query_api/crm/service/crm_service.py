@@ -118,7 +118,16 @@ class CrmService:
     def get_crm_member_mul_dim_income_report_data(self, dto):
         """
         查询多维度收入分析
-        :param dto:restplus.Api.payload
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_crm_member_register_proportion_report_data(self, dto):
+        """
+        查询登记率
+        :param dto: restplus.Api.payload
         :return:
         """
         pass

@@ -57,3 +57,9 @@ DTYPE_CRM_MEMBER_LEVEL_INCOME_REPORT_DATA = {
     'sales_item_per_order': float,
     'compared_with_lyst': float
 }
+
+DTYPE_CRM_MEMBER_REGISTER_PROPORTION_REPORT_DATA = {
+    'brand': str,
+    'zone': str,
+    'register_proportion': float
+}

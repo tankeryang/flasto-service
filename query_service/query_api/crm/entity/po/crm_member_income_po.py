@@ -85,3 +85,15 @@ crm_member_level_income_report_list_model = ns_2.model('MemberLevelIncomeReportL
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+crm_member_register_proportion_report_model = ns_2.model('MemberRegisterProportionReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'register_proportion': fields.Float(readOnly=True, description="登记率")
+})
+
+crm_member_register_proportion_report_list_model = ns_2.model('MemberRegisterProportionReportListModel', {
+    'data': fields.List(fields.Nested(crm_member_register_proportion_report_model)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})

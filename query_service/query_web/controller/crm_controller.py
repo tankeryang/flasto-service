@@ -226,6 +226,24 @@ class CrmMemberMulDimIncomeReportController(Resource):
         return resp_dict
 
 
+@ns_2.route('/MemberRegisterProportionReport')
+class CrmMemberRegisterProportionReportController(Resource):
+    
+    crm_service = CrmServiceImpl()
+
+    @ns_2.expect(dto.crm_member_analyse_req_dto_model, validate=True)
+    @ns_2.marshal_with(po.crm_member_register_proportion_report_list_model)
+    def post(self):
+        """
+        查询登记率
+        登记率
+        """
+        resp_dict = CrmMemberRegisterProportionReportController.crm_service \
+            .get_crm_member_register_proportion_report_data(ns_2.payload)
+    
+        return resp_dict
+
+
 @ns_3.route('/MemberAmountDetail')
 class CrmMemberAmountDetailController(Resource):
     

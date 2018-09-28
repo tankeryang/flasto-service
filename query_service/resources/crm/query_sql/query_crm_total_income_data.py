@@ -33,14 +33,14 @@ SQL_CRM_TOTAL_INCOME_REPORT_DATA = """
         f.{zone} AS zone,
         f.member_type AS member_type,
         cast(sum(f.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
         cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS customer_amount,
         cast(sum(f.order_amount) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(sum(f.order_amount) / cardinality(array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS consumption_frequency,
-        cast(COALESCE(TRY(sum(f.sales_income) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
-        cast(COALESCE(TRY(sum(f.sales_item_quantity) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
+        cast(COALESCE(TRY(sum(f.sales_item_quantity) * 1.0 / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
     LEFT JOIN lyst ON f.brand_name = lyst.brand_name AND f.{zone} = lyst.{zone} AND f.member_type = lyst.member_type
@@ -86,14 +86,14 @@ SQL_CRM_STORE_TOTAL_INCOME_REPORT_DATA = """
         f.store_code AS zone,
         f.member_type AS member_type,
         cast(sum(f.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
         cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS customer_amount,
         cast(sum(f.order_amount) AS INTEGER) AS order_amount,
         cast(COALESCE(TRY(sum(f.order_amount) / cardinality(array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS consumption_frequency,
-        cast(COALESCE(TRY(sum(f.sales_income) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
-        cast(COALESCE(TRY(sum(f.sales_item_quantity) / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
-        cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_income_per_order,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(f.sales_item_quantity)), 0) AS DECIMAL(18, 2)) AS sales_income_per_item,
+        cast(COALESCE(TRY(sum(f.sales_item_quantity) * 1.0 / sum(f.order_amount)), 0) AS DECIMAL(18, 2)) AS sales_item_per_order,
+        cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.store_code = tt.store_code
     LEFT JOIN lyst ON f.brand_name = lyst.brand_name AND f.store_code = lyst.store_code AND f.member_type = lyst.member_type
@@ -127,7 +127,7 @@ SQL_CRM_TOTAL_DAILY_INCOME_DETAIL_DATA = """
         t.brand_name AS brand,
         t.{zone}     AS zone,
         cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(SUM(t.sales_income) / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
+        cast(COALESCE(TRY(SUM(t.sales_income) * 1.0 / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
         t.date AS date
     FROM ads_crm.member_analyse_daily_income_detail t
     LEFT JOIN lyst_t ON t.brand_name = lyst_t.brand_name AND t.{zone} = lyst_t.{zone}
@@ -161,7 +161,7 @@ SQL_CRM_STORE_TOTAL_DAILY_INCOME_DETAIL_DATA = """
         t.brand_name AS brand,
         t.store_code AS zone,
         cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(SUM(t.sales_income) / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
+        cast(COALESCE(TRY(SUM(t.sales_income) * 1.0 / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
         t.date AS date
     FROM ads_crm.member_analyse_daily_income_detail t
     LEFT JOIN lyst_t ON t.brand_name = lyst_t.brand_name AND t.store_code = lyst_t.store_code
@@ -196,7 +196,7 @@ SQL_CRM_TOTAL_MONTHLY_INCOME_DETAIL_DATA = """
         t.brand_name AS brand,
         t.{zone}     AS zone,
         cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(SUM(t.sales_income) / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
+        cast(COALESCE(TRY(SUM(t.sales_income) * 1.0 / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
         cast(month(t.date) AS VARCHAR) AS month
     FROM ads_crm.member_analyse_daily_income_detail t
     LEFT JOIN lyst_t ON t.brand_name = lyst_t.brand_name AND t.{zone} = lyst_t.{zone}
@@ -231,7 +231,7 @@ SQL_CRM_STORE_TOTAL_MONTHLY_INCOME_DETAIL_DATA = """
         t.brand_name AS brand,
         t.store_code AS zone,
         cast(SUM(t.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-        cast(COALESCE(TRY(SUM(t.sales_income) / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
+        cast(COALESCE(TRY(SUM(t.sales_income) * 1.0 / lyst_t.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
         cast(month(t.date) AS VARCHAR) AS month
     FROM ads_crm.member_analyse_daily_income_detail t
     LEFT JOIN lyst_t ON t.brand_name = lyst_t.brand_name AND t.store_code = lyst_t.store_code

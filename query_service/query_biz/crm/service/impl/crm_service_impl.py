@@ -259,6 +259,24 @@ class CrmServiceImpl(CrmService):
         
         return resp_dict
 
+    def get_crm_member_register_proportion_report_data(self, dto):
+        """
+        查询登记率
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = crm_member_income_analyse_format_sql(query_sql.SQL_CRM_MEMBER_REGISTER_PROPORTION_REPORT_DATA, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.DTYPE_CRM_MEMBER_REGISTER_PROPORTION_REPORT_DATA)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+
+        return resp_dict
+
     def get_crm_member_amount_detail(self, dto):
         """
         查询当前会员，有消费会员，未消费会员人数
