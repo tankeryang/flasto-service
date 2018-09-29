@@ -2,7 +2,7 @@ from flask_restplus import fields
 from query_service.query_web.crm.controller.crm_controller import ns_2
 
 
-member_analyse_zone_dto = ns_2.model('MemberAnalyseReqDtoModel', {
+income_analyse_zone_dto = ns_2.model('MemberAnalyseReqDtoModel', {
     'brands': fields.List(fields.String(description="品牌名", example="FivePlus"), required=True),
     'country': fields.List(fields.String(description="全国", example='中国')),
     'sales_areas': fields.List(fields.String(description="大区", example='华南')),
@@ -19,7 +19,7 @@ member_analyse_zone_dto = ns_2.model('MemberAnalyseReqDtoModel', {
 })
 
 
-member_analyse_store_dto = ns_2.model('MemberAnalyseStoreReqDtoModel', {
+income_analyse_store_dto = ns_2.model('MemberAnalyseStoreReqDtoModel', {
     'brands': fields.List(fields.String(description="品牌名", example="FivePlus"), required=True),
     'store_codes': fields.List(fields.String(description="门店编码", example="1102"), required=True),
     'order_channels': fields.List(fields.String(required=True, description="订单类型(线上/线下)", example='线下'), required=True),

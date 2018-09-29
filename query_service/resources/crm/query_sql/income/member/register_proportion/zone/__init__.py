@@ -1,4 +1,4 @@
-from .dtypes import (
+from .sql import (
     ALL,
     DAILY,
     MONTHLY,

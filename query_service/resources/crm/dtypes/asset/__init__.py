@@ -1,1 +1,1 @@
-from .dtypes import STATIC
+from query_service.resources.crm.dtypes.asset import member

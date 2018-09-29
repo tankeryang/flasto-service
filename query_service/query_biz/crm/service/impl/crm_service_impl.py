@@ -8,7 +8,8 @@ from query_service.query_api.crm.service import (
 from query_service.query_biz.crm.db_utils import (
     get_presto_engine,
     daily_report_formator,
-    member_analyse_formator,
+    income_analyse_formator,
+    asset_analyse_formator,
 )
 
 # resources
@@ -45,7 +46,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.total.zone.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.total.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -63,7 +64,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.total.store.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.total.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -81,7 +82,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.total.zone.DAILY, dto)
+        sql = income_analyse_formator(query_sql.income.total.zone.DAILY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
         
@@ -99,7 +100,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.total.store.DAILY, dto)
+        sql = income_analyse_formator(query_sql.income.total.store.DAILY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
         
@@ -117,7 +118,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.total.zone.MONTHLY, dto)
+        sql = income_analyse_formator(query_sql.income.total.zone.MONTHLY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
         
@@ -135,7 +136,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.total.store.MONTHLY, dto)
+        sql = income_analyse_formator(query_sql.income.total.store.MONTHLY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
         
@@ -153,7 +154,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.now_before.zone.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.member.now_before.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -171,7 +172,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.now_before.store.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.member.now_before.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -189,7 +190,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.new_old.zone.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.member.new_old.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -207,7 +208,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.new_old.store.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.member.new_old.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -225,7 +226,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.new_old.zone.DAILY, dto)
+        sql = income_analyse_formator(query_sql.income.member.new_old.zone.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -243,7 +244,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.new_old.store.DAILY, dto)
+        sql = income_analyse_formator(query_sql.income.member.new_old.store.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -261,7 +262,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.new_old.zone.MONTHLY, dto)
+        sql = income_analyse_formator(query_sql.income.member.new_old.zone.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -279,7 +280,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.new_old.store.MONTHLY, dto)
+        sql = income_analyse_formator(query_sql.income.member.new_old.store.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -297,7 +298,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.level.zone.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.member.level.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -315,7 +316,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.level.store.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.member.level.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -333,7 +334,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.level.zone.DAILY, dto)
+        sql = income_analyse_formator(query_sql.income.member.level.zone.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -351,7 +352,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.level.store.DAILY, dto)
+        sql = income_analyse_formator(query_sql.income.member.level.store.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -369,7 +370,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.level.zone.MONTHLY, dto)
+        sql = income_analyse_formator(query_sql.income.member.level.zone.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -387,7 +388,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.level.store.MONTHLY, dto)
+        sql = income_analyse_formator(query_sql.income.member.level.store.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -405,7 +406,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.mul_dim.zone.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.member.mul_dim.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -423,7 +424,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.mul_dim.store.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.member.mul_dim.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -441,7 +442,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.mul_dim.zone.DAILY, dto)
+        sql = income_analyse_formator(query_sql.income.member.mul_dim.zone.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -459,7 +460,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.mul_dim.store.DAILY, dto)
+        sql = income_analyse_formator(query_sql.income.member.mul_dim.store.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -477,7 +478,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.mul_dim.zone.MONTHLY, dto)
+        sql = income_analyse_formator(query_sql.income.member.mul_dim.zone.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -495,7 +496,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.mul_dim.store.MONTHLY, dto)
+        sql = income_analyse_formator(query_sql.income.member.mul_dim.store.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -513,7 +514,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.income.member.register_proportion.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.member.register_proportion.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -525,6 +526,96 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         
         return resp_dict
 
+    def get_store_member_register_proportion_report_data(self, dto):
+        """
+        查询门店登记率
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = income_analyse_formator(query_sql.income.member.register_proportion.store.ALL, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.ALL)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_member_daily_register_proportion_report_data(self, dto):
+        """
+        查询每日登记率
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = income_analyse_formator(query_sql.income.member.register_proportion.zone.DAILY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.DAILY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_member_daily_register_proportion_report_data(self, dto):
+        """
+        查询门店每日登记率
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = income_analyse_formator(query_sql.income.member.register_proportion.store.DAILY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.DAILY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_member_monthly_register_proportion_report_data(self, dto):
+        """
+        查询每月登记率
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = income_analyse_formator(query_sql.income.member.register_proportion.zone.MONTHLY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.MONTHLY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_member_monthly_register_proportion_report_data(self, dto):
+        """
+        查询门店每月登记率
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = income_analyse_formator(query_sql.income.member.register_proportion.store.MONTHLY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.MONTHLY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
 
 class AssetAnalyseServiceImpl(AssetAnalyseService):
     
@@ -534,14 +625,32 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = member_analyse_formator(query_sql.asset.STATIC, dto)
+        sql = asset_analyse_formator(query_sql.asset.member.zone.STATIC, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.STATIC)
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.STATIC)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
+        return resp_dict
+
+    def get_store_member_amount_detail(self, dto):
+        """
+        查询门店当前会员，有消费会员，未消费会员人数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.store.STATIC, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.STATIC)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
         return resp_dict

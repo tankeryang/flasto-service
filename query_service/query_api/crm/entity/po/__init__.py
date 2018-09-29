@@ -14,5 +14,7 @@ from .income_analyse_po import (
     mul_dim_daily_list_po,
     mul_dim_monthly_list_po,
     rgp_list_po,
+    rgp_daily_list_po,
+    rgp_monthly_list_po,
 )
 from .asset_analyse_po import member_amount_list_po

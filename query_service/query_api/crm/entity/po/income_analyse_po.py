@@ -248,3 +248,32 @@ rgp_list_po = ns_2.model('MemberRegisterProportionReportListModel', {
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+
+rgp_daily_po = ns_2.model('MemberDailyRegisterProportionReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'register_proportion': fields.Float(readOnly=True, description="登记率"),
+    'date': fields.String(readOnly=True, description="日期")
+})
+rgp_daily_list_po = ns_2.model('MemberDailyRegisterProportionReportListModel', {
+    'data': fields.List(fields.Nested(rgp_daily_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
+
+
+rgp_monthly_po = ns_2.model('MemberMonthlyRegisterProportionReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'register_proportion': fields.Float(readOnly=True, description="登记率"),
+    'year': fields.String(readOnly=True, description="年份"),
+    'month': fields.String(readOnly=True, description="月份")
+})
+rgp_monthly_list_po = ns_2.model('MemberMonthlyRegisterProportionReportListModel', {
+    'data': fields.List(fields.Nested(rgp_monthly_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
+
+

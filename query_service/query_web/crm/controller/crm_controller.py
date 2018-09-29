@@ -32,7 +32,7 @@ class CrmDailyReportController(Resource):
 class TotalIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.total_all_list_po)
     def post(self):
         """
@@ -47,7 +47,7 @@ class TotalIncomeReportController(Resource):
 class StoreTotalIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.total_all_list_po)
     def post(self):
         """
@@ -62,7 +62,7 @@ class StoreTotalIncomeReportController(Resource):
 class TotalDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.total_daily_list_po)
     def post(self):
         """
@@ -77,7 +77,7 @@ class TotalDailyIncomeDetailController(Resource):
 class StoreTotalDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.total_daily_list_po)
     def post(self):
         """
@@ -92,7 +92,7 @@ class StoreTotalDailyIncomeDetailController(Resource):
 class TotalMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.total_monthly_list_po)
     def post(self):
         """
@@ -107,7 +107,7 @@ class TotalMonthlyIncomeDetailController(Resource):
 class StoreTotalMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.total_monthly_list_po)
     def post(self):
         """
@@ -122,7 +122,7 @@ class StoreTotalMonthlyIncomeDetailController(Resource):
 class MemberNowBeforeIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.now_before_all_list_po)
     def post(self):
         """
@@ -137,7 +137,7 @@ class MemberNowBeforeIncomeReportController(Resource):
 class StoreMemberNowBeforeIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.now_before_all_list_po)
     def post(self):
         """
@@ -152,7 +152,7 @@ class StoreMemberNowBeforeIncomeReportController(Resource):
 class MemberNewOldIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.new_old_all_list_po)
     def post(self):
         """
@@ -167,7 +167,7 @@ class MemberNewOldIncomeReportController(Resource):
 class StoreMemberNewOldIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.new_old_all_list_po)
     def post(self):
         """
@@ -182,7 +182,7 @@ class StoreMemberNewOldIncomeReportController(Resource):
 class MemberNewOldDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.new_old_daily_list_po)
     def post(self):
         """
@@ -197,7 +197,7 @@ class MemberNewOldDailyIncomeDetailController(Resource):
 class StoreMemberNewOldDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.new_old_daily_list_po)
     def post(self):
         """
@@ -212,7 +212,7 @@ class StoreMemberNewOldDailyIncomeDetailController(Resource):
 class MemberNewOldMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.new_old_monthly_list_po)
     def post(self):
         """
@@ -227,7 +227,7 @@ class MemberNewOldMonthlyIncomeDetailController(Resource):
 class StoreMemberNewOldMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.new_old_monthly_list_po)
     def post(self):
         """
@@ -242,7 +242,7 @@ class StoreMemberNewOldMonthlyIncomeDetailController(Resource):
 class MemberLevelIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.level_all_list_po)
     def post(self):
         """
@@ -257,7 +257,7 @@ class MemberLevelIncomeReportController(Resource):
 class StoreMemberLevelIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.level_all_list_po)
     def post(self):
         """
@@ -272,7 +272,7 @@ class StoreMemberLevelIncomeReportController(Resource):
 class MemberLevelDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.level_daily_list_po)
     def post(self):
         """
@@ -287,7 +287,7 @@ class MemberLevelDailyIncomeDetailController(Resource):
 class StoreMemberLevelDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.level_daily_list_po)
     def post(self):
         """
@@ -302,7 +302,7 @@ class StoreMemberLevelDailyIncomeDetailController(Resource):
 class MemberLevelMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.level_monthly_list_po)
     def post(self):
         """
@@ -317,7 +317,7 @@ class MemberLevelMonthlyIncomeDetailController(Resource):
 class StoreMemberLevelMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.level_monthly_list_po)
     def post(self):
         """
@@ -332,7 +332,7 @@ class StoreMemberLevelMonthlyIncomeDetailController(Resource):
 class MemberMulDimIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_all_list_po)
     def post(self):
         """
@@ -347,7 +347,7 @@ class MemberMulDimIncomeReportController(Resource):
 class StoreMemberMulDimIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_all_list_po)
     def post(self):
         """
@@ -362,7 +362,7 @@ class StoreMemberMulDimIncomeReportController(Resource):
 class MemberMulDimDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_daily_list_po)
     def post(self):
         """
@@ -377,7 +377,7 @@ class MemberMulDimDailyIncomeDetailController(Resource):
 class StoreMemberMulDimDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_daily_list_po)
     def post(self):
         """
@@ -392,7 +392,7 @@ class StoreMemberMulDimDailyIncomeDetailController(Resource):
 class MemberMulDimMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_monthly_list_po)
     def post(self):
         """
@@ -407,7 +407,7 @@ class MemberMulDimMonthlyIncomeDetailController(Resource):
 class StoreMemberMulDimMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_monthly_list_po)
     def post(self):
         """
@@ -419,29 +419,120 @@ class StoreMemberMulDimMonthlyIncomeDetailController(Resource):
 
 
 @ns_2.route('/MemberRegisterProportionReport')
-class CrmMemberRegisterProportionReportController(Resource):
+class MemberRegisterProportionReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.rgp_list_po)
     def post(self):
         """
         查询登记率
-        登记率
+        登记率：新会员单 / 新会员单 + 非会员单
         """
-        return CrmMemberRegisterProportionReportController.service \
+        return MemberRegisterProportionReportController.service \
             .get_member_register_proportion_report_data(ns_2.payload)
 
 
+@ns_2.route('/StoreMemberRegisterProportionReport')
+class StoreMemberRegisterProportionReportController(Resource):
+    service = IncomeAnalyseServiceImpl()
+    
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.rgp_list_po)
+    def post(self):
+        """
+        查询门店登记率
+        登记率：新会员单 / 新会员单 + 非会员单
+        """
+        return StoreMemberRegisterProportionReportController.service \
+            .get_store_member_register_proportion_report_data(ns_2.payload)
+
+
+@ns_2.route('/MemberDailyRegisterProportionReport')
+class MemberDailyRegisterProportionReportController(Resource):
+    service = IncomeAnalyseServiceImpl()
+    
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.rgp_daily_list_po)
+    def post(self):
+        """
+        查询每日登记率
+        登记率：新会员单 / 新会员单 + 非会员单
+        """
+        return MemberDailyRegisterProportionReportController.service \
+            .get_member_daily_register_proportion_report_data(ns_2.payload)
+
+
+@ns_2.route('/StoreMemberDailyRegisterProportionReport')
+class StoreMemberDailyRegisterProportionReportController(Resource):
+    service = IncomeAnalyseServiceImpl()
+    
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.rgp_daily_list_po)
+    def post(self):
+        """
+        查询门店每日登记率
+        登记率：新会员单 / 新会员单 + 非会员单
+        """
+        return StoreMemberDailyRegisterProportionReportController.service \
+            .get_store_member_daily_register_proportion_report_data(ns_2.payload)
+
+
+@ns_2.route('/MemberMonthlyRegisterProportionReport')
+class MemberMonthlyRegisterProportionReportController(Resource):
+    service = IncomeAnalyseServiceImpl()
+    
+    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.rgp_monthly_list_po)
+    def post(self):
+        """
+        查询每月登记率
+        登记率：新会员单 / 新会员单 + 非会员单
+        """
+        return MemberMonthlyRegisterProportionReportController.service \
+            .get_member_monthly_register_proportion_report_data(ns_2.payload)
+
+
+@ns_2.route('/StoreMemberMonthlyRegisterProportionReport')
+class StoreMemberMonthlyRegisterProportionReportController(Resource):
+    service = IncomeAnalyseServiceImpl()
+    
+    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.rgp_monthly_list_po)
+    def post(self):
+        """
+        查询门店每月登记率
+        登记率：新会员单 / 新会员单 + 非会员单
+        """
+        return StoreMemberMonthlyRegisterProportionReportController.service \
+            .get_store_member_monthly_register_proportion_report_data(ns_2.payload)
+
+
 @ns_3.route('/MemberAmountDetail')
-class CrmMemberAmountDetailController(Resource):
+class MemberAmountDetailController(Resource):
     service = AssetAnalyseServiceImpl()
     
-    @ns_3.expect(dto.member_analyse_zone_dto)
+    @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_amount_list_po)
     def post(self):
         """
         查询会员计数详情
         当前全部会员，有消费会员，未消费会员
         """
-        return CrmMemberAmountDetailController.service.get_member_amount_detail(ns_3.payload)
+        return MemberAmountDetailController.service \
+            .get_member_amount_detail(ns_3.payload)
+
+
+@ns_3.route('/StoreMemberAmountDetail')
+class StoreMemberAmountDetailController(Resource):
+    service = AssetAnalyseServiceImpl()
+    
+    @ns_3.expect(dto.asset_analyse_store_dto)
+    @ns_3.marshal_with(po.member_amount_list_po)
+    def post(self):
+        """
+        查询门店会员计数详情
+        当前全部会员，有消费会员，未消费会员
+        """
+        return StoreMemberAmountDetailController.service \
+            .get_store_member_amount_detail(ns_3.payload)

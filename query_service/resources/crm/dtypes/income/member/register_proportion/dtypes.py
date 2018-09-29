@@ -3,3 +3,18 @@ ALL = {
     'zone': str,
     'register_proportion': float
 }
+
+DAILY = {
+    'brand': str,
+    'zone': str,
+    'register_proportion': float,
+    'date': str
+}
+
+MONTHLY = {
+    'brand': str,
+    'zone': str,
+    'register_proportion': float,
+    'year': str,
+    'month': str
+}
