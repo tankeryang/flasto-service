@@ -429,8 +429,8 @@ class CrmMemberRegisterProportionReportController(Resource):
         查询登记率
         登记率
         """
-        return CrmMemberRegisterProportionReportController.crm_service \
-            .get_crm_member_register_proportion_report_data(ns_2.payload)
+        return CrmMemberRegisterProportionReportController.service \
+            .get_member_register_proportion_report_data(ns_2.payload)
 
 
 @ns_3.route('/MemberAmountDetail')
