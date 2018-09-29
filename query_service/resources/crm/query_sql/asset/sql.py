@@ -3,11 +3,9 @@ STATIC = """
         cast(COALESCE(SUM(mrac.ma), 0) AS INTEGER) AS member_register_cumulative_amount,
         cast(COALESCE(SUM(mcac.ma), 0) AS INTEGER) AS member_consumed_cumulative_amount,
         cast(COALESCE(SUM(mrac.ma - mcac.ma), 0) AS INTEGER) AS member_unconsumed_cumulative_amount
-    FROM (
-        SELECT DISTINCT
-            {zone}, order_channel, sales_mode, store_type, store_level, channel_type
-        FROM cdm_crm.member_analyse_type_label
-    ) matl
+    FROM (SELECT DISTINCT
+        {zone}, order_channel, sales_mode, store_type, store_level, channel_type
+        FROM cdm_common.crm_member_analyse_index_label) matl
 
     LEFT JOIN (
         SELECT {zone}, order_channel, sales_mode, store_type, store_level, channel_type,
@@ -26,7 +24,7 @@ STATIC = """
     LEFT JOIN (
         SELECT {zone}, order_channel, sales_mode, store_type, store_level, channel_type,
         count(distinct mab.member_no) AS ma
-        FROM cdm_crm.member_analyse_base mab
+        FROM cdm_common.crm_order_info_detail mab
         WHERE date(mab.order_deal_time) < date('{end_date}')
         GROUP BY {zone}, order_channel, sales_mode, store_type, store_level, channel_type
     ) mcac
