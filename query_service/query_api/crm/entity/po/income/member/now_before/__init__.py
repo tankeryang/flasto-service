@@ -1,1 +1,0 @@
-from .po import ALL_LIST

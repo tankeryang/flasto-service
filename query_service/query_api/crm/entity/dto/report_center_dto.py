@@ -1,8 +1,8 @@
 from flask_restplus import fields
-from query_service.query_web.crm.controller.report_center_controller import ns_1
+from query_service.query_web.crm.controller.crm_controller import ns_1
 
 
-DAILY_DTO = ns_1.model('CrmDailyReportReqDtoModel', {
+daily_report_dto = ns_1.model('CrmDailyReportReqDtoModel', {
     'sales_areas': fields.List(fields.String(description="大区", example='全国'), required=True),
     'cities': fields.List(fields.String(description="城市", example='广州市'), required=True),
     'store_codes': fields.List(fields.String(description="门店编码", example='1102'), required=True),

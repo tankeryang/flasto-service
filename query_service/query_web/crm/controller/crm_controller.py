@@ -1,18 +1,39 @@
 from flask_restplus import Resource, Namespace
-ns_2 = Namespace('CRM 业绩分析', path='/crm/income', description='业绩分析api')
 
-from query_service.query_biz.crm.service.impl import IncomeAnalyseServiceImpl
+ns_1 = Namespace('CRM 报表中心', path='/crm/report', description='日报月报api')
+ns_2 = Namespace('CRM 业绩分析', path='/crm/income', description='业绩分析api')
+ns_3 = Namespace('CRM 客户资产', path='/crm/asset', description='客户资产api')
+
+from query_service.query_biz.crm.service.impl import (
+    ReportCenterServiceImpl,
+    IncomeAnalyseServiceImpl,
+    AssetAnalyseServiceImpl,
+)
 
 import query_service.query_api.crm.entity.dto as dto
 import query_service.query_api.crm.entity.po as po
+
+
+@ns_1.route('/DailyReport')
+class CrmDailyReportController(Resource):
+    service = ReportCenterServiceImpl()
+    
+    @ns_1.expect(dto.daily_report_dto, validate=True)
+    @ns_1.marshal_with(po.daily_report_list_po)
+    def post(self):
+        """
+        日报查询
+        全国，大区，城市，门店
+        """
+        return CrmDailyReportController.service.get_daily_report_data(ns_1.payload)
 
 
 @ns_2.route('/TotalIncomeReport')
 class TotalIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.total.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.total_all_list_po)
     def post(self):
         """
         查询整体收入分析
@@ -26,8 +47,8 @@ class TotalIncomeReportController(Resource):
 class StoreTotalIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.total.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.total_all_list_po)
     def post(self):
         """
         查询门店整体收入分析
@@ -41,8 +62,8 @@ class StoreTotalIncomeReportController(Resource):
 class TotalDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.total.DAILY_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.total_daily_list_po)
     def post(self):
         """
         查询整体收入每日趋势
@@ -56,8 +77,8 @@ class TotalDailyIncomeDetailController(Resource):
 class StoreTotalDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.total.DAILY_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.total_daily_list_po)
     def post(self):
         """
         查询门店整体收入每日趋势
@@ -71,8 +92,8 @@ class StoreTotalDailyIncomeDetailController(Resource):
 class TotalMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.total.MONTHLY_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.total_monthly_list_po)
     def post(self):
         """
         查询整体收入每月趋势
@@ -86,8 +107,8 @@ class TotalMonthlyIncomeDetailController(Resource):
 class StoreTotalMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.total.MONTHLY_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.total_monthly_list_po)
     def post(self):
         """
         查询门店整体收入每月趋势
@@ -101,8 +122,8 @@ class StoreTotalMonthlyIncomeDetailController(Resource):
 class MemberNowBeforeIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.now_before.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.now_before_all_list_po)
     def post(self):
         """
         查询会员收入分析
@@ -116,8 +137,8 @@ class MemberNowBeforeIncomeReportController(Resource):
 class StoreMemberNowBeforeIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.now_before.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.now_before_all_list_po)
     def post(self):
         """
         查询门店会员收入分析
@@ -131,8 +152,8 @@ class StoreMemberNowBeforeIncomeReportController(Resource):
 class MemberNewOldIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.new_old.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.new_old_all_list_po)
     def post(self):
         """
         查询新老会员收入分析
@@ -146,8 +167,8 @@ class MemberNewOldIncomeReportController(Resource):
 class StoreMemberNewOldIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.new_old.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.new_old_all_list_po)
     def post(self):
         """
         查询门店新老会员收入分析
@@ -161,8 +182,8 @@ class StoreMemberNewOldIncomeReportController(Resource):
 class MemberNewOldDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.new_old.DAILY_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.new_old_daily_list_po)
     def post(self):
         """
         查询新老会员每日收入趋势
@@ -176,8 +197,8 @@ class MemberNewOldDailyIncomeDetailController(Resource):
 class StoreMemberNewOldDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.new_old.DAILY_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.new_old_daily_list_po)
     def post(self):
         """
         查询门店新老会员每日收入趋势
@@ -191,8 +212,8 @@ class StoreMemberNewOldDailyIncomeDetailController(Resource):
 class MemberNewOldMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.new_old.MONTHLY_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.new_old_monthly_list_po)
     def post(self):
         """
         查询新老会员每日收入趋势
@@ -206,8 +227,8 @@ class MemberNewOldMonthlyIncomeDetailController(Resource):
 class StoreMemberNewOldMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.new_old.MONTHLY_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.new_old_monthly_list_po)
     def post(self):
         """
         查询新老会员每日收入趋势
@@ -221,8 +242,8 @@ class StoreMemberNewOldMonthlyIncomeDetailController(Resource):
 class MemberLevelIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.level.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.level_all_list_po)
     def post(self):
         """
         查询新老会员收入分析
@@ -236,8 +257,8 @@ class MemberLevelIncomeReportController(Resource):
 class StoreMemberLevelIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.level.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.level_all_list_po)
     def post(self):
         """
         查询门店新老会员收入分析
@@ -251,8 +272,8 @@ class StoreMemberLevelIncomeReportController(Resource):
 class MemberLevelDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.level.DAILY_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.level_daily_list_po)
     def post(self):
         """
         查询新老会员每日收入趋势
@@ -266,8 +287,8 @@ class MemberLevelDailyIncomeDetailController(Resource):
 class StoreMemberLevelDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.level.DAILY_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.level_daily_list_po)
     def post(self):
         """
         查询门店新老会员每日收入趋势
@@ -281,8 +302,8 @@ class StoreMemberLevelDailyIncomeDetailController(Resource):
 class MemberLevelMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.level.MONTHLY_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.level_monthly_list_po)
     def post(self):
         """
         查询新老会员每日收入趋势
@@ -296,8 +317,8 @@ class MemberLevelMonthlyIncomeDetailController(Resource):
 class StoreMemberLevelMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.level.MONTHLY_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.level_monthly_list_po)
     def post(self):
         """
         查询门店新老会员每日收入趋势
@@ -311,8 +332,8 @@ class StoreMemberLevelMonthlyIncomeDetailController(Resource):
 class MemberMulDimIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.mul_dim.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.mul_dim_all_list_po)
     def post(self):
         """
         查询多维度收入分析
@@ -326,8 +347,8 @@ class MemberMulDimIncomeReportController(Resource):
 class StoreMemberMulDimIncomeReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.mul_dim.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.mul_dim_all_list_po)
     def post(self):
         """
         查询门店多维度收入分析
@@ -341,8 +362,8 @@ class StoreMemberMulDimIncomeReportController(Resource):
 class MemberMulDimDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.mul_dim.DAILY_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.mul_dim_daily_list_po)
     def post(self):
         """
         查询多维度每日收入趋势
@@ -356,8 +377,8 @@ class MemberMulDimDailyIncomeDetailController(Resource):
 class StoreMemberMulDimDailyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.mul_dim.DAILY_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.mul_dim_daily_list_po)
     def post(self):
         """
         查询门店多维度每日收入趋势
@@ -371,8 +392,8 @@ class StoreMemberMulDimDailyIncomeDetailController(Resource):
 class MemberMulDimMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.mul_dim.MONTHLY_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.mul_dim_monthly_list_po)
     def post(self):
         """
         查询多维度每月收入趋势
@@ -386,8 +407,8 @@ class MemberMulDimMonthlyIncomeDetailController(Resource):
 class StoreMemberMulDimMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.store.STORE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.mul_dim.MONTHLY_LIST)
+    @ns_2.expect(dto.member_analyse_store_dto, validate=True)
+    @ns_2.marshal_with(po.mul_dim_monthly_list_po)
     def post(self):
         """
         查询门店多维度每月收入趋势
@@ -401,8 +422,8 @@ class StoreMemberMulDimMonthlyIncomeDetailController(Resource):
 class CrmMemberRegisterProportionReportController(Resource):
     service = IncomeAnalyseServiceImpl()
     
-    @ns_2.expect(dto.member_anlyse.zone.ZONE_DTO, validate=True)
-    @ns_2.marshal_with(po.income.member.register_proportion.ALL_LIST)
+    @ns_2.expect(dto.member_analyse_zone_dto, validate=True)
+    @ns_2.marshal_with(po.rgp_list_po)
     def post(self):
         """
         查询登记率
@@ -410,3 +431,17 @@ class CrmMemberRegisterProportionReportController(Resource):
         """
         return CrmMemberRegisterProportionReportController.crm_service \
             .get_crm_member_register_proportion_report_data(ns_2.payload)
+
+
+@ns_3.route('/MemberAmountDetail')
+class CrmMemberAmountDetailController(Resource):
+    service = AssetAnalyseServiceImpl()
+    
+    @ns_3.expect(dto.member_analyse_zone_dto)
+    @ns_3.marshal_with(po.member_amount_list_po)
+    def post(self):
+        """
+        查询会员计数详情
+        当前全部会员，有消费会员，未消费会员
+        """
+        return CrmMemberAmountDetailController.service.get_member_amount_detail(ns_3.payload)
