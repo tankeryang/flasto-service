@@ -129,7 +129,7 @@ MONTHLY = """
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.store_code = tt.store_code
     AND year(f.date) = tt.year AND month(f.date) = tt.month
     LEFT JOIN lyst ON f.brand_name = lyst.brand_name AND f.store_code = lyst.store_code
-    AND f.member_newold_type = lyst.member_newold_type
+    AND f.member_level_type = lyst.member_level_type
     AND year(f.date) - 1 = lyst.year AND month(date) = lyst.month
     WHERE f.member_level_type IS NOT NULL AND f.member_type IS NULL AND f.member_newold_type IS NULL
     AND f.brand_name IN ({brands})

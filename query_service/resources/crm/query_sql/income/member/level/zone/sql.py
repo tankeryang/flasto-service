@@ -134,7 +134,6 @@ MONTHLY = """
         GROUP BY brand_name, {zone}, year(date), month(date)
     ), lyst AS (
         SELECT brand_name, {zone}, member_level_type, cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income,
-            year(date) AS year, month(date) AS month
         FROM ads_crm.member_analyse_fold_daily_income_detail
         WHERE member_level_type IS NOT NULL AND member_type IS NULL AND member_newold_type IS NULL
         AND brand_name IN ({brands})
@@ -161,7 +160,7 @@ MONTHLY = """
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
     AND year(f.date) = tt.year AND month(f.date) = tt.month
     LEFT JOIN lyst ON f.brand_name = lyst.brand_name AND f.{zone} = lyst.{zone}
-    AND f.member_newold_type = lyst.member_newold_type
+    AND f.member_level_type = lyst.member_level_type
     AND year(f.date) - 1 = lyst.year AND month(date) = lyst.month
     WHERE f.member_level_type IS NOT NULL AND f.member_type IS NULL AND f.member_newold_type IS NULL
     AND f.brand_name IN ({brands})
