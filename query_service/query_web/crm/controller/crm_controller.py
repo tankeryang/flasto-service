@@ -216,7 +216,7 @@ class MemberNewOldMonthlyIncomeDetailController(Resource):
     @ns_2.marshal_with(po.new_old_monthly_list_po)
     def post(self):
         """
-        查询新老会员每日收入趋势
+        查询新老会员每月收入趋势
         会员，新会员，老会员
         """
         return MemberNewOldMonthlyIncomeDetailController.service \
@@ -231,7 +231,7 @@ class StoreMemberNewOldMonthlyIncomeDetailController(Resource):
     @ns_2.marshal_with(po.new_old_monthly_list_po)
     def post(self):
         """
-        查询新老会员每日收入趋势
+        查询门店新老会员每月收入趋势
         会员，新会员，老会员
         """
         return StoreMemberNewOldMonthlyIncomeDetailController.service \
@@ -246,8 +246,8 @@ class MemberLevelIncomeReportController(Resource):
     @ns_2.marshal_with(po.level_all_list_po)
     def post(self):
         """
-        查询新老会员收入分析
-        会员，新会员，老会员
+        查询会员等级收入分析
+        会员，普通会员，VIP会员
         """
         return MemberLevelIncomeReportController.service \
             .get_member_level_income_report_data(ns_2.payload)
@@ -261,8 +261,8 @@ class StoreMemberLevelIncomeReportController(Resource):
     @ns_2.marshal_with(po.level_all_list_po)
     def post(self):
         """
-        查询门店新老会员收入分析
-        会员，新会员，老会员
+        查询门店会员等级收入分析
+        会员，普通会员，VIP会员
         """
         return StoreMemberLevelIncomeReportController.service \
             .get_store_member_level_income_report_data(ns_2.payload)
@@ -276,8 +276,8 @@ class MemberLevelDailyIncomeDetailController(Resource):
     @ns_2.marshal_with(po.level_daily_list_po)
     def post(self):
         """
-        查询新老会员每日收入趋势
-        会员，新会员，老会员
+        查询会员等级每日收入趋势
+        会员，普通会员，VIP会员
         """
         return MemberLevelDailyIncomeDetailController.service \
             .get_member_level_daily_income_detail_data(ns_2.payload)
@@ -291,8 +291,8 @@ class StoreMemberLevelDailyIncomeDetailController(Resource):
     @ns_2.marshal_with(po.level_daily_list_po)
     def post(self):
         """
-        查询门店新老会员每日收入趋势
-        会员，新会员，老会员
+        查询门店会员等级每日收入趋势
+        会员，普通会员，VIP会员
         """
         return StoreMemberLevelDailyIncomeDetailController.service \
             .get_store_member_level_daily_income_detail_data(ns_2.payload)
@@ -306,14 +306,14 @@ class MemberLevelMonthlyIncomeDetailController(Resource):
     @ns_2.marshal_with(po.level_monthly_list_po)
     def post(self):
         """
-        查询新老会员每日收入趋势
-        会员，新会员，老会员
+        查询会员等级每月收入趋势
+        会员，普通会员，VIP会员
         """
         return MemberLevelMonthlyIncomeDetailController.service \
             .get_member_level_monthly_income_detail_data(ns_2.payload)
 
 
-@ns_2.route('/StoreMemberLevelDailyIncomeDetail')
+@ns_2.route('/StoreMemberLevelMonthlyIncomeDetail')
 class StoreMemberLevelMonthlyIncomeDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
@@ -321,8 +321,8 @@ class StoreMemberLevelMonthlyIncomeDetailController(Resource):
     @ns_2.marshal_with(po.level_monthly_list_po)
     def post(self):
         """
-        查询门店新老会员每日收入趋势
-        会员，新会员，老会员
+        查询门店会员等级每月收入趋势
+        会员，普通会员，VIP会员
         """
         return StoreMemberLevelMonthlyIncomeDetailController.service \
             .get_store_member_level_monthly_income_detail_data(ns_2.payload)
