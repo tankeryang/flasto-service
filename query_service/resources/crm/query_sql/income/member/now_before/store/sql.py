@@ -4,7 +4,6 @@ ALL = """
             t_.brand_name,
             t_.store_code,
             t_.order_channel,
-            t_.store_code,
             t_.outer_order_no,
             t_.member_no,
             t_.member_grade_id,
