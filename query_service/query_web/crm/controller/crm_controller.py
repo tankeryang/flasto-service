@@ -448,8 +448,8 @@ class StoreMemberRegisterProportionReportController(Resource):
             .get_store_member_register_proportion_report_data(ns_2.payload)
 
 
-@ns_2.route('/MemberDailyRegisterProportionReport')
-class MemberDailyRegisterProportionReportController(Resource):
+@ns_2.route('/MemberDailyRegisterProportionDetail')
+class MemberDailyRegisterProportionDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
@@ -459,12 +459,12 @@ class MemberDailyRegisterProportionReportController(Resource):
         查询每日登记率
         登记率：新会员单 / 新会员单 + 非会员单
         """
-        return MemberDailyRegisterProportionReportController.service \
-            .get_member_daily_register_proportion_report_data(ns_2.payload)
+        return MemberDailyRegisterProportionDetailController.service \
+            .get_member_daily_register_proportion_detail_data(ns_2.payload)
 
 
-@ns_2.route('/StoreMemberDailyRegisterProportionReport')
-class StoreMemberDailyRegisterProportionReportController(Resource):
+@ns_2.route('/StoreMemberDailyRegisterProportionDetail')
+class StoreMemberDailyRegisterProportionDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
@@ -474,12 +474,12 @@ class StoreMemberDailyRegisterProportionReportController(Resource):
         查询门店每日登记率
         登记率：新会员单 / 新会员单 + 非会员单
         """
-        return StoreMemberDailyRegisterProportionReportController.service \
-            .get_store_member_daily_register_proportion_report_data(ns_2.payload)
+        return StoreMemberDailyRegisterProportionDetailController.service \
+            .get_store_member_daily_register_proportion_detail_data(ns_2.payload)
 
 
-@ns_2.route('/MemberMonthlyRegisterProportionReport')
-class MemberMonthlyRegisterProportionReportController(Resource):
+@ns_2.route('/MemberMonthlyRegisterProportionDetail')
+class MemberMonthlyRegisterProportionDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
@@ -489,12 +489,12 @@ class MemberMonthlyRegisterProportionReportController(Resource):
         查询每月登记率
         登记率：新会员单 / 新会员单 + 非会员单
         """
-        return MemberMonthlyRegisterProportionReportController.service \
-            .get_member_monthly_register_proportion_report_data(ns_2.payload)
+        return MemberMonthlyRegisterProportionDetailController.service \
+            .get_member_monthly_register_proportion_detail_data(ns_2.payload)
 
 
-@ns_2.route('/StoreMemberMonthlyRegisterProportionReport')
-class StoreMemberMonthlyRegisterProportionReportController(Resource):
+@ns_2.route('/StoreMemberMonthlyRegisterProportionDetail')
+class StoreMemberMonthlyRegisterProportionDetailController(Resource):
     service = IncomeAnalyseServiceImpl()
     
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
@@ -504,12 +504,12 @@ class StoreMemberMonthlyRegisterProportionReportController(Resource):
         查询门店每月登记率
         登记率：新会员单 / 新会员单 + 非会员单
         """
-        return StoreMemberMonthlyRegisterProportionReportController.service \
-            .get_store_member_monthly_register_proportion_report_data(ns_2.payload)
+        return StoreMemberMonthlyRegisterProportionDetailController.service \
+            .get_store_member_monthly_register_proportion_detail_data(ns_2.payload)
 
 
-@ns_3.route('/MemberAmountDetail')
-class MemberAmountDetailController(Resource):
+@ns_3.route('/MemberAmountReport')
+class MemberAmountReportController(Resource):
     service = AssetAnalyseServiceImpl()
     
     @ns_3.expect(dto.asset_analyse_zone_dto)
@@ -519,12 +519,12 @@ class MemberAmountDetailController(Resource):
         查询会员计数详情
         当前全部会员，有消费会员，未消费会员
         """
-        return MemberAmountDetailController.service \
-            .get_member_amount_detail(ns_3.payload)
+        return MemberAmountReportController.service \
+            .get_member_amount_report_data(ns_3.payload)
 
 
-@ns_3.route('/StoreMemberAmountDetail')
-class StoreMemberAmountDetailController(Resource):
+@ns_3.route('/StoreMemberAmountReport')
+class StoreMemberAmountReportController(Resource):
     service = AssetAnalyseServiceImpl()
     
     @ns_3.expect(dto.asset_analyse_store_dto)
@@ -534,5 +534,5 @@ class StoreMemberAmountDetailController(Resource):
         查询门店会员计数详情
         当前全部会员，有消费会员，未消费会员
         """
-        return StoreMemberAmountDetailController.service \
-            .get_store_member_amount_detail(ns_3.payload)
+        return StoreMemberAmountReportController.service \
+            .get_store_member_amount_report_data(ns_3.payload)

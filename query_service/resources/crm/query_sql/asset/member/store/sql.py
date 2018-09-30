@@ -7,7 +7,7 @@ ALL = """
         WHERE brand_name IN ({brands})
         AND store_code IN ({zones})
         AND date <= date('{end_date}') - interval '1' day
-        AND date >= date('{start_date}')
+        -- AND date >= date('{start_date}')
         GROUP BY brand_name, store_code
     ), ytt AS (
         SELECT brand_name, store_code,
@@ -16,7 +16,7 @@ ALL = """
         WHERE brand_name IN ({brands})
         AND store_code IN ({zones})
         AND date <= date('{end_date}') - interval '2' day
-        AND date >= date('{start_date}')
+        -- AND date >= date('{start_date}')
         GROUP BY brand_name, store_code
     ), yc AS (
         SELECT brand_name, store_code,
@@ -25,7 +25,7 @@ ALL = """
         WHERE brand_name IN ({brands})
         AND store_code IN ({zones})
         AND date <= date('{end_date}') - interval '2' day
-        AND date >= date('{end_date}') - interval '3' day
+        -- AND date >= date('{end_date}') - interval '3' day
         GROUP BY brand_name, store_code
     ), tc AS (
         SELECT brand_name, store_code,
@@ -34,7 +34,7 @@ ALL = """
         WHERE brand_name IN ({brands})
         AND store_code IN ({zones})
         AND date <= date('{end_date}') - interval '1' day
-        AND date >= date('{end_date}') - interval '2' day
+        -- AND date >= date('{end_date}') - interval '2' day
         GROUP BY brand_name, store_code
     )
     SELECT DISTINCT
@@ -56,8 +56,8 @@ ALL = """
     AND f.brand_name IN ({brands})
     AND f.order_channel IN ({order_channels})
     AND f.store_code IN ({zones})
-    AND f.date <= date('{end_date}')
-    AND f.date >= date('{start_date}')
+    AND f.date <= date('{end_date}') - interval '1' day
+    -- AND f.date >= date('{start_date}')
     GROUP BY
         f.brand_name, f.store_code,
         tt.register_member_amount, tt.register_member_array, ytt.register_member_amount,

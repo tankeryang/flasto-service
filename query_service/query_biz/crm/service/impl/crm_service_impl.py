@@ -544,7 +544,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
     
         return resp_dict
 
-    def get_member_daily_register_proportion_report_data(self, dto):
+    def get_member_daily_register_proportion_detail_data(self, dto):
         """
         查询每日登记率
         :param dto: restplus.Api.payload
@@ -562,7 +562,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
     
         return resp_dict
 
-    def get_store_member_daily_register_proportion_report_data(self, dto):
+    def get_store_member_daily_register_proportion_detail_data(self, dto):
         """
         查询门店每日登记率
         :param dto: restplus.Api.payload
@@ -580,7 +580,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
     
         return resp_dict
 
-    def get_member_monthly_register_proportion_report_data(self, dto):
+    def get_member_monthly_register_proportion_detail_data(self, dto):
         """
         查询每月登记率
         :param dto: restplus.Api.payload
@@ -598,7 +598,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
     
         return resp_dict
 
-    def get_store_member_monthly_register_proportion_report_data(self, dto):
+    def get_store_member_monthly_register_proportion_detail_data(self, dto):
         """
         查询门店每月登记率
         :param dto: restplus.Api.payload
@@ -619,7 +619,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
 
 class AssetAnalyseServiceImpl(AssetAnalyseService):
     
-    def get_member_amount_detail(self, dto):
+    def get_member_amount_report_data(self, dto):
         """
         查询当前会员，有消费会员，未消费会员人数
         :param dto: restplus.Api.payload
@@ -637,7 +637,7 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         
         return resp_dict
 
-    def get_store_member_amount_detail(self, dto):
+    def get_store_member_amount_report_data(self, dto):
         """
         查询门店当前会员，有消费会员，未消费会员人数
         :param dto: restplus.Api.payload

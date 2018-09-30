@@ -259,7 +259,7 @@ class IncomeAnalyseService:
 
 
     @abstractclassmethod
-    def get_member_daily_register_proportion_report_data(self, dto):
+    def get_member_daily_register_proportion_detail_data(self, dto):
         """
         查询每日登记率
         :param dto: member_analyse.zone.dto
@@ -269,7 +269,7 @@ class IncomeAnalyseService:
 
 
     @abstractclassmethod
-    def get_store_member_daily_register_proportion_report_data(self, dto):
+    def get_store_member_daily_register_proportion_detail_data(self, dto):
         """
         查询门店每日登记率
         :param dto: member_analyse.zone.dto
@@ -279,7 +279,7 @@ class IncomeAnalyseService:
 
 
     @abstractclassmethod
-    def get_member_monthly_register_proportion_report_data(self, dto):
+    def get_member_monthly_register_proportion_detail_data(self, dto):
         """
         查询每月登记率
         :param dto: member_analyse.zone.dto
@@ -289,7 +289,7 @@ class IncomeAnalyseService:
 
 
     @abstractclassmethod
-    def get_store_member_monthly_register_proportion_report_data(self, dto):
+    def get_store_member_monthly_register_proportion_detail_data(self, dto):
         """
         查询门店每月登记率
         :param dto: member_analyse.zone.dto

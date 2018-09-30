@@ -17,4 +17,6 @@ from .income_analyse_po import (
     rgp_daily_list_po,
     rgp_monthly_list_po,
 )
-from .asset_analyse_po import member_amount_list_po
+from .asset_analyse_po import (
+    member_amount_list_po,
+)

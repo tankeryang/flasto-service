@@ -1,1 +1,3 @@
-from .dtypes import STATIC
+from .dtypes import (
+    STATIC,
+)
