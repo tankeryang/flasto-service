@@ -171,10 +171,11 @@ def asset_analyse_formator(sql, payload):
         store_types = str(payload['store_types']).strip('[').strip(']')
         store_levels = str(payload['store_levels']).strip('[').strip(']')
         channel_types = str(payload['channel_types']).strip('[').strip(']')
+        start_date = payload['start_date']
         end_date = payload['end_date']
         
         return sql.format(
-            brands=brands, zone=zone, zones=zones, end_date=end_date,
+            brands=brands, zone=zone, zones=zones, start_date=start_date, end_date=end_date,
             order_channels=order_channels, sales_modes=sales_modes, store_types=store_types,
             store_levels=store_levels, channel_types=channel_types
         )
@@ -194,9 +195,10 @@ def asset_analyse_formator(sql, payload):
         
         brands = str(payload['brands']).strip('[').strip(']')
         order_channels = str(payload['order_channels']).strip('[').strip(']')
+        start_date = payload['start_date']
         end_date = payload['end_date']
         
         return sql.format(
-            brands=brands, zones=zones, order_channels=order_channels, end_date=end_date
+            brands=brands, zones=zones, order_channels=order_channels, start_date=start_date, end_date=end_date
         )
 

@@ -1,1 +1,1 @@
-from .sql import STATIC
+from .sql import ALL

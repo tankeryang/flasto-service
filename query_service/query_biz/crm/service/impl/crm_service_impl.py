@@ -625,7 +625,7 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = asset_analyse_formator(query_sql.asset.member.zone.STATIC, dto)
+        sql = asset_analyse_formator(query_sql.asset.member.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -643,7 +643,7 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = asset_analyse_formator(query_sql.asset.member.store.STATIC, dto)
+        sql = asset_analyse_formator(query_sql.asset.member.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
     
