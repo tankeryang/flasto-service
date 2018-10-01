@@ -22,4 +22,39 @@ class AssetAnalyseService:
         :return:
         """
         pass
-
+    
+    @abstractclassmethod
+    def get_member_new_old_amount_report_data(self, dto):
+        """
+        查询新老会员数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_member_new_old_amount_report_data(self, dto):
+        """
+        查询门店新老会员数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_member_level_amount_report_data(self, dto):
+        """
+        查询会员等级数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_member_level_amount_report_data(self, dto):
+        """
+        查询门店会员等级数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass

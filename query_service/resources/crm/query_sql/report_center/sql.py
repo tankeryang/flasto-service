@@ -25,7 +25,7 @@ DAILY = """
         cast(COALESCE(TRY(sm.oa * 1.0 / sm.ma), 0) AS DECIMAL(18, 2)) AS order_amount_per_member
     FROM (
         SELECT DISTINCT {zone_index}, dr_member_type
-        FROM cdm_common.crm_member_analyse_index_label) cmail
+        FROM cdm_crm.member_analyse_index_label) cmail
 
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
@@ -34,7 +34,7 @@ DAILY = """
         count(distinct coid.outer_order_no) AS oa,
         sum(coid.order_item_quantity)       AS siq,
         count(distinct coid.member_no)      AS ma
-        FROM cdm_common.crm_order_info_detail coid
+        FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
         GROUP BY coid.{zone}, coid.dr_member_type
@@ -45,7 +45,7 @@ DAILY = """
     LEFT JOIN (
         SELECT coid.{zone},
         sum(coid.order_fact_amount) AS sa
-        FROM cdm_common.crm_order_info_detail coid
+        FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
         GROUP BY coid.{zone}
@@ -55,7 +55,7 @@ DAILY = """
     LEFT JOIN (
         SELECT coid.{zone},
         sum(coid.order_fact_amount) AS sa
-        FROM cdm_common.crm_order_info_detail coid
+        FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
         AND coid.dr_member_type != '非会员'
@@ -66,7 +66,7 @@ DAILY = """
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
         sum(coid.order_fact_amount) AS sa
-        FROM cdm_common.crm_order_info_detail coid
+        FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date(date('{end_date}') - interval '1' year)
         AND date(coid.order_deal_time) >= date(date('{start_date}') - interval '1' year)
         GROUP BY coid.{zone}, coid.dr_member_type
@@ -77,7 +77,7 @@ DAILY = """
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
         count(distinct coid.member_no) AS ma
-        FROM cdm_common.crm_order_info_detail coid
+        FROM cdm_crm.order_info_detail coid
         WHERE coid.dr_member_type IN ('普通会员', 'VIP会员')
         AND date(coid.order_deal_time) <= date(date('{start_date}') - interval '1' day)
         AND date(coid.order_deal_time) >= date(date('{start_date}') - interval '12' month)
@@ -89,7 +89,7 @@ DAILY = """
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
         count(distinct coid.member_no) AS ma
-        FROM cdm_common.crm_order_info_detail coid
+        FROM cdm_crm.order_info_detail coid
         WHERE coid.dr_member_type = '新会员'
         AND date(coid.member_register_time) = date(coid.order_deal_time)
         AND coid.last_grade_change_time IS NOT NULL
@@ -103,7 +103,7 @@ DAILY = """
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
         count(distinct coid.member_no) AS ma
-        FROM cdm_common.crm_order_info_detail coid
+        FROM cdm_crm.order_info_detail coid
         WHERE coid.dr_member_type = '新会员'
         AND coid.last_grade_change_time IS NULL
         AND date(coid.order_deal_time) <= date('{end_date}')
@@ -116,7 +116,7 @@ DAILY = """
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
         count(distinct coid.member_no) AS ma
-        FROM cdm_common.crm_order_info_detail coid
+        FROM cdm_crm.order_info_detail coid
         WHERE coid.dr_member_type IN ('新会员', '普通会员')
         AND date(coid.last_grade_change_time) = date(coid.order_deal_time)
         AND date(coid.order_deal_time) <= date('{end_date}')
@@ -129,7 +129,7 @@ DAILY = """
     LEFT JOIN (
         SELECT coid.{zone},
         count(distinct coid.store_code) AS sa
-        FROM cdm_common.crm_order_info_detail coid
+        FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
         GROUP BY coid.{zone}

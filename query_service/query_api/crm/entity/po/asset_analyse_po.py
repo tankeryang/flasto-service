@@ -18,3 +18,32 @@ member_amount_list_po = ns_3.model('MemberAmountReportListModel', {
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+
+member_newold_amount_po = ns_3.model('MemberNewOldAmountReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'new_member_amount': fields.Integer(readOnly=True, description="新会员数"),
+    'new_member_amount_proportion': fields.Float(readOnly=True, description="新会员数占比"),
+    'old_member_amount': fields.Integer(readOnly=True, description="老会员数"),
+    'old_member_amount_proportion': fields.Float(readOnly=True, description="老会员数占比"),
+})
+member_newold_amount_list_po = ns_3.model('MemberNewOldAmountReportListModel', {
+    'data': fields.List(fields.Nested(member_newold_amount_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
+
+
+member_level_amount_po = ns_3.model('MemberLevelAmountReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'member_level_type': fields.String(readOnly=True, description="会员等级类型"),
+    'member_level_amount': fields.Integer(readOnly=True, description="会员数"),
+    'member_level_amount_proportion': fields.Float(readOnly=True, description="会员数占比")
+})
+member_level_amount_list_po = ns_3.model('MemberLevelAmountReportListModel', {
+    'data': fields.List(fields.Nested(member_level_amount_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})

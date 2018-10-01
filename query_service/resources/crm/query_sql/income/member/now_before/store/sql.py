@@ -15,13 +15,13 @@ ALL = """
             t_.member_register_time,
             t_.last_grade_change_time,
             t_.order_deal_time
-        FROM cdm_common.crm_order_info_detail t_
+        FROM cdm_crm.order_info_detail t_
         LEFT JOIN (
             SELECT DISTINCT date(member_register_time) member_register_date,
             IF( year(member_register_time) = year(date('{end_date}')),
                 IF(month(member_register_time) = month(date('{end_date}')), '当月会员', '当年会员'),
                 IF(year(member_register_time) < year(date('{end_date}')), '往年会员', NULL)) member_nowbefore_type
-            FROM cdm_common.crm_order_info_detail ) _t
+            FROM cdm_crm.order_info_detail ) _t
         ON date(t_.member_register_time) = _t.member_register_date
         WHERE t_.member_type = '会员' AND date(t_.order_deal_time) <= date('{end_date}')
     ), t1 AS (
@@ -36,7 +36,7 @@ ALL = """
             smtt.ttsi         AS ttsi
         FROM (
             SELECT DISTINCT brand_name, store_code, order_channel, member_type
-            FROM cdm_common.crm_member_analyse_index_label
+            FROM cdm_crm.member_analyse_index_label
             WHERE member_type = '会员' ) cmail
         LEFT JOIN (
             SELECT brand_name, store_code, order_channel, member_type,
@@ -77,7 +77,7 @@ ALL = """
             smtt2.ttsi                   AS ttsi
         FROM (
             SELECT DISTINCT brand_name, store_code, order_channel, member_nowbefore_type
-            FROM cdm_common.crm_member_analyse_index_label
+            FROM cdm_crm.member_analyse_index_label
             WHERE member_type = '会员') cmail2
         LEFT JOIN (
             SELECT brand_name, store_code, order_channel, member_nowbefore_type,

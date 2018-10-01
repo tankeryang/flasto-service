@@ -654,3 +654,75 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
     
         return resp_dict
+
+    def get_member_new_old_amount_report_data(self, dto):
+        """
+        查询新老会员数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.zone.NEW_OLD, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.NEW_OLD)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_member_new_old_amount_report_data(self, dto):
+        """
+        查询门店新老会员数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.store.NEW_OLD, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.NEW_OLD)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_member_level_amount_report_data(self, dto):
+        """
+        查询会员等级数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.zone.LEVEL, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.LEVEL)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_member_level_amount_report_data(self, dto):
+        """
+        查询门店会员等级数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.store.LEVEL, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.LEVEL)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
