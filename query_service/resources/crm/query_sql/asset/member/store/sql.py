@@ -108,7 +108,7 @@ LEVEL = """
         WHEN 14 THEN 'VIP会员'
         ELSE NULL END  AS member_level_type,
         cast(count(DISTINCT mi.member_no) AS INTEGER) AS member_level_amount,
-        cast(count(DISTINCT mi.member_no) / tt.register_member_amount AS DECIMAL(18, 4)) AS member_level_amount_proportion
+        cast(count(DISTINCT mi.member_no) * 1.0 / tt.register_member_amount AS DECIMAL(18, 4)) AS member_level_amount_proportion
     FROM cdm_crm.member_info_detail mi
     LEFT JOIN tt ON mi.brand_name = tt.brand_name AND mi.store_code = tt.store_code
     WHERE mi.brand_name IN ({brands})
