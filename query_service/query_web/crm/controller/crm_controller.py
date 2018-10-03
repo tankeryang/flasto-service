@@ -560,3 +560,31 @@ class StoreMemberLevelAmountReportController(Resource):
         """
         return AssetAnalyseServiceImpl()\
             .get_store_member_level_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/MemberRemainAmountReport')
+class MemberRemainAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_zone_dto)
+    @ns_3.marshal_with(po.member_remain_amount_list_po)
+    def post(self):
+        """
+        查询会员留存数
+        留存会员数/占比，流失会员数/占比
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_member_remain_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/StoreMemberRemainAmountReport')
+class StoreMemberRemainAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_store_dto)
+    @ns_3.marshal_with(po.member_remain_amount_list_po)
+    def post(self):
+        """
+        查询门店留存会员数
+        留存会员数/占比，流失会员数/占比
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_member_remain_amount_report_data(ns_3.payload)

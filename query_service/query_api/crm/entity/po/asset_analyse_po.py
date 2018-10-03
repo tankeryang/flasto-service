@@ -47,3 +47,18 @@ member_level_amount_list_po = ns_3.model('MemberLevelAmountReportListModel', {
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+
+member_remain_amount_po = ns_3.model('MemberRemainAmountReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'remain_member_amount': fields.Integer(readOnly=True, description="留存会员数"),
+    'remain_member_amount_proportion': fields.Float(readOnly=True, description="留存会员数占比"),
+    'lost_member_amount': fields.Integer(readOnly=True, description="流失会员数"),
+    'lost_member_amount_proportion': fields.Float(readOnly=True, description="流失员数占比"),
+})
+member_remain_amount_list_po = ns_3.model('MemberRemainAmountReportListModel', {
+    'data': fields.List(fields.Nested(member_remain_amount_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})

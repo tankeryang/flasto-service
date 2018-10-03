@@ -26,3 +26,12 @@ LEVEL = {
     'member_level_amount': int,
     'member_level_amount_proportion': float
 }
+
+REMAIN = {
+    'brand': str,
+    'zone': str,
+    'remain_member_amount': int,
+    'remain_member_amount_proportion': float,
+    'lost_member_amount': int,
+    'lost_member_amount_proportion': float
+}

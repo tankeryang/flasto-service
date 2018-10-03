@@ -58,3 +58,21 @@ class AssetAnalyseService:
         :return:
         """
         pass
+    
+    @abstractclassmethod
+    def get_member_remain_amount_report_data(self, dto):
+        """
+        查询会员留存数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_member_remain_amount_report_data(self, dto):
+        """
+        查询门店会员留存数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass

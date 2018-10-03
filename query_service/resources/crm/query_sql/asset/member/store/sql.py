@@ -64,11 +64,11 @@ ALL = """
 NEW_OLD = """
     WITH tt AS (
         SELECT brand_name, store_code,
-        cardinality(array_distinct(flatten(array_agg(register_member_array)))) AS register_member_amount
-        FROM ads_crm.member_register_detail
+        count(DISTINCT member_no) AS register_member_amount
+        FROM cdm_crm.member_info_detail
         WHERE brand_name IN ({brands})
         AND store_code IN ({zones})
-        AND date <= date('{end_date}') - interval '1' day
+        AND date(member_register_time) <= date('{end_date}') - INTERVAL '1' DAY
         GROUP BY brand_name, store_code
     )
     SELECT DISTINCT
@@ -93,11 +93,11 @@ NEW_OLD = """
 LEVEL = """
     WITH tt AS (
         SELECT brand_name, store_code,
-        cardinality(array_distinct(flatten(array_agg(register_member_array)))) AS register_member_amount
-        FROM ads_crm.member_register_detail
+        count(DISTINCT member_no) AS register_member_amount
+        FROM cdm_crm.member_info_detail
         WHERE brand_name IN ({brands})
         AND store_code IN ({zones})
-        AND date <= date('{end_date}') - interval '1' day
+        AND date(member_register_time) <= date('{end_date}') - INTERVAL '1' DAY
         GROUP BY brand_name, store_code
     )
     SELECT DISTINCT
@@ -119,4 +119,32 @@ LEVEL = """
     WHEN 13 THEN '普通会员'
     WHEN 14 THEN 'VIP会员'
     ELSE NULL END
+"""
+
+########################################################################################################################
+
+REMAIN = """
+    WITH tt AS (
+        SELECT brand_name, store_code,
+        count(DISTINCT member_no) AS register_member_amount
+        FROM cdm_crm.member_info_detail
+        WHERE brand_name IN ({brands})
+        AND store_code IN ({zones})
+        AND date(member_register_time) <= date('{end_date}') - INTERVAL '1' DAY
+        GROUP BY brand_name, store_code
+    )
+    SELECT DISTINCT
+        mi.brand_name AS brand,
+        mi.store_code AS zone,
+        cast(count(DISTINCT mi.member_no) AS INTEGER) AS remain_member_amount,
+        cast(count(DISTINCT mi.member_no) * 1.0 / tt.register_member_amount AS DECIMAL(18, 4)) AS remain_member_amount_proportion,
+        cast(tt.register_member_amount - count(DISTINCT mi.member_no) AS INTEGER) AS lost_member_amount,
+        cast(1.0 - count(DISTINCT mi.member_no) * 1.0 / tt.register_member_amount AS DECIMAL(18, 4)) AS lost_member_amount_proportion
+    FROM cdm_crm.member_info_detail mi
+    LEFT JOIN tt ON mi.brand_name = tt.brand_name AND mi.store_code = tt.store_code
+    WHERE mi.brand_name IN ({brands})
+    AND mi.store_code IN ({zones})
+    AND date(mi.member_last_order_time) <= date('{end_date}') - interval '1' day
+    AND date(mi.member_last_order_time) >= date('{end_date}') - interval '1' year
+    GROUP BY mi.brand_name, mi.store_code, tt.register_member_amount
 """

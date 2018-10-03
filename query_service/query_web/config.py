@@ -1,5 +1,5 @@
 class Config:
-    SECRET_KEY = 'hard to guess string'
+    SECRET_KEY = 'caonima'
     FLASKY_ADMIN = 'Flasto'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_TEARDOWN = True
@@ -11,12 +11,12 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "presto://crm@10.10.22.5:10300/dev_hive/cdm_crm"
+    SQLALCHEMY_DATABASE_URI = "presto://dev@10.10.22.5:10300/dev_hive/cdm_crm"
 
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "presto://crm@10.10.22.5:10300/dev_hive/cdm_crm"
+    SQLALCHEMY_DATABASE_URI = "presto://dev@10.10.22.5:10300/dev_hive/cdm_crm"
 
 
 class ProductionConfig(Config):
