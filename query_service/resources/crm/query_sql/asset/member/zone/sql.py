@@ -53,12 +53,12 @@ ALL = """
         f.brand_name AS brand,
         f.{zone} AS zone,
         cast(tt.register_member_amount AS INTEGER) AS register_member_amount,
-        cast(COALESCE(TRY(tt.register_member_amount * 1.0 / ytt.register_member_amount), 0) AS DECIMAL(18, 4)) AS rma_compared_with_ystd,
+        cast(COALESCE(TRY(tt.register_member_amount * 1.0000 / ytt.register_member_amount), 0) AS DECIMAL(18, 4)) AS rma_compared_with_ystd,
         cast(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) AS INTEGER) AS consumed_member_amount,
-        cast(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0 / tt.register_member_amount AS DECIMAL(18, 4)) AS consumed_member_amount_proportion,
-        cast(COALESCE(TRY(tc.consumed_member_amount * 1.0 / yc.consumed_member_amount), 0) AS DECIMAL(18, 4)) AS cma_compared_with_ystd,
+        cast(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS consumed_member_amount_proportion,
+        cast(COALESCE(TRY(tc.consumed_member_amount * 1.0000 / yc.consumed_member_amount), 0) AS DECIMAL(18, 4)) AS cma_compared_with_ystd,
         cast(tt.register_member_amount - cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) AS INTEGER) AS unconsumed_member_amount,
-        cast(1.0 - (cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0 / tt.register_member_amount) AS DECIMAL(18, 4)) AS unconsumed_member_amount_proportion
+        cast(1.0000 - (cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount) AS DECIMAL(18, 4)) AS unconsumed_member_amount_proportion
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
     LEFT JOIN ytt ON f.brand_name = ytt.brand_name AND f.{zone} = ytt.{zone}
@@ -99,9 +99,9 @@ NEW_OLD = """
         f.brand_name AS brand,
         f.{zone} AS zone,
         cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS new_member_amount,
-        cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) * 1.0 / tt.register_member_amount AS DECIMAL(18, 4)) AS new_member_amount_proportion,
+        cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS new_member_amount_proportion,
         cast(tt.register_member_amount - cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS old_member_amount,
-        cast(1 - (cardinality(array_distinct(flatten(array_agg(f.customer_array)))) * 1.0 / tt.register_member_amount) AS DECIMAL(18, 4)) AS old_member_amount_proportion
+        cast(1 - (cardinality(array_distinct(flatten(array_agg(f.customer_array)))) * 1.0000 / tt.register_member_amount) AS DECIMAL(18, 4)) AS old_member_amount_proportion
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
     WHERE f.member_newold_type = '新会员' AND f.member_type IS NULL AND f.member_level_type IS NULL
@@ -140,7 +140,7 @@ LEVEL = """
         WHEN 14 THEN 'VIP会员'
         ELSE NULL END  AS member_level_type,
         cast(count(DISTINCT mi.member_no) AS INTEGER) AS member_level_amount,
-        cast(count(DISTINCT mi.member_no) * 1.0 / tt.register_member_amount AS DECIMAL(18, 4)) AS member_level_amount_proportion
+        cast(count(DISTINCT mi.member_no) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS member_level_amount_proportion
     FROM cdm_crm.member_info_detail mi
     LEFT JOIN tt ON mi.brand_name = tt.brand_name AND mi.{zone} = tt.{zone}
     WHERE mi.brand_name IN ({brands})
@@ -177,9 +177,9 @@ REMAIN = """
         mi.brand_name AS brand,
         mi.{zone}     AS zone,
         cast(count(DISTINCT mi.member_no) AS INTEGER) AS remain_member_amount,
-        cast(count(DISTINCT mi.member_no) * 1.0 / tt.register_member_amount AS DECIMAL(18, 4)) AS remain_member_amount_proportion,
+        cast(count(DISTINCT mi.member_no) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS remain_member_amount_proportion,
         cast(tt.register_member_amount - count(DISTINCT mi.member_no) AS INTEGER) AS lost_member_amount,
-        cast(1.0 - count(DISTINCT mi.member_no) * 1.0 / tt.register_member_amount AS DECIMAL(18, 4)) AS lost_member_amount_proportion
+        cast(1.0000 - count(DISTINCT mi.member_no) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS lost_member_amount_proportion
     FROM cdm_crm.member_info_detail mi
     LEFT JOIN tt ON mi.brand_name = tt.brand_name AND mi.{zone} = tt.{zone}
     WHERE mi.brand_name IN ({brands})
@@ -191,4 +191,73 @@ REMAIN = """
     AND date(mi.member_last_order_time) <= date('{end_date}') - interval '1' day
     AND date(mi.member_last_order_time) >= date('{end_date}') - interval '1' year
     GROUP BY mi.brand_name, mi.{zone}, tt.register_member_amount
+"""
+
+########################################################################################################################
+
+ACTIVE = """
+    WITH tt AS (
+        SELECT brand_name, {zone},
+        count(DISTINCT member_no) AS member_amount
+        FROM cdm_crm.member_info_detail
+        WHERE brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date(member_last_order_time) <= date('{end_date}') - INTERVAL '1' DAY
+        AND date(member_last_order_time) >= date('{end_date}') - interval '1' year
+        GROUP BY brand_name, {zone}
+    ), t_36 AS (
+        SELECT brand_name, {zone},
+        count(DISTINCT member_no) AS member_amount
+        FROM cdm_crm.member_info_detail
+        WHERE brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date(member_last_order_time) <= date('{end_date}') - INTERVAL '3' month
+        AND date(member_last_order_time) >= date('{end_date}') - interval '6' month
+        GROUP BY brand_name, {zone}
+    ), t_69 AS (
+        SELECT brand_name, {zone},
+        count(DISTINCT member_no) AS member_amount
+        FROM cdm_crm.member_info_detail
+        WHERE brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date(member_last_order_time) <= date('{end_date}') - INTERVAL '6' month
+        AND date(member_last_order_time) >= date('{end_date}') - interval '9' month
+        GROUP BY brand_name, {zone}
+    )
+    SELECT DISTINCT
+        mi.brand_name AS brand,
+        mi.{zone}     AS zone,
+        cast(count(DISTINCT mi.member_no) AS INTEGER) AS active_member_amount,
+        cast(count(DISTINCT mi.member_no) * 1.0000 / tt.member_amount AS DECIMAL(18, 4)) AS active_member_amount_proportion,
+        cast(t_36.member_amount AS INTEGER) AS silent_member_amount,
+        cast(t_36.member_amount * 1.0000 / tt.member_amount AS DECIMAL(18, 4)) AS silent_member_amount_proportion,
+        cast(t_69.member_amount AS INTEGER) AS sleep_member_amount,
+        cast(t_69.member_amount * 1.0000 / tt.member_amount AS DECIMAL(18, 4)) AS sleep_member_amount_proportion,
+        cast(tt.member_amount - (count(DISTINCT mi.member_no) + t_36.member_amount + t_69.member_amount) AS INTEGER) AS pre_lost_member_amount,
+        cast(1.0000 - (count(DISTINCT mi.member_no) + t_36.member_amount + t_69.member_amount) * 1.0000 / tt.member_amount AS DECIMAL(18, 4)) AS pre_lost_member_amount_proportion
+    FROM cdm_crm.member_info_detail mi
+    LEFT JOIN tt ON mi.brand_name = tt.brand_name AND mi.{zone} = tt.{zone}
+    LEFT JOIN t_36 ON mi.brand_name = t_36.brand_name AND mi.{zone} = t_36.{zone}
+    LEFT JOIN t_69 ON mi.brand_name = t_69.brand_name AND mi.{zone} = t_69.{zone}
+    WHERE mi.brand_name IN ({brands})
+    AND mi.{zone} IN ({zones})
+    AND mi.sales_mode IN ({sales_modes})
+    AND mi.store_type IN ({store_types})
+    AND mi.store_level IN ({store_levels})
+    AND mi.channel_type IN ({channel_types})
+    AND date(mi.member_last_order_time) <= date('{end_date}') - interval '1' day
+    AND date(mi.member_last_order_time) >= date('{end_date}') - interval '3' month
+    GROUP BY mi.brand_name, mi.{zone}, tt.member_amount, t_36.member_amount, t_69.member_amount
 """

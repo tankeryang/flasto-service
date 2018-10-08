@@ -22,4 +22,5 @@ from .asset_analyse_po import (
     member_newold_amount_list_po,
     member_level_amount_list_po,
     member_remain_amount_list_po,
+    member_active_amount_list_po,
 )

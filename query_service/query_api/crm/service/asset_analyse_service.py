@@ -76,3 +76,21 @@ class AssetAnalyseService:
         :return:
         """
         pass
+    
+    @abstractclassmethod
+    def get_member_active_amount_report_data(self, dto):
+        """
+        查询活跃会员数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_member_active_amount_report_data(self, dto):
+        """
+        查询门店活跃会员数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass

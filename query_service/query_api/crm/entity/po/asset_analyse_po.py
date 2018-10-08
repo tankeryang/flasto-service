@@ -62,3 +62,22 @@ member_remain_amount_list_po = ns_3.model('MemberRemainAmountReportListModel', {
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+
+member_active_amount_po = ns_3.model('MemberActiveAmountReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'active_member_amount': fields.Integer(readOnly=True, description="活跃会员数"),
+    'active_member_amount_proportion': fields.Float(readOnly=True, description="活跃会员数占比"),
+    'silent_member_amount': fields.Integer(readOnly=True, description="沉默会员数"),
+    'silent_member_amount_proportion': fields.Float(readOnly=True, description="沉默会员数占比"),
+    'sleep_member_amount': fields.Integer(readOnly=True, description="睡眠会员数"),
+    'sleep_member_amount_proportion': fields.Float(readOnly=True, description="睡眠会员数占比"),
+    'pre_lost_member_amount': fields.Integer(readOnly=True, description="预流失会员数"),
+    'pre_lost_member_amount_proportion': fields.Float(readOnly=True, description="预流失会员数占比"),
+})
+member_active_amount_list_po = ns_3.model('MemberActiveAmountReportListModel', {
+    'data': fields.List(fields.Nested(member_active_amount_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})

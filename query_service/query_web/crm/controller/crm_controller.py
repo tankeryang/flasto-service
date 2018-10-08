@@ -588,3 +588,31 @@ class StoreMemberRemainAmountReportController(Resource):
         """
         return AssetAnalyseServiceImpl() \
             .get_store_member_remain_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/MemberActiveAmountReport')
+class MemberActiveAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_zone_dto)
+    @ns_3.marshal_with(po.member_active_amount_list_po)
+    def post(self):
+        """
+        查询活跃会员数
+        活跃会员数/占比，沉默会员数/占比，睡眠会员数/占比，预流失会员数/占比
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_member_active_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/StoreMemberActiveAmountReport')
+class StoreMemberActiveAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_store_dto)
+    @ns_3.marshal_with(po.member_active_amount_list_po)
+    def post(self):
+        """
+        查询门店活跃会员数
+        活跃会员数/占比，沉默会员数/占比，睡眠会员数/占比，预流失会员数/占比
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_member_active_amount_report_data(ns_3.payload)

@@ -35,3 +35,16 @@ REMAIN = {
     'lost_member_amount': int,
     'lost_member_amount_proportion': float
 }
+
+ACTIVE = {
+    'brand': str,
+    'zone': str,
+    'active_member_amount': int,
+    'active_member_amount_proportion': float,
+    'silent_member_amount': int,
+    'silent_member_amount_proportion': float,
+    'sleep_member_amount': int,
+    'sleep_member_amount_proportion': float,
+    'pre_lost_member_amount': int,
+    'pre_lost_member_amount_proportion': float
+}
