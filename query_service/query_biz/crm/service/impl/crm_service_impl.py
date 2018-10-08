@@ -798,3 +798,39 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
     
         return resp_dict
+
+    def get_member_frequency_amount_report_data(self, dto):
+        """
+        查询累计消费频次会员数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.zone.FREQUENCY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.FREQUENCY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_member_frequency_amount_report_data(self, dto):
+        """
+        查询门店累计消费频次会员数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.store.FREQUENCY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.FREQUENCY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict

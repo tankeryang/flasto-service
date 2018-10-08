@@ -48,3 +48,10 @@ ACTIVE = {
     'pre_lost_member_amount': int,
     'pre_lost_member_amount_proportion': float
 }
+
+FREQUENCY = {
+    'brand': str,
+    'zone': str,
+    'member_amount': int,
+    'frequency': str
+}

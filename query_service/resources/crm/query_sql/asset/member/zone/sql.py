@@ -261,3 +261,40 @@ ACTIVE = """
     AND date(mi.member_last_order_time) >= date('{end_date}') - interval '3' month
     GROUP BY mi.brand_name, mi.{zone}, tt.member_amount, t_36.member_amount, t_69.member_amount
 """
+
+########################################################################################################################
+
+FREQUENCY = """
+    WITH f AS (
+        SELECT
+            mi.brand_name,
+            mi.{zone},
+            mi.member_no,
+            IF (count(distinct oi.outer_order_no) IS NOT NULL,
+                CASE count(distinct oi.outer_order_no)
+                WHEN 1 THEN '1'
+                WHEN 2 THEN '2'
+                WHEN 3 THEN '3'
+                WHEN 4 THEN '>=4'
+                ELSE '>=4' END,
+                NULL
+            ) frequency
+        FROM cdm_crm.member_info_detail mi
+        LEFT JOIN ods_crm.order_info oi ON mi.member_no = oi.member_no
+        WHERE mi.brand_name IN ({brands})
+        AND mi.{zone} IN ({zones})
+        AND mi.sales_mode IN ({sales_modes})
+        AND mi.store_type IN ({store_types})
+        AND mi.store_level IN ({store_levels})
+        AND mi.channel_type IN ({channel_types})
+        AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
+        GROUP BY mi.member_no, mi.brand_name, mi.{zone}
+    )
+    SELECT DISTINCT
+        brand_name AS brand,
+        {zone} AS zone,
+        cast(count(distinct member_no) AS INTEGER) AS member_amount,
+        frequency
+    FROM f WHERE frequency IS NOT NULL
+    GROUP BY brand_name, {zone}, frequency
+"""

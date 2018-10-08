@@ -94,3 +94,21 @@ class AssetAnalyseService:
         :return:
         """
         pass
+    
+    @abstractclassmethod
+    def get_member_frequency_amount_report_data(self, dto):
+        """
+        查询累计消费频次会员数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_member_frequency_amount_report_data(self, dto):
+        """
+        查询门店累计消费频次会员数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass

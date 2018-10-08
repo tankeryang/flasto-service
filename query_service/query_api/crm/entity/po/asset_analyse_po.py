@@ -81,3 +81,16 @@ member_active_amount_list_po = ns_3.model('MemberActiveAmountReportListModel', {
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+
+member_frequency_amount_po = ns_3.model('MemberFrequencyAmountReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'member_amount': fields.Integer(readOnly=True, description="会员数"),
+    'frequency': fields.String(readOnly=True, description="累计消费频次")
+})
+member_frequency_amount_list_po = ns_3.model('MemberFrequencyAmountReportListModel', {
+    'data': fields.List(fields.Nested(member_frequency_amount_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})

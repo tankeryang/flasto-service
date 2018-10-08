@@ -4,4 +4,5 @@ from .dtypes import (
     LEVEL,
     REMAIN,
     ACTIVE,
+    FREQUENCY,
 )

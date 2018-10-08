@@ -616,3 +616,31 @@ class StoreMemberActiveAmountReportController(Resource):
         """
         return AssetAnalyseServiceImpl() \
             .get_store_member_active_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/MemberFrequencyAmountReport')
+class MemberFrequencyAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_zone_dto)
+    @ns_3.marshal_with(po.member_frequency_amount_list_po)
+    def post(self):
+        """
+        查询累计消费频次会员数
+        1, 2, 3, >=4
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_member_frequency_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/StoreMemberFrequencyAmountReport')
+class StoreMemberFrequencyAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_store_dto)
+    @ns_3.marshal_with(po.member_frequency_amount_list_po)
+    def post(self):
+        """
+        查询门店累计消费频次会员数
+        1, 2, 3, >=4
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_member_frequency_amount_report_data(ns_3.payload)
