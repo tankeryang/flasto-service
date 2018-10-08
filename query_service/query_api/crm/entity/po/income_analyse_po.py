@@ -15,6 +15,7 @@ total_all_po = ns_2.model('MemberTotalIncomeReportModel', {
     'sales_income_per_item': fields.Float(readOnly=True, description="件单价(元)"),
     'sales_item_per_order': fields.Float(readOnly=True, description="客单件(件)"),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
 })
 total_all_list_po = ns_2.model('MemberTotalIncomeReportListModel', {
     'data': fields.List(fields.Nested(total_all_po)),
@@ -89,6 +90,7 @@ new_old_all_po = ns_2.model('MemberNewOldIncomeReportModel', {
     'sales_income_per_item': fields.Float(readOnly=True, description="件单价(元)"),
     'sales_item_per_order': fields.Float(readOnly=True, description="客单件(件)"),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
 })
 new_old_all_list_po = ns_2.model('MemberNewOldIncomeReportListModel', {
     'data': fields.List(fields.Nested(new_old_all_po)),
@@ -143,6 +145,7 @@ level_all_po = ns_2.model('MemberLevelIncomeReportModel', {
     'sales_income_per_item': fields.Float(readOnly=True, description="件单价(元)"),
     'sales_item_per_order': fields.Float(readOnly=True, description="客单件(件)"),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
 })
 level_all_list_po = ns_2.model('MemberLevelIncomeReportListModel', {
     'data': fields.List(fields.Nested(level_all_po)),
@@ -197,6 +200,7 @@ mul_dim_all_po = ns_2.model('MemberMulDimIncomeReportModel', {
     'sales_income_per_item': fields.Float(readOnly=True, description="件单价(元)"),
     'sales_item_per_order': fields.Float(readOnly=True, description="客单件(件)"),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
 })
 mul_dim_all_list_po = ns_2.model('MemberMulDimIncomeReportListModel', {
     'data': fields.List(fields.Nested(mul_dim_all_po)),

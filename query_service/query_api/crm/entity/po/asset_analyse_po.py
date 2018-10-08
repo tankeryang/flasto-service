@@ -6,10 +6,8 @@ member_amount_po = ns_3.model('MemberAmountReportModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
     'zone': fields.String(readOnly=True, description="查询范围"),
     'register_member_amount': fields.Integer(readOnly=True, description="当前全部会员数"),
-    'rma_compared_with_ystd': fields.Float(readOnly=True, description="当前全部会员数环比(昨日/前日)"),
     'consumed_member_amount': fields.Integer(readOnly=True, description="有消费会员数"),
     'consumed_member_amount_proportion': fields.Float(readOnly=True, description="有消费会员数占比"),
-    'cma_compared_with_ystd': fields.Float(readOnly=True, description="有消费会员数环比(昨日/前日)"),
     'unconsumed_member_amount': fields.Integer(readOnly=True, description="未消费会员数"),
     'unconsumed_member_amount_proportion': fields.Float(readOnly=True, description="未消费会员数占比")
 })
@@ -78,6 +76,45 @@ member_active_amount_po = ns_3.model('MemberActiveAmountReportModel', {
 })
 member_active_amount_list_po = ns_3.model('MemberActiveAmountReportListModel', {
     'data': fields.List(fields.Nested(member_active_amount_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
+
+
+member_time_amount_po = ns_3.model('MemberTimeAmountReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'member_amount': fields.Integer(readOnly=True, description="会员数"),
+    'time': fields.String(readOnly=True, description="入会时长")
+})
+member_time_amount_list_po = ns_3.model('MemberTimeAmountReportListModel', {
+    'data': fields.List(fields.Nested(member_time_amount_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
+
+
+member_discount_amount_po = ns_3.model('MemberDiscountAmountReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'member_amount': fields.Integer(readOnly=True, description="会员数"),
+    'discount': fields.String(readOnly=True, description="折扣率")
+})
+member_discount_amount_list_po = ns_3.model('MemberDiscountAmountReportListModel', {
+    'data': fields.List(fields.Nested(member_discount_amount_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
+
+
+member_sipo_amount_po = ns_3.model('MemberSipoAmountReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'member_amount': fields.Integer(readOnly=True, description="会员数"),
+    'sales_income_per_order': fields.String(readOnly=True, description="客单价")
+})
+member_sipo_amount_list_po = ns_3.model('MemberSipoAmountReportListModel', {
+    'data': fields.List(fields.Nested(member_sipo_amount_po)),
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })

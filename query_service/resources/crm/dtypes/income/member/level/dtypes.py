@@ -10,7 +10,8 @@ ALL = {
     'sales_income_per_order': float,
     'sales_income_per_item': float,
     'sales_item_per_order': float,
-    'compared_with_lyst': float
+    'compared_with_lyst': float,
+    'compared_with_ss_lyst': float
 }
 
 DAILY = {

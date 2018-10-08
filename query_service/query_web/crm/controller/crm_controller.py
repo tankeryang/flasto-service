@@ -700,3 +700,87 @@ class StoreMemberMonetaryAmountReportController(Resource):
         """
         return AssetAnalyseServiceImpl() \
             .get_store_member_monetary_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/MemberTimeAmountReport')
+class MemberTimeAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_zone_dto)
+    @ns_3.marshal_with(po.member_time_amount_list_po)
+    def post(self):
+        """
+        查询入会时长会员数
+        <1, 1-3, 3-5, >5
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_member_time_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/StoreMemberTimeAmountReport')
+class StoreMemberTimeAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_store_dto)
+    @ns_3.marshal_with(po.member_time_amount_list_po)
+    def post(self):
+        """
+        查询门店入会时长会员数
+        <1, 1-3, 3-5, >5
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_member_time_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/MemberDiscountAmountReport')
+class MemberDiscountAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_zone_dto)
+    @ns_3.marshal_with(po.member_discount_amount_list_po)
+    def post(self):
+        """
+        查询折扣率会员数
+        <50, 50-69, 70-89, >=90
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_member_discount_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/StoreMemberDiscountAmountReport')
+class StoreMemberDiscountAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_store_dto)
+    @ns_3.marshal_with(po.member_discount_amount_list_po)
+    def post(self):
+        """
+        查询门店折扣率会员数
+        <50, 50-69, 70-89, >=90
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_member_discount_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/MemberSipoAmountReport')
+class MemberSipoAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_zone_dto)
+    @ns_3.marshal_with(po.member_sipo_amount_list_po)
+    def post(self):
+        """
+        查询客单价会员数
+        <1400, 1400-1799, 1800-2199, >=2200
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_member_sipo_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/StoreMemberSipoAmountReport')
+class StoreMemberSipoAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_store_dto)
+    @ns_3.marshal_with(po.member_sipo_amount_list_po)
+    def post(self):
+        """
+        查询门店客单价会员数
+        <1400, 1400-1799, 1800-2199, >=2200
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_member_sipo_amount_report_data(ns_3.payload)

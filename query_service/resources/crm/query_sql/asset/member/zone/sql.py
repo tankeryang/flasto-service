@@ -12,58 +12,17 @@ ALL = """
         AND channel_type IN ({channel_types})
         AND date <= date('{end_date}') - interval '1' day
         GROUP BY brand_name, {zone}
-    ), ytt AS (
-        SELECT brand_name, {zone},
-        cardinality(array_distinct(flatten(array_agg(register_member_array)))) AS register_member_amount
-        FROM ads_crm.member_register_detail
-        WHERE brand_name IN ({brands})
-        AND {zone} IN ({zones})
-        AND sales_mode IN ({sales_modes})
-        AND store_type IN ({store_types})
-        AND store_level IN ({store_levels})
-        AND channel_type IN ({channel_types})
-        AND date <= date('{end_date}') - interval '2' day
-        GROUP BY brand_name, {zone}
-    ), yc AS (
-        SELECT brand_name, {zone},
-        cardinality(array_distinct(flatten(array_agg(customer_array)))) AS consumed_member_amount
-        FROM ads_crm.member_analyse_fold_daily_income_detail
-        WHERE brand_name IN ({brands})
-        AND {zone} IN ({zones})
-        AND sales_mode IN ({sales_modes})
-        AND store_type IN ({store_types})
-        AND store_level IN ({store_levels})
-        AND channel_type IN ({channel_types})
-        AND date <= date('{end_date}') - interval '2' day
-        GROUP BY brand_name, {zone}
-    ), tc AS (
-        SELECT brand_name, {zone},
-        cardinality(array_distinct(flatten(array_agg(customer_array)))) AS consumed_member_amount
-        FROM ads_crm.member_analyse_fold_daily_income_detail
-        WHERE brand_name IN ({brands})
-        AND {zone} IN ({zones})
-        AND sales_mode IN ({sales_modes})
-        AND store_type IN ({store_types})
-        AND store_level IN ({store_levels})
-        AND channel_type IN ({channel_types})
-        AND date <= date('{end_date}') - interval '1' day
-        GROUP BY brand_name, {zone}
     )
     SELECT DISTINCT
         f.brand_name AS brand,
         f.{zone} AS zone,
         cast(tt.register_member_amount AS INTEGER) AS register_member_amount,
-        cast(COALESCE(TRY(tt.register_member_amount * 1.0000 / ytt.register_member_amount), 0) AS DECIMAL(18, 4)) AS rma_compared_with_ystd,
         cast(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) AS INTEGER) AS consumed_member_amount,
         cast(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS consumed_member_amount_proportion,
-        cast(COALESCE(TRY(tc.consumed_member_amount * 1.0000 / yc.consumed_member_amount), 0) AS DECIMAL(18, 4)) AS cma_compared_with_ystd,
         cast(tt.register_member_amount - cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) AS INTEGER) AS unconsumed_member_amount,
         cast(1.0000 - (cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount) AS DECIMAL(18, 4)) AS unconsumed_member_amount_proportion
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
-    LEFT JOIN ytt ON f.brand_name = ytt.brand_name AND f.{zone} = ytt.{zone}
-    LEFT JOIN yc ON f.brand_name = yc.brand_name AND f.{zone} = yc.{zone}
-    LEFT JOIN tc ON f.brand_name = tc.brand_name AND f.{zone} = tc.{zone}
     WHERE f.member_type = '会员' AND f.member_newold_type IS NULL AND f.member_level_type IS NULL
     AND f.brand_name IN ({brands})
     AND f.order_channel IN ({order_channels})
@@ -73,10 +32,7 @@ ALL = """
     AND f.store_level IN ({store_levels})
     AND f.channel_type IN ({channel_types})
     AND f.date <= date('{end_date}') - interval '1' day
-    GROUP BY
-        f.brand_name, f.{zone},
-        tt.register_member_amount, tt.register_member_array, ytt.register_member_amount,
-        yc.consumed_member_amount, tc.consumed_member_amount
+    GROUP BY f.brand_name, f.{zone}, tt.register_member_amount, tt.register_member_array
 """
 
 ########################################################################################################################
@@ -264,6 +220,141 @@ ACTIVE = """
 
 ########################################################################################################################
 
+TIME = """
+    WITH t AS (
+        SELECT
+            mi.brand_name,
+            mi.{zone},
+            mi.member_no,
+            IF (mi.member_register_time IS NOT NULL,
+                CASE
+                WHEN (
+                    DATE(mi.member_register_time) <= DATE('{end_date}') - INTERVAL '1' DAY
+                    AND DATE(mi.member_register_time) > DATE('{end_date}') - INTERVAL '1' month
+                ) THEN '<1'
+                WHEN (
+                    DATE(mi.member_register_time) <= DATE('{end_date}') - INTERVAL '1' month
+                    AND DATE(mi.member_register_time) > DATE('{end_date}') - INTERVAL '3' month
+                ) THEN '1-3'
+                WHEN (
+                    DATE(mi.member_register_time) <= DATE('{end_date}') - INTERVAL '3' month
+                    AND DATE(mi.member_register_time) > DATE('{end_date}') - INTERVAL '5' month
+                ) THEN '3-5'
+                WHEN (
+                    DATE(mi.member_register_time) <= DATE('{end_date}') - INTERVAL '5' month
+                ) THEN '>5'
+                ELSE NULL END,
+                NULL
+            ) time
+        FROM cdm_crm.member_info_detail mi
+        WHERE mi.brand_name IN ({brands})
+        AND mi.{zone} IN ({zones})
+        AND mi.sales_mode IN ({sales_modes})
+        AND mi.store_type IN ({store_types})
+        AND mi.store_level IN ({store_levels})
+        AND mi.channel_type IN ({channel_types})
+        AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
+    )
+    SELECT DISTINCT
+        brand_name AS brand,
+        {zone} AS zone,
+        cast(count(distinct member_no) AS INTEGER) AS member_amount,
+        time
+    FROM t WHERE time IS NOT NULL
+    GROUP BY brand_name, {zone}, time
+"""
+
+
+########################################################################################################################
+
+DISCOUNT = """
+    WITH d AS (
+        SELECT
+            oi.brand_name,
+            oi.{zone},
+            oi.member_no,
+            CASE
+            WHEN (
+                sum(oi.order_fact_amount) * 1.0 / sum(oi.order_amount) < 0.5
+            ) THEN '<50'
+            WHEN (
+                sum(oi.order_fact_amount) * 1.0 / sum(oi.order_amount) < 0.7
+                AND sum(oi.order_fact_amount) * 1.0 / sum(oi.order_amount) >= 0.5
+            ) THEN '50-69'
+            WHEN (
+                sum(oi.order_fact_amount) * 1.0 / sum(oi.order_amount) < 0.9
+                AND sum(oi.order_fact_amount) * 1.0 / sum(oi.order_amount) >= 0.7
+            ) THEN '70-89'
+            WHEN (
+                sum(oi.order_fact_amount) * 1.0 / sum(oi.order_amount) >= 0.9
+            ) THEN '>=90'
+            ELSE NULL END discount
+        FROM cdm_crm.order_info_detail oi
+        WHERE oi.order_amount > 0
+        AND oi.brand_name IN ({brands})
+        AND oi.{zone} IN ({zones})
+        AND oi.sales_mode IN ({sales_modes})
+        AND oi.store_type IN ({store_types})
+        AND oi.store_level IN ({store_levels})
+        AND oi.channel_type IN ({channel_types})
+        AND date(oi.order_deal_time) <= date('{end_date}') - interval '1' day
+        GROUP BY oi.brand_name, oi.{zone}, oi.member_no
+    )
+    SELECT DISTINCT
+        brand_name AS brand,
+        {zone} AS zone,
+        cast(count(distinct member_no) AS INTEGER) AS member_amount,
+        discount
+    FROM d WHERE discount IS NOT NULL
+    GROUP BY brand_name, {zone}, discount
+"""
+
+########################################################################################################################
+
+SI_PO = """
+    WITH s AS (
+        SELECT
+            oi.brand_name,
+            oi.{zone},
+            oi.member_no,
+            CASE
+            WHEN (
+                sum(oi.order_fact_amount) * 1.0 / count(distinct outer_order_no) < 1400
+            ) THEN '<1400'
+            WHEN (
+                sum(oi.order_fact_amount) * 1.0 / count(distinct outer_order_no) < 1800
+                AND sum(oi.order_fact_amount) * 1.0 / count(distinct outer_order_no) >= 1400
+            ) THEN '1400-1799'
+            WHEN (
+                sum(oi.order_fact_amount) * 1.0 / count(distinct outer_order_no) < 2200
+                AND sum(oi.order_fact_amount) * 1.0 / count(distinct outer_order_no) >= 1800
+            ) THEN '1800-2199'
+            WHEN (
+                sum(oi.order_fact_amount) * 1.0 / count(distinct outer_order_no) >= 2200
+            ) THEN '>=2200'
+            ELSE NULL END sales_income_per_order
+        FROM cdm_crm.order_info_detail oi
+        WHERE oi.order_item_quantity > 0
+        AND oi.brand_name IN ({brands})
+        AND oi.{zone} IN ({zones})
+        AND oi.sales_mode IN ({sales_modes})
+        AND oi.store_type IN ({store_types})
+        AND oi.store_level IN ({store_levels})
+        AND oi.channel_type IN ({channel_types})
+        AND date(oi.order_deal_time) <= date('{end_date}') - interval '1' day
+        GROUP BY oi.brand_name, oi.{zone}, oi.member_no
+    )
+    SELECT DISTINCT
+        brand_name AS brand,
+        {zone} AS zone,
+        cast(count(distinct member_no) AS INTEGER) AS member_amount,
+        sales_income_per_order
+    FROM s WHERE sales_income_per_order IS NOT NULL
+    GROUP BY brand_name, {zone}, sales_income_per_order
+"""
+
+########################################################################################################################
+
 RECENCY = """
     WITH r AS (
         SELECT
@@ -390,4 +481,88 @@ MONETARY = """
         monetary
     FROM m WHERE monetary IS NOT NULL
     GROUP BY brand_name, {zone}, monetary
+"""
+
+########################################################################################################################
+
+RECRUIT_ALL = """
+    WITH tt AS (
+        SELECT brand_name, {zone},
+        array_distinct(flatten(array_agg(register_member_array))) AS register_member_array,
+        cardinality(array_distinct(flatten(array_agg(register_member_array)))) AS register_member_amount
+        FROM ads_crm.member_register_detail
+        WHERE brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date <= date('{end_date}') - interval '1' day
+        AND date >= date('{start_date}')
+        GROUP BY brand_name, {zone}
+    ), ytt AS (
+        SELECT brand_name, {zone},
+        cardinality(array_distinct(flatten(array_agg(register_member_array)))) AS register_member_amount
+        FROM ads_crm.member_register_detail
+        WHERE brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date <= date('{end_date}') - interval '2' day
+        GROUP BY brand_name, {zone}
+    ), yc AS (
+        SELECT brand_name, {zone},
+        cardinality(array_distinct(flatten(array_agg(customer_array)))) AS consumed_member_amount
+        FROM ads_crm.member_analyse_fold_daily_income_detail
+        WHERE brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date <= date('{end_date}') - interval '2' day
+        GROUP BY brand_name, {zone}
+    ), tc AS (
+        SELECT brand_name, {zone},
+        cardinality(array_distinct(flatten(array_agg(customer_array)))) AS consumed_member_amount
+        FROM ads_crm.member_analyse_fold_daily_income_detail
+        WHERE brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date <= date('{end_date}') - interval '1' day
+        GROUP BY brand_name, {zone}
+    )
+    SELECT DISTINCT
+        f.brand_name AS brand,
+        f.{zone} AS zone,
+        cast(tt.register_member_amount AS INTEGER) AS register_member_amount,
+        cast(COALESCE(TRY(tt.register_member_amount * 1.0000 / ytt.register_member_amount), 0) AS DECIMAL(18, 4)) AS rma_compared_with_ystd,
+        cast(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) AS INTEGER) AS consumed_member_amount,
+        cast(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS consumed_member_amount_proportion,
+        cast(COALESCE(TRY(tc.consumed_member_amount * 1.0000 / yc.consumed_member_amount), 0) AS DECIMAL(18, 4)) AS cma_compared_with_ystd,
+        cast(tt.register_member_amount - cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) AS INTEGER) AS unconsumed_member_amount,
+        cast(1.0000 - (cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount) AS DECIMAL(18, 4)) AS unconsumed_member_amount_proportion
+    FROM ads_crm.member_analyse_fold_daily_income_detail f
+    LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
+    LEFT JOIN ytt ON f.brand_name = ytt.brand_name AND f.{zone} = ytt.{zone}
+    LEFT JOIN yc ON f.brand_name = yc.brand_name AND f.{zone} = yc.{zone}
+    LEFT JOIN tc ON f.brand_name = tc.brand_name AND f.{zone} = tc.{zone}
+    WHERE f.member_type = '会员' AND f.member_newold_type IS NULL AND f.member_level_type IS NULL
+    AND f.brand_name IN ({brands})
+    AND f.order_channel IN ({order_channels})
+    AND f.{zone} IN ({zones})
+    AND f.sales_mode IN ({sales_modes})
+    AND f.store_type IN ({store_types})
+    AND f.store_level IN ({store_levels})
+    AND f.channel_type IN ({channel_types})
+    AND f.date <= date('{end_date}') - interval '1' day
+    GROUP BY
+        f.brand_name, f.{zone},
+        tt.register_member_amount, tt.register_member_array, ytt.register_member_amount,
+        yc.consumed_member_amount, tc.consumed_member_amount
 """

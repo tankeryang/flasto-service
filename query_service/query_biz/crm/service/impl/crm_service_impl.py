@@ -906,3 +906,111 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
     
         return resp_dict
+
+    def get_member_time_amount_report_data(self, dto):
+        """
+        查询入会时长会员数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.zone.TIME, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.TIME)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_member_time_amount_report_data(self, dto):
+        """
+        查询门店入会时长会员数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.store.TIME, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.TIME)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_member_discount_amount_report_data(self, dto):
+        """
+        查询折扣率会员数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.zone.DISCOUNT, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.DISCOUNT)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_member_discount_amount_report_data(self, dto):
+        """
+        查询门店折扣率会员数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.store.DISCOUNT, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.DISCOUNT)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_member_sipo_amount_report_data(self, dto):
+        """
+        查询客单价会员数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.zone.SI_PO, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.SI_PO)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_member_sipo_amount_report_data(self, dto):
+        """
+        查询门店客单价会员数
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = asset_analyse_formator(query_sql.asset.member.store.SI_PO, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.SI_PO)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict

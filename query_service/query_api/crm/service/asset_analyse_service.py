@@ -148,3 +148,57 @@ class AssetAnalyseService:
         :return:
         """
         pass
+    
+    @abstractclassmethod
+    def get_member_time_amount_report_data(self, dto):
+        """
+        查询入会时长会员数
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_member_time_amount_report_data(self, dto):
+        """
+        查询门店入会时长会员数
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_member_discount_amount_report_data(self, dto):
+        """
+        查询折扣率会员数
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_member_discount_amount_report_data(self, dto):
+        """
+        查询门店折扣率会员数
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_member_sipo_amount_report_data(self, dto):
+        """
+        查询客单价会员数
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_member_sipo_amount_report_data(self, dto):
+        """
+        查询门店客单价会员数
+        :param dto:
+        :return:
+        """
+        pass

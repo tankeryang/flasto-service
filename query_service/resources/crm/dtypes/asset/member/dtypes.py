@@ -2,10 +2,8 @@ STATIC = {
     'brand': str,
     'zone': str,
     'register_member_amount': int,
-    'rma_compared_with_ystd': float,
     'consumed_member_amount': int,
     'consumed_member_amount_proportion': float,
-    'cma_compared_with_ystd': float,
     'unconsumed_member_amount': int,
     'unconsumed_member_amount_proportion': float
 }
@@ -47,6 +45,27 @@ ACTIVE = {
     'sleep_member_amount_proportion': float,
     'pre_lost_member_amount': int,
     'pre_lost_member_amount_proportion': float
+}
+
+TIME = {
+    'brand': str,
+    'zone': str,
+    'member_amount': int,
+    'time': str
+}
+
+DISCOUNT = {
+    'brand': str,
+    'zone': str,
+    'member_amount': int,
+    'discount': str
+}
+
+SI_PO = {
+    'brand': str,
+    'zone': str,
+    'member_amount': int,
+    'sales_income_per_order': str
 }
 
 RECENCY = {

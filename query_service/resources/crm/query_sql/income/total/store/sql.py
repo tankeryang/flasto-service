@@ -10,7 +10,8 @@ ALL = """
         AND date >= date('{start_date}')
         GROUP BY brand_name, store_code
     ), lyst AS (
-        SELECT brand_name, store_code, member_type, cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income
+        SELECT brand_name, store_code, member_type, cast(sum(sales_income) AS DECIMAL(18, 3)) AS sales_income,
+        array_distinct(array_agg(store_code)) AS store_array
         FROM ads_crm.member_analyse_fold_daily_income_detail
         WHERE member_type IS NOT NULL AND member_newold_type IS NULL AND member_level_type IS NULL
         AND brand_name IN ({brands})
