@@ -49,9 +49,23 @@ ACTIVE = {
     'pre_lost_member_amount_proportion': float
 }
 
+RECENCY = {
+    'brand': str,
+    'zone': str,
+    'member_amount': int,
+    'recency': str
+}
+
 FREQUENCY = {
     'brand': str,
     'zone': str,
     'member_amount': int,
     'frequency': str
+}
+
+MONETARY = {
+    'brand': str,
+    'zone': str,
+    'member_amount': int,
+    'monetary': str
 }

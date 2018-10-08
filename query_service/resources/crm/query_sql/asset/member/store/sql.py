@@ -204,6 +204,48 @@ ACTIVE = """
 
 ########################################################################################################################
 
+RECENCY = """
+    WITH r AS (
+        SELECT
+            mi.brand_name,
+            mi.store_code,
+            mi.member_no,
+            IF (mi.member_last_order_time IS NOT NULL,
+                CASE
+                WHEN (
+                    DATE(mi.member_last_order_time) <= DATE('{end_date}') - INTERVAL '1' DAY
+                    AND DATE(mi.member_last_order_time) >= DATE('{end_date}') - INTERVAL '3' month
+                ) THEN '<3'
+                WHEN (
+                    DATE(mi.member_last_order_time) <= DATE('{end_date}') - INTERVAL '3' month
+                    AND DATE(mi.member_last_order_time) >= DATE('{end_date}') - INTERVAL '5' month
+                ) THEN '3-5'
+                WHEN (
+                    DATE(mi.member_last_order_time) <= DATE('{end_date}') - INTERVAL '6' month
+                    AND DATE(mi.member_last_order_time) >= DATE('{end_date}') - INTERVAL '8' month
+                ) THEN '6-8'
+                WHEN (
+                    DATE(mi.member_last_order_time) <= DATE('{end_date}') - INTERVAL '9' month
+                ) THEN '>9'
+                ELSE NULL END,
+                NULL
+            ) recency
+        FROM cdm_crm.member_info_detail mi
+        WHERE mi.brand_name IN ({brands})
+        AND mi.store_code IN ({zones})
+        AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
+    )
+    SELECT DISTINCT
+        brand_name AS brand,
+        store_code AS zone,
+        cast(count(distinct member_no) AS INTEGER) AS member_amount,
+        recency
+    FROM r WHERE recency IS NOT NULL
+    GROUP BY brand_name, store_code, recency
+"""
+
+########################################################################################################################
+
 FREQUENCY = """
     WITH f AS (
         SELECT
@@ -233,4 +275,47 @@ FREQUENCY = """
         frequency
     FROM f WHERE frequency IS NOT NULL
     GROUP BY brand_name, store_code, frequency
+"""
+
+########################################################################################################################
+
+MONETARY = """
+    WITH m AS (
+        SELECT
+            mi.brand_name,
+            mi.store_code,
+            mi.member_no,
+            IF (sum(oi.order_fact_amount) IS NOT NULL,
+                CASE
+                    WHEN (
+                        sum(oi.order_fact_amount) < 1500
+                    ) THEN '<1500'
+                    WHEN (
+                        sum(oi.order_fact_amount) < 3800
+                        AND sum(oi.order_fact_amount) >= 1500
+                    ) THEN '1500-3799'
+                    WHEN (
+                        sum(oi.order_fact_amount) < 5000
+                        AND sum(oi.order_fact_amount) >= 3800
+                    ) THEN '3800-4999'
+                    WHEN (
+                        sum(oi.order_fact_amount) >= 5000
+                    ) THEN '>5000'
+                    ELSE NULL END,
+                NULL
+            ) monetary
+        FROM cdm_crm.member_info_detail mi
+        LEFT JOIN ods_crm.order_info oi ON mi.member_no = oi.member_no
+        WHERE mi.brand_name IN ({brands})
+        AND mi.store_code IN ({zones})
+        AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
+        GROUP BY mi.member_no, mi.brand_name, mi.store_code
+    )
+    SELECT DISTINCT
+        brand_name AS brand,
+        store_code AS zone,
+        cast(count(distinct member_no) AS INTEGER) AS member_amount,
+        monetary
+    FROM m WHERE monetary IS NOT NULL
+    GROUP BY brand_name, store_code, monetary
 """

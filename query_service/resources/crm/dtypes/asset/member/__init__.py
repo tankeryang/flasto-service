@@ -4,5 +4,7 @@ from .dtypes import (
     LEVEL,
     REMAIN,
     ACTIVE,
+    RECENCY,
     FREQUENCY,
+    MONETARY,
 )

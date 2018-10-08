@@ -112,3 +112,39 @@ class AssetAnalyseService:
         :return:
         """
         pass
+    
+    @abstractclassmethod
+    def get_member_recency_amount_report_data(self, dto):
+        """
+        查询最近一次消费会员数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_member_recency_amount_report_data(self, dto):
+        """
+        查询门店最近一次消费会员数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_member_monetary_amount_report_data(self, dto):
+        """
+        查询累计消费金额会员数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_member_monetary_amount_report_data(self, dto):
+        """
+        查询门店累计消费金额会员数
+        :param dto: restplus.Api.payload
+        :return:
+        """
+        pass

@@ -644,3 +644,59 @@ class StoreMemberFrequencyAmountReportController(Resource):
         """
         return AssetAnalyseServiceImpl() \
             .get_store_member_frequency_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/MemberRecencyAmountReport')
+class MemberRecencyAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_zone_dto)
+    @ns_3.marshal_with(po.member_recency_amount_list_po)
+    def post(self):
+        """
+        查询最近一次消费次会员数
+        <3, 3-5, 6-8, >9
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_member_recency_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/StoreMemberRecencyAmountReport')
+class StoreMemberRecencyAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_store_dto)
+    @ns_3.marshal_with(po.member_recency_amount_list_po)
+    def post(self):
+        """
+        查询门店最近一次消费次会员数
+        <3, 3-5, 6-8, >9
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_member_recency_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/MemberMonetaryAmountReport')
+class MemberMonetaryAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_zone_dto)
+    @ns_3.marshal_with(po.member_monetary_amount_list_po)
+    def post(self):
+        """
+        查询累计消费金额次会员数
+        <1500, 1500-2799, 3800-5000, >5000
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_member_monetary_amount_report_data(ns_3.payload)
+
+
+@ns_3.route('/StoreMemberMonetaryAmountReport')
+class StoreMemberMonetaryAmountReportController(Resource):
+    
+    @ns_3.expect(dto.asset_analyse_store_dto)
+    @ns_3.marshal_with(po.member_monetary_amount_list_po)
+    def post(self):
+        """
+        查询门店累计消费金额次会员数
+        <1500, 1500-2799, 3800-5000, >5000
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_member_monetary_amount_report_data(ns_3.payload)

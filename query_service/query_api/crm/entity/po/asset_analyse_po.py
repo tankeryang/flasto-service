@@ -94,3 +94,29 @@ member_frequency_amount_list_po = ns_3.model('MemberFrequencyAmountReportListMod
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+
+member_recency_amount_po = ns_3.model('MemberRecencyAmountReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'member_amount': fields.Integer(readOnly=True, description="会员数"),
+    'recency': fields.String(readOnly=True, description="最近一次消费")
+})
+member_recency_amount_list_po = ns_3.model('MemberRecencyAmountReportListModel', {
+    'data': fields.List(fields.Nested(member_recency_amount_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
+
+
+member_monetary_amount_po = ns_3.model('MemberMonetaryAmountReportModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'member_amount': fields.Integer(readOnly=True, description="会员数"),
+    'monetary': fields.String(readOnly=True, description="累计消费金额")
+})
+member_monetary_amount_list_po = ns_3.model('MemberRecencyAmountReportListModel', {
+    'data': fields.List(fields.Nested(member_monetary_amount_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
