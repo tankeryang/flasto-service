@@ -2,7 +2,7 @@ from flask_restplus import Resource, Namespace
 
 ns_1 = Namespace('CRM 报表中心', path='/crm/report', description='日报月报api')
 ns_2 = Namespace('CRM 业绩分析', path='/crm/income', description='业绩分析api')
-ns_3 = Namespace('CRM 客户资产', path='/crm/asset', description='客户资产api')
+ns_3 = Namespace('CRM 会员资产', path='/crm/asset', description='会员资产api')
 
 from query_service.query_biz.crm.service.impl import (
     ReportCenterServiceImpl,
