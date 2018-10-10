@@ -29,4 +29,7 @@ from .asset_analyse_po import (
     member_recency_amount_list_po,
     member_frequency_amount_list_po,
     member_monetary_amount_list_po,
+    recruit_amount_list_po,
+    recruit_amount_daily_list_po,
+    recruit_amount_monthly_list_po,
 )

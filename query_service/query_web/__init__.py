@@ -20,12 +20,14 @@ def register_api():
     from query_service.query_web.crm.controller.crm_controller import ns_1 as report_center
     from query_service.query_web.crm.controller.crm_controller import ns_2 as income_analyse
     from query_service.query_web.crm.controller.crm_controller import ns_3 as asset_analyse
+    from query_service.query_web.crm.controller.crm_controller import ns_4 as recruit_analyse
 
     from query_service.query_web import api
     
     api.add_namespace(report_center)
     api.add_namespace(income_analyse)
     api.add_namespace(asset_analyse)
+    api.add_namespace(recruit_analyse)
     api.namespaces.pop(0)
 
 

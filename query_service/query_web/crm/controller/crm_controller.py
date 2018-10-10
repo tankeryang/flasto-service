@@ -3,6 +3,7 @@ from flask_restplus import Resource, Namespace
 ns_1 = Namespace('CRM 报表中心', path='/crm/report', description='日报月报api')
 ns_2 = Namespace('CRM 业绩分析', path='/crm/income', description='业绩分析api')
 ns_3 = Namespace('CRM 会员资产', path='/crm/asset', description='会员资产api')
+ns_4 = Namespace('CRM 招募会员', path='/crm/recruit', description='招募会员api')
 
 from query_service.query_biz.crm.service.impl import (
     ReportCenterServiceImpl,
@@ -784,3 +785,87 @@ class StoreMemberSipoAmountReportController(Resource):
         """
         return AssetAnalyseServiceImpl() \
             .get_store_member_sipo_amount_report_data(ns_3.payload)
+
+
+@ns_4.route('/RecruitAmountReport')
+class RecruitAmountReportController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_zone_dto)
+    @ns_4.marshal_with(po.recruit_amount_list_po)
+    def post(self):
+        """
+        查询招募会员详情
+        招募会员，有消费会员，未消费会员
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_recruit_amount_report_data(ns_4.payload)
+
+
+@ns_4.route('/StoreRecruitAmountReport')
+class StoreRecruitAmountReportController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_store_dto)
+    @ns_4.marshal_with(po.recruit_amount_list_po)
+    def post(self):
+        """
+        查询门店招募会员详情
+        招募会员，有消费会员，未消费会员
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_recruit_amount_report_data(ns_4.payload)
+
+
+@ns_4.route('/RecruitAmountDailyDetail')
+class RecruitAmountDailyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_zone_dto)
+    @ns_4.marshal_with(po.recruit_amount_daily_list_po)
+    def post(self):
+        """
+        查询每日招募会员详情
+        招募会员，有消费会员，未消费会员
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_recruit_amount_daily_detail_data(ns_4.payload)
+
+
+@ns_4.route('/StoreRecruitAmountDailyDetail')
+class StoreRecruitAmountDailyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_store_dto)
+    @ns_4.marshal_with(po.recruit_amount_daily_list_po)
+    def post(self):
+        """
+        查询门店每日招募会员详情
+        招募会员，有消费会员，未消费会员
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_recruit_amount_daily_detail_data(ns_4.payload)
+
+
+@ns_4.route('/RecruitAmountMonthlyDetail')
+class RecruitAmountMonthlyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_zone_dto)
+    @ns_4.marshal_with(po.recruit_amount_monthly_list_po)
+    def post(self):
+        """
+        查询每月招募会员详情
+        招募会员，有消费会员，未消费会员
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_recruit_amount_monthly_detail_data(ns_4.payload)
+
+
+@ns_4.route('/StoreRecruitAmountMonthlyDetail')
+class StoreRecruitAmountMonthlyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_store_dto)
+    @ns_4.marshal_with(po.recruit_amount_monthly_list_po)
+    def post(self):
+        """
+        查询门店每月招募会员详情
+        招募会员，有消费会员，未消费会员
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_recruit_amount_monthly_detail_data(ns_4.payload)

@@ -202,3 +202,57 @@ class AssetAnalyseService:
         :return:
         """
         pass
+    
+    @abstractclassmethod
+    def get_recruit_amount_report_data(self, dto):
+        """
+        查询招募会员数，有消费会员数，未消费会员数
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_recruit_amount_report_data(self, dto):
+        """
+        查询门店招募会员数，有消费会员数，未消费会员数
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_recruit_amount_daily_detail_data(self, dto):
+        """
+        查询每天招募会员数，有消费会员数，未消费会员数
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_recruit_amount_daily_detail_data(self, dto):
+        """
+        查询门店每天招募会员数，有消费会员数，未消费会员数
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_recruit_amount_monthly_detail_data(self, dto):
+        """
+        查询每月招募会员数，有消费会员数，未消费会员数
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_recruit_amount_monthly_detail_data(self, dto):
+        """
+        查询门店每月招募会员数，有消费会员数，未消费会员数
+        :param dto:
+        :return:
+        """
+        pass

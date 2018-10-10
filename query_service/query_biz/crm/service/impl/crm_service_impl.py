@@ -10,6 +10,7 @@ from query_service.query_biz.crm.db_utils import (
     daily_report_formator,
     income_analyse_formator,
     asset_analyse_formator,
+    recruit_analyse_formator,
 )
 
 # resources
@@ -1011,6 +1012,114 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         con = presto_engine.connect()
     
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.SI_PO)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_recruit_amount_report_data(self, dto):
+        """
+        查询招募会员详情
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = recruit_analyse_formator(query_sql.asset.recruit.zone.ALL, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.STATIC)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_recruit_amount_report_data(self, dto):
+        """
+        查询门店招募会员详情
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = recruit_analyse_formator(query_sql.asset.recruit.store.ALL, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.STATIC)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_recruit_amount_daily_detail_data(self, dto):
+        """
+        查询每天招募会员详情
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = recruit_analyse_formator(query_sql.asset.recruit.zone.DAILY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.DAILY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_recruit_amount_daily_detail_data(self, dto):
+        """
+        查询门店每天招募会员详情
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = recruit_analyse_formator(query_sql.asset.recruit.store.DAILY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.DAILY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_recruit_amount_monthly_detail_data(self, dto):
+        """
+        查询每月招募会员详情
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = recruit_analyse_formator(query_sql.asset.recruit.zone.MONTHLY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.MONTHLY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_recruit_amount_monthly_detail_data(self, dto):
+        """
+        查询门店每月招募会员详情
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = recruit_analyse_formator(query_sql.asset.recruit.store.MONTHLY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.MONTHLY)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
     
         return resp_dict
