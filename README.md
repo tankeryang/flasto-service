@@ -35,7 +35,7 @@
     ├── query_service: 查询服务
     │   ├── query_api: 查询接口定义
     │   ├── query_biz: 查询接口实现
-    │   ├── query_web (web服务):
+    │   ├── query_web: web服务实现
     │   │   └── config.py: web app 配置
     │   ├── resource: 资源文件
     │   ├── gun_query_app.py: gunicorn 配置
