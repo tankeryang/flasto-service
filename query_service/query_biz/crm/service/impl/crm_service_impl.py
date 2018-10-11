@@ -1022,7 +1022,7 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = recruit_analyse_formator(query_sql.asset.recruit.zone.ALL, dto)
+        sql = recruit_analyse_formator(query_sql.asset.recruit.all.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
     
@@ -1040,7 +1040,7 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = recruit_analyse_formator(query_sql.asset.recruit.store.ALL, dto)
+        sql = recruit_analyse_formator(query_sql.asset.recruit.all.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
     
@@ -1058,7 +1058,7 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = recruit_analyse_formator(query_sql.asset.recruit.zone.DAILY, dto)
+        sql = recruit_analyse_formator(query_sql.asset.recruit.all.zone.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
     
@@ -1076,7 +1076,7 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = recruit_analyse_formator(query_sql.asset.recruit.store.DAILY, dto)
+        sql = recruit_analyse_formator(query_sql.asset.recruit.all.store.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
     
@@ -1094,7 +1094,7 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = recruit_analyse_formator(query_sql.asset.recruit.zone.MONTHLY, dto)
+        sql = recruit_analyse_formator(query_sql.asset.recruit.all.zone.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
     
@@ -1112,7 +1112,7 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = recruit_analyse_formator(query_sql.asset.recruit.store.MONTHLY, dto)
+        sql = recruit_analyse_formator(query_sql.asset.recruit.all.store.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
     
@@ -1120,6 +1120,42 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         con = presto_engine.connect()
     
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.MONTHLY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_recruit_consumed_amount_daily_detail_data(self, dto):
+        """
+        查询有消费会员每日详情
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = recruit_analyse_formator(query_sql.asset.recruit.consumed.zone.DAILY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.CONSUMED_DAILY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_recruit_consumed_amount_daily_detail_data(self, dto):
+        """
+        查询门店有消费会员每日详情
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = recruit_analyse_formator(query_sql.asset.recruit.consumed.store.DAILY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.CONSUMED_DAILY)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
     
         return resp_dict

@@ -869,3 +869,31 @@ class StoreRecruitAmountMonthlyDetailController(Resource):
         """
         return AssetAnalyseServiceImpl() \
             .get_store_recruit_amount_monthly_detail_data(ns_4.payload)
+
+
+@ns_4.route('/RecruitConsumedAmountDailyDetail')
+class RecruitConsumedAmountDailyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_zone_dto)
+    @ns_4.marshal_with(po.recruit_consumed_amount_daily_list_po)
+    def post(self):
+        """
+        查询有消费会员每日详情
+        普通会员，VIP会员，升级会员
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_recruit_consumed_amount_daily_detail_data(ns_4.payload)
+
+
+@ns_4.route('/StoreRecruitConsumedAmountDailyDetail')
+class StoreRecruitConsumedAmountDailyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_store_dto)
+    @ns_4.marshal_with(po.recruit_consumed_amount_daily_list_po)
+    def post(self):
+        """
+        查询门店有消费会员每日详情
+        普通会员，VIP会员，升级会员
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_recruit_consumed_amount_daily_detail_data(ns_4.payload)

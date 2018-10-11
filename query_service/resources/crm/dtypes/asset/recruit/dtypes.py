@@ -39,3 +39,12 @@ MONTHLY = {
     'year': str,
     'month': str
 }
+
+CONSUMED_DAILY = {
+    'brand': str,
+    'zone': str,
+    'member_recruit_type': str,
+    'member_amount': int,
+    'member_amount_proportion': float,
+    'date': str
+}

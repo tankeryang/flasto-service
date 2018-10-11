@@ -256,3 +256,20 @@ class AssetAnalyseService:
         :return:
         """
         pass
+    
+    @abstractclassmethod
+    def get_recruit_consumed_amount_daily_detail_data(self, dto):
+        """
+        查询有消费会员每日详情
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_recruit_consumed_amount_daily_detail_data(self, dto):
+        """
+        查询门店有消费会员每日详情
+        :param dto:
+        :return:
+        """
