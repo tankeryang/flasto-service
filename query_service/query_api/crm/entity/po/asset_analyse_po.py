@@ -232,3 +232,18 @@ recruit_consumed_amount_daily_list_po = ns_3.model('RecruitConsumedAmountDailyDe
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+
+recruit_unconsumed_amount_daily_po = ns_3.model('RecruitUnconsumedAmountDailyDetailModel', {
+    'brand': fields.String(readOnly=True, description="品牌名"),
+    'zone': fields.String(readOnly=True, description="查询范围"),
+    'member_register_type': fields.String(readOnly=True, description="会员注册类型"),
+    'member_amount': fields.Integer(readOnly=True, description="会员数"),
+    'member_amount_proportion': fields.Float(readOnly=True, description="占比"),
+    'date': fields.String(readOnly=True, description="日期")
+})
+recruit_unconsumed_amount_daily_list_po = ns_3.model('RecruitUnconsumedAmountDailyDetailListModel', {
+    'data': fields.List(fields.Nested(recruit_unconsumed_amount_daily_po)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})

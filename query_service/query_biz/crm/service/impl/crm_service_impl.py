@@ -1159,3 +1159,39 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
     
         return resp_dict
+
+    def get_recruit_unconsumed_amount_daily_detail_data(self, dto):
+        """
+        查询未消费会员每日详情
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = recruit_analyse_formator(query_sql.asset.recruit.unconsumed.zone.DAILY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.UNCONSUMED_DAILY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict
+
+    def get_store_recruit_unconsumed_amount_daily_detail_data(self, dto):
+        """
+        查询门店未消费会员每日详情
+        :param dto: restplus.Api.payload
+        :return: response dict
+        """
+        sql = recruit_analyse_formator(query_sql.asset.recruit.unconsumed.store.DAILY, dto)
+        if sql is None:
+            return dict(success=False, message="参数错误")
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.UNCONSUMED_DAILY)
+        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+    
+        return resp_dict

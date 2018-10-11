@@ -33,4 +33,5 @@ from .asset_analyse_po import (
     recruit_amount_daily_list_po,
     recruit_amount_monthly_list_po,
     recruit_consumed_amount_daily_list_po,
+    recruit_unconsumed_amount_daily_list_po,
 )

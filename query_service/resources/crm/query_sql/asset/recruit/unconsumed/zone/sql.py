@@ -17,13 +17,13 @@ DAILY = """
     SELECT DISTINCT
         f.brand_name AS brand,
         f.{zone}     AS zone,
-        f.member_recruit_type,
-        cast(COALESCE(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS member_amount,
-        cast(COALESCE(TRY(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount), 0) AS DECIMAL(18, 4)) AS member_amount_proportion,
+        f.member_register_type,
+        cast(COALESCE(cardinality(array_except(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS member_amount,
+        cast(COALESCE(TRY(cardinality(array_except(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount), 0) AS DECIMAL(18, 4)) AS member_amount_proportion,
         f.date AS date
     FROM ads_crm.member_recruit_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
-    WHERE f.member_recruit_type IS NOT NULL AND f.member_recruit_type != '未升级' AND f.member_register_type IS NULL
+    WHERE f.member_register_type IS NOT NULL AND f.member_recruit_type IS NULL
     AND f.brand_name IN ({brands})
     AND f.order_channel IN ({order_channels})
     AND f.{zone} IN ({zones})
@@ -33,5 +33,5 @@ DAILY = """
     AND f.channel_type IN ({channel_types})
     AND f.date <= date('{end_date}') - interval '1' day
     AND f.date >= date('{start_date}')
-    GROUP BY f.brand_name, f.{zone}, f.member_recruit_type, f.date, tt.register_member_array, tt.register_member_amount
+    GROUP BY f.brand_name, f.{zone}, f.member_register_type, f.date, tt.register_member_array, tt.register_member_amount
 """

@@ -897,3 +897,31 @@ class StoreRecruitConsumedAmountDailyDetailController(Resource):
         """
         return AssetAnalyseServiceImpl() \
             .get_store_recruit_consumed_amount_daily_detail_data(ns_4.payload)
+
+
+@ns_4.route('/RecruitUnconsumedAmountDailyDetail')
+class RecruitUnconsumedAmountDailyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_zone_dto)
+    @ns_4.marshal_with(po.recruit_unconsumed_amount_daily_list_po)
+    def post(self):
+        """
+        查询未消费会员每日详情
+        官网注册，门店注册
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_recruit_unconsumed_amount_daily_detail_data(ns_4.payload)
+
+
+@ns_4.route('/StoreRecruitUnconsumedAmountDailyDetail')
+class StoreRecruitUnconsumedAmountDailyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_store_dto)
+    @ns_4.marshal_with(po.recruit_unconsumed_amount_daily_list_po)
+    def post(self):
+        """
+        查询门店未消费会员每日详情
+        官网注册，门店注册
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_recruit_unconsumed_amount_daily_detail_data(ns_4.payload)

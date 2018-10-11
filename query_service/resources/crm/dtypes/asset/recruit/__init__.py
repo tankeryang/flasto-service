@@ -3,4 +3,5 @@ from .dtypes import (
     DAILY,
     MONTHLY,
     CONSUMED_DAILY,
+    UNCONSUMED_DAILY,
 )

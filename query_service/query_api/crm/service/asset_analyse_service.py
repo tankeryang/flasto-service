@@ -273,3 +273,21 @@ class AssetAnalyseService:
         :param dto:
         :return:
         """
+    
+    @abstractclassmethod
+    def get_recruit_unconsumed_amount_daily_detail_data(self, dto):
+        """
+        查询未消费会员每日详情
+        :param dto:
+        :return:
+        """
+        pass
+    
+    @abstractclassmethod
+    def get_store_recruit_unconsumed_amount_daily_detail_data(self, dto):
+        """
+        查询门店未消费会员每日详情
+        :param dto:
+        :return:
+        """
+        pass

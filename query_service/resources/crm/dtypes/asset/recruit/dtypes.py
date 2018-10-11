@@ -48,3 +48,12 @@ CONSUMED_DAILY = {
     'member_amount_proportion': float,
     'date': str
 }
+
+UNCONSUMED_DAILY = {
+    'brand': str,
+    'zone': str,
+    'member_register_type': str,
+    'member_amount': int,
+    'member_amount_proportion': float,
+    'date': str
+}
