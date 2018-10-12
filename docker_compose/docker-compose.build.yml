@@ -11,5 +11,3 @@ services:
       - "5678:5678"
     volumes:
       - ../query_service/log:/opt/flasto-service/query_service/log
-      - /etc/timezone:/etc/timezone
-      - /etc/localtime:/etc/localtime
