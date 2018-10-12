@@ -501,7 +501,6 @@ class StoreMemberAmountReportController(Resource):
         查询门店会员计数详情
         当前全部会员，有消费会员，未消费会员
         """
-        
         return AssetAnalyseServiceImpl()\
             .get_store_member_amount_report_data(ns_3.payload)
     
