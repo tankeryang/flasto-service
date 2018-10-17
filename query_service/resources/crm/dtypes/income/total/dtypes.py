@@ -1,6 +1,6 @@
 ALL = {
     'brand': str,
-    'zone': str,
+    'zone': list,
     'member_type': str,
     'sales_income': float,
     'sales_income_proportion': float,
@@ -16,21 +16,23 @@ ALL = {
 
 DAILY = {
     'brand': str,
-    'zone': str,
+    'zone': list,
     'member_type': str,
     'sales_income': float,
     'sales_income_proportion': float,
     'compared_with_lyst': float,
+    'compared_with_ss_lyst': float,
     'date': str
 }
 
 MONTHLY = {
     'brand': str,
-    'zone': str,
+    'zone': list,
     'member_type': str,
     'sales_income': float,
     'sales_income_proportion': float,
     'compared_with_lyst': float,
+    'compared_with_ss_lyst': float,
     'year': str,
     'month': str
 }

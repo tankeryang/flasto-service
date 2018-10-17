@@ -4,7 +4,7 @@ from query_service.query_web.crm.controller.crm_controller import ns_2
 
 total_all_po = ns_2.model('MemberTotalIncomeReportModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
@@ -26,11 +26,12 @@ total_all_list_po = ns_2.model('MemberTotalIncomeReportListModel', {
 
 total_daily_po = ns_2.model('MemberTotalDailyIncomeDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
     'date': fields.String(readOnly=True, description="日期")
 })
 total_daily_list_po = ns_2.model('MemberTotalDailyIncomeDetailListModel', {
@@ -42,11 +43,12 @@ total_daily_list_po = ns_2.model('MemberTotalDailyIncomeDetailListModel', {
 
 total_monthly_po = ns_2.model('MemberTotalMonthlyIncomeDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
     'year': fields.String(readOnly=True, description="年份"),
     'month': fields.String(readOnly=True, description="月份")
 })
@@ -79,7 +81,7 @@ now_before_all_list_po = ns_2.model('MemberNowBeforeIncomeReportListModel', {
 
 new_old_all_po = ns_2.model('MemberNewOldIncomeReportModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
@@ -101,11 +103,12 @@ new_old_all_list_po = ns_2.model('MemberNewOldIncomeReportListModel', {
 
 new_old_daily_po = ns_2.model('MemberNewOldDailyIncomeDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
     'date': fields.String(readOnly=True, description="日期")
 })
 new_old_daily_list_po = ns_2.model('MemberNewOldDailyIncomeDetailListModel', {
@@ -117,11 +120,12 @@ new_old_daily_list_po = ns_2.model('MemberNewOldDailyIncomeDetailListModel', {
 
 new_old_monthly_po = ns_2.model('MemberNewOldMonthlyIncomeDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
     'year': fields.String(readOnly=True, description="年份"),
     'month': fields.String(readOnly=True, description="月份")
 })
@@ -134,7 +138,7 @@ new_old_monthly_list_po = ns_2.model('MemberNewOldMonthlyIncomeDetailListModel',
 
 level_all_po = ns_2.model('MemberLevelIncomeReportModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
@@ -155,11 +159,12 @@ level_all_list_po = ns_2.model('MemberLevelIncomeReportListModel', {
 
 level_daily_po = ns_2.model('MemberLevelDailyIncomeDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
     'date': fields.String(readOnly=True, description="日期")
 })
 level_daily_list_po = ns_2.model('MemberLevelDailyIncomeDetailListModel', {
@@ -171,11 +176,12 @@ level_daily_list_po = ns_2.model('MemberLevelDailyIncomeDetailListModel', {
 
 level_monthly_po = ns_2.model('MemberLevelMonthlyIncomeDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
     'year': fields.String(readOnly=True, description="年份"),
     'month': fields.String(readOnly=True, description="月份")
 })
@@ -188,7 +194,7 @@ level_monthly_list_po = ns_2.model('MemberLevelMonthlyIncomeDetailListModel', {
 
 mul_dim_all_po = ns_2.model('MemberMulDimIncomeReportModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_newold_type': fields.String(readOnly=True, description="新老会员类型"),
     'member_level_type': fields.String(readOnly=True, description="会员等级类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
@@ -211,11 +217,12 @@ mul_dim_all_list_po = ns_2.model('MemberMulDimIncomeReportListModel', {
 
 mul_dim_daily_po = ns_2.model('MemberMulDimDailyIncomeDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_newold_type': fields.String(readOnly=True, description="新老会员类型"),
     'member_level_type': fields.String(readOnly=True, description="会员等级类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
     'date': fields.String(readOnly=True, description="日期")
 })
 mul_dim_daily_list_po = ns_2.model('MemberMulDimDailyIncomeDetailListModel', {
@@ -227,11 +234,12 @@ mul_dim_daily_list_po = ns_2.model('MemberMulDimDailyIncomeDetailListModel', {
 
 mul_dim_monthly_po = ns_2.model('MemberMulDimMonthlyIncomeDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_newold_type': fields.String(readOnly=True, description="新老会员类型"),
     'member_level_type': fields.String(readOnly=True, description="会员等级类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
+    'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
     'year': fields.String(readOnly=True, description="年份"),
     'month': fields.String(readOnly=True, description="月份")
 })

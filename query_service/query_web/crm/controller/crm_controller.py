@@ -853,7 +853,7 @@ class RecruitAmountMonthlyDetailController(Resource):
         招募会员，有消费会员，未消费会员
         """
         return AssetAnalyseServiceImpl() \
-            .get_store_recruit_amount_monthly_detail_data(ns_4.payload)
+            .get_recruit_amount_monthly_detail_data(ns_4.payload)
 
 
 @ns_4.route('/StoreRecruitAmountMonthlyDetail')

@@ -22,6 +22,10 @@ class Language(Resource):
     
     @api.marshal_with(a_language)
     def get(self):
+        """
+        get lang
+        :return:
+        """
         return languages
 
     @api.expect(a_language, validate=True)
