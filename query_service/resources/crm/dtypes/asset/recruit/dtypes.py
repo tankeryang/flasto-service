@@ -1,6 +1,6 @@
 STATIC = {
     'brand': str,
-    'zone': str,
+    'zone': list,
     'register_member_amount': int,
     'rma_compared_with_lyst': float,
     'consumed_member_amount': int,
@@ -13,7 +13,7 @@ STATIC = {
 
 DAILY = {
     'brand': str,
-    'zone': str,
+    'zone': list,
     'register_member_amount': int,
     'rma_compared_with_lyst': float,
     'consumed_member_amount': int,
@@ -27,7 +27,7 @@ DAILY = {
 
 MONTHLY = {
     'brand': str,
-    'zone': str,
+    'zone': list,
     'register_member_amount': int,
     'rma_compared_with_lyst': float,
     'consumed_member_amount': int,
@@ -42,7 +42,7 @@ MONTHLY = {
 
 CONSUMED_DAILY = {
     'brand': str,
-    'zone': str,
+    'zone': list,
     'member_recruit_type': str,
     'member_amount': int,
     'member_amount_proportion': float,
@@ -51,7 +51,7 @@ CONSUMED_DAILY = {
 
 UNCONSUMED_DAILY = {
     'brand': str,
-    'zone': str,
+    'zone': list,
     'member_register_type': str,
     'member_amount': int,
     'member_amount_proportion': float,

@@ -161,7 +161,7 @@ member_monetary_amount_list_po = ns_3.model('MemberRecencyAmountReportListModel'
 
 recruit_amount_po = ns_3.model('RecruitAmountReportModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'register_member_amount': fields.Integer(readOnly=True, description="招募会员数"),
     'rma_compared_with_lyst': fields.Float(readOnly=True, description="招募会员同比"),
     'consumed_member_amount': fields.Integer(readOnly=True, description="有消费会员数"),
@@ -180,7 +180,7 @@ recruit_amount_list_po = ns_3.model('RecruitAmountReportListModel', {
 
 recruit_amount_daily_po = ns_3.model('RecruitAmountDailyDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'register_member_amount': fields.Integer(readOnly=True, description="招募会员数"),
     'rma_compared_with_lyst': fields.Float(readOnly=True, description="招募会员同比"),
     'consumed_member_amount': fields.Integer(readOnly=True, description="有消费会员数"),
@@ -200,7 +200,7 @@ recruit_amount_daily_list_po = ns_3.model('RecruitAmountDailyDetailListModel', {
 
 recruit_amount_monthly_po = ns_3.model('RecruitAmountMonthlyDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'register_member_amount': fields.Integer(readOnly=True, description="招募会员数"),
     'rma_compared_with_lyst': fields.Float(readOnly=True, description="招募会员同比"),
     'consumed_member_amount': fields.Integer(readOnly=True, description="有消费会员数"),
@@ -221,7 +221,7 @@ recruit_amount_monthly_list_po = ns_3.model('RecruitAmountMonthlyDetailListModel
 
 recruit_consumed_amount_daily_po = ns_3.model('RecruitConsumedAmountDailyDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_recruit_type': fields.String(readOnly=True, description="招募会员类型"),
     'member_amount': fields.Integer(readOnly=True, description="会员数"),
     'member_amount_proportion': fields.Float(readOnly=True, description="占比"),
@@ -236,7 +236,7 @@ recruit_consumed_amount_daily_list_po = ns_3.model('RecruitConsumedAmountDailyDe
 
 recruit_unconsumed_amount_daily_po = ns_3.model('RecruitUnconsumedAmountDailyDetailModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_register_type': fields.String(readOnly=True, description="会员注册类型"),
     'member_amount': fields.Integer(readOnly=True, description="会员数"),
     'member_amount_proportion': fields.Float(readOnly=True, description="占比"),
