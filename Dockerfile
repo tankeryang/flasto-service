@@ -4,6 +4,6 @@ WORKDIR /opt/flasto-service
 COPY ./ ./
 RUN mkdir query_service/log \
     && pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir -r requirements.txt \
-    && chmod +x entrypoint.sh
-ENTRYPOINT ["sh", "entrypoint.sh"]
+    && chmod +x docker-entrypoint.sh
+ENTRYPOINT ["sh", "docker-entrypoint.sh"]
 EXPOSE 5678

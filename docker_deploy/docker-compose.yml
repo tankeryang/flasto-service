@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  flasto-service:
+    container_name: flasto-service
+    image: flasto-service:1.0
+    ports:
+      - "5678:5678"
+    volumes:
+      - /var/log/flasto-service:/opt/flasto-service/query_service/log
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
