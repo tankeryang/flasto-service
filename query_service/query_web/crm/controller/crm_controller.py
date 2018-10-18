@@ -884,6 +884,20 @@ class RecruitConsumedAmountDailyDetailController(Resource):
             .get_recruit_consumed_amount_daily_detail_data(ns_4.payload)
 
 
+@ns_4.route('/RecruitConsumedAmountMonthlyDetail')
+class RecruitConsumedAmountMonthlyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_zone_dto)
+    @ns_4.marshal_with(po.recruit_consumed_amount_monthly_list_po)
+    def post(self):
+        """
+        查询有消费会员每月详情
+        普通会员，VIP会员，升级会员
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_recruit_consumed_amount_monthly_detail_data(ns_4.payload)
+
+
 @ns_4.route('/StoreRecruitConsumedAmountDailyDetail')
 class StoreRecruitConsumedAmountDailyDetailController(Resource):
     
@@ -896,6 +910,20 @@ class StoreRecruitConsumedAmountDailyDetailController(Resource):
         """
         return AssetAnalyseServiceImpl() \
             .get_store_recruit_consumed_amount_daily_detail_data(ns_4.payload)
+
+
+@ns_4.route('/StoreRecruitConsumedAmountMonthlyDetail')
+class StoreRecruitConsumedAmountMonthlyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_store_dto)
+    @ns_4.marshal_with(po.recruit_consumed_amount_monthly_list_po)
+    def post(self):
+        """
+        查询门店有消费会员每月详情
+        普通会员，VIP会员，升级会员
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_recruit_consumed_amount_monthly_detail_data(ns_4.payload)
 
 
 @ns_4.route('/RecruitUnconsumedAmountDailyDetail')
@@ -912,6 +940,20 @@ class RecruitUnconsumedAmountDailyDetailController(Resource):
             .get_recruit_unconsumed_amount_daily_detail_data(ns_4.payload)
 
 
+@ns_4.route('/RecruitUnconsumedAmountMonthlyDetail')
+class RecruitUnconsumedAmountMonthlyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_zone_dto)
+    @ns_4.marshal_with(po.recruit_unconsumed_amount_monthly_list_po)
+    def post(self):
+        """
+        查询未消费会员每月详情
+        官网注册，门店注册
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_recruit_unconsumed_amount_monthly_detail_data(ns_4.payload)
+
+
 @ns_4.route('/StoreRecruitUnconsumedAmountDailyDetail')
 class StoreRecruitUnconsumedAmountDailyDetailController(Resource):
     
@@ -924,3 +966,17 @@ class StoreRecruitUnconsumedAmountDailyDetailController(Resource):
         """
         return AssetAnalyseServiceImpl() \
             .get_store_recruit_unconsumed_amount_daily_detail_data(ns_4.payload)
+
+
+@ns_4.route('/StoreRecruitUnconsumedAmountMonthlyDetail')
+class StoreRecruitUnconsumedAmountMonthlyDetailController(Resource):
+    
+    @ns_4.expect(dto.recruit_analyse_store_dto)
+    @ns_4.marshal_with(po.recruit_unconsumed_amount_monthly_list_po)
+    def post(self):
+        """
+        查询门店未消费会员每月详情
+        官网注册，门店注册
+        """
+        return AssetAnalyseServiceImpl() \
+            .get_store_recruit_unconsumed_amount_monthly_detail_data(ns_4.payload)

@@ -49,6 +49,16 @@ CONSUMED_DAILY = {
     'date': str
 }
 
+CONSUMED_MONTHLY = {
+    'brand': str,
+    'zone': list,
+    'member_recruit_type': str,
+    'member_amount': int,
+    'member_amount_proportion': float,
+    'year': str,
+    'month': str
+}
+
 UNCONSUMED_DAILY = {
     'brand': str,
     'zone': list,
@@ -56,4 +66,14 @@ UNCONSUMED_DAILY = {
     'member_amount': int,
     'member_amount_proportion': float,
     'date': str
+}
+
+UNCONSUMED_MONTHLY = {
+    'brand': str,
+    'zone': list,
+    'member_register_type': str,
+    'member_amount': int,
+    'member_amount_proportion': float,
+    'year': str,
+    'month': str
 }

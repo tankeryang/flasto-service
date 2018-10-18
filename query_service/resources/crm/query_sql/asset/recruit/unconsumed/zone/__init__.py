@@ -1,1 +1,4 @@
-from .sql import DAILY
+from .sql import (
+    DAILY,
+    MONTHLY,
+)
