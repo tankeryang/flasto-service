@@ -121,7 +121,8 @@ DAILY = """
     WITH l AS (
         SELECT DISTINCT a.brand_name AS brand, array[a.{zone}] AS zone, a.member_type, b.date
         FROM (
-            SELECT DISTINCT brand_name, member_type, {zone}, 'key' AS key FROM cdm_crm.order_info_detail
+            SELECT DISTINCT brand_name, member_type, {zone}, 'key' AS key
+            FROM ads_crm.member_analyse_fold_index_label
             WHERE brand_name IN ({brands}) AND member_type IS NOT NULL AND {zone} IN ({zones})
         ) a FULL JOIN (
             SELECT DISTINCT date(order_deal_time) date, 'key' AS key
@@ -262,7 +263,8 @@ MONTHLY = """
     WITH l AS (
         SELECT DISTINCT a.brand_name AS brand, array[a.{zone}] AS zone, a.member_type, b.year, b.month
         FROM (
-            SELECT DISTINCT brand_name, member_type, {zone}, 'key' AS key FROM cdm_crm.order_info_detail
+            SELECT DISTINCT brand_name, member_type, {zone}, 'key' AS key
+            FROM ads_crm.member_analyse_fold_index_label
             WHERE brand_name IN ({brands}) AND member_type IS NOT NULL AND {zone} IN ({zones})
         ) a FULL JOIN (
             SELECT DISTINCT year(order_deal_time) AS year, month(order_deal_time) AS month, 'key' AS key

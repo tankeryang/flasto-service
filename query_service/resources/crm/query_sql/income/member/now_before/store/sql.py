@@ -27,7 +27,7 @@ ALL = """
     ), t1 AS (
         SELECT DISTINCT
             cmail.brand_name  AS brand,
-            cmail.store_code  AS zone,
+            cmail.zone        AS zone,
             cmail.member_type AS member_type,
             sm.si             AS si,
             sm.ca             AS ca,
@@ -35,40 +35,40 @@ ALL = """
             sm.siq            AS siq,
             smtt.ttsi         AS ttsi
         FROM (
-            SELECT DISTINCT brand_name, store_code, order_channel, member_type
+            SELECT DISTINCT brand_name, array_distinct(array_agg(store_code)) AS zone, order_channel, member_type
             FROM cdm_crm.member_analyse_index_label
-            WHERE member_type = '会员' ) cmail
+            WHERE member_type = '会员' AND store_code IN ({zones})
+            GROUP BY brand_name, order_channel, member_type) cmail
         LEFT JOIN (
-            SELECT brand_name, store_code, order_channel, member_type,
+            SELECT brand_name, order_channel, member_type,
             sum(coid.order_fact_amount) * 1.0   AS si,
             count(distinct coid.member_no)      AS ca,
             count(distinct coid.outer_order_no) AS oa,
             sum(coid.order_item_quantity)       AS siq
             FROM coid
-            WHERE date(coid.order_deal_time) <= date('{end_date}')
+            WHERE coid.store_code IN ({zones})
+            AND date(coid.order_deal_time) <= date('{end_date}')
             AND date(coid.order_deal_time) >= date('{start_date}')
-            GROUP BY brand_name, store_code, order_channel, member_type) sm
+            GROUP BY brand_name, order_channel, member_type) sm
         ON cmail.brand_name = sm.brand_name
-        AND cmail.store_code = sm.store_code
         AND cmail.order_channel = sm.order_channel
         AND cmail.member_type = sm.member_type
         LEFT JOIN (
-            SELECT brand_name, store_code, order_channel,
+            SELECT brand_name, order_channel,
             sum(coid.order_fact_amount) * 1.0 AS ttsi
             FROM coid
-            WHERE date(coid.order_deal_time) <= date('{end_date}')
+            WHERE coid.store_code IN ({zones})
+            AND date(coid.order_deal_time) <= date('{end_date}')
             AND date(coid.order_deal_time) >= date('{start_date}')
-            GROUP BY brand_name, store_code, order_channel) smtt
+            GROUP BY brand_name, order_channel) smtt
         ON cmail.brand_name = smtt.brand_name
-        AND cmail.store_code = smtt.store_code
         AND cmail.order_channel = smtt.order_channel
         WHERE cmail.brand_name IN ({brands})
-        AND cmail.store_code IN ({zones})
         AND cmail.order_channel IN ({order_channels})
     ), t2 AS (
         SELECT DISTINCT
             cmail2.brand_name            AS brand,
-            cmail2.store_code            AS zone,
+            cmail2.zone                  AS zone,
             cmail2.member_nowbefore_type AS member_type,
             sm2.si                       AS si,
             sm2.ca                       AS ca,
@@ -76,35 +76,35 @@ ALL = """
             sm2.siq                      AS siq,
             smtt2.ttsi                   AS ttsi
         FROM (
-            SELECT DISTINCT brand_name, store_code, order_channel, member_nowbefore_type
+            SELECT DISTINCT brand_name, array_distinct(array_agg(store_code)) AS zone, order_channel, member_nowbefore_type
             FROM cdm_crm.member_analyse_index_label
-            WHERE member_type = '会员') cmail2
+            WHERE member_type = '会员' AND store_code IN ({zones})
+            GROUP BY brand_name, order_channel, member_nowbefore_type) cmail2
         LEFT JOIN (
-            SELECT brand_name, store_code, order_channel, member_nowbefore_type,
+            SELECT brand_name, order_channel, member_nowbefore_type,
             sum(coid.order_fact_amount) * 1.0   AS si,
             count(distinct member_no)           AS ca,
             count(distinct coid.outer_order_no) AS oa,
             sum(coid.order_item_quantity)       AS siq
             FROM coid
-            WHERE date(coid.order_deal_time) <= date('{end_date}')
+            WHERE coid.store_code IN ({zones})
+            AND date(coid.order_deal_time) <= date('{end_date}')
             AND date(coid.order_deal_time) >= date('{start_date}')
-            GROUP BY brand_name, store_code, order_channel, member_nowbefore_type) sm2
+            GROUP BY brand_name, order_channel, member_nowbefore_type) sm2
         ON cmail2.brand_name = sm2.brand_name
-        AND cmail2.store_code = sm2.store_code
         AND cmail2.order_channel = sm2.order_channel
         AND cmail2.member_nowbefore_type = sm2.member_nowbefore_type
         LEFT JOIN (
-            SELECT brand_name, store_code, order_channel,
+            SELECT brand_name, order_channel,
             sum(coid.order_fact_amount) * 1.0 AS ttsi
             FROM coid
-            WHERE date(coid.order_deal_time) <= date('{end_date}')
+            WHERE coid.store_code IN ({zones})
+            AND date(coid.order_deal_time) <= date('{end_date}')
             AND date(coid.order_deal_time) >= date('{start_date}')
-            GROUP BY brand_name, store_code, order_channel) smtt2
+            GROUP BY brand_name, order_channel) smtt2
         ON cmail2.brand_name = smtt2.brand_name
-        AND cmail2.store_code = smtt2.store_code
         AND cmail2.order_channel = smtt2.order_channel
         WHERE cmail2.brand_name IN ({brands})
-        AND cmail2.store_code IN ({zones})
         AND cmail2.order_channel IN ({order_channels})
     )
     SELECT DISTINCT

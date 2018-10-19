@@ -61,7 +61,7 @@ total_monthly_list_po = ns_2.model('MemberTotalMonthlyIncomeDetailListModel', {
 
 now_before_all_po = ns_2.model('MemberNowBeforeIncomeReportModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
-    'zone': fields.String(readOnly=True, description="查询范围"),
+    'zone': fields.List(fields.String(readOnly=True, description="查询范围")),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),

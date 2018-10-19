@@ -3,7 +3,7 @@ DAILY = """
         SELECT DISTINCT a.brand_name AS brand, array[a.{zone}] AS zone, a.member_register_type, b.date
         FROM (
             SELECT DISTINCT brand_name, member_register_type, {zone}, 'key' AS key
-            FROM ads_crm.member_recruit_analyse_fold_daily_income_detail
+            FROM ads_crm.member_recruit_analyse_fold_index_label
             WHERE brand_name IN ({brands}) AND member_register_type IS NOT NULL AND {zone} IN ({zones})
         ) a FULL JOIN (
             SELECT DISTINCT date(order_deal_time) date, 'key' AS key
@@ -61,7 +61,7 @@ MONTHLY = """
         SELECT DISTINCT a.brand_name AS brand, array[a.{zone}] AS zone, a.member_register_type, b.year, b.month
         FROM (
             SELECT DISTINCT brand_name, member_register_type, {zone}, 'key' AS key
-            FROM ads_crm.member_recruit_analyse_fold_daily_income_detail
+            FROM ads_crm.member_recruit_analyse_fold_index_label
             WHERE brand_name IN ({brands}) AND member_register_type IS NOT NULL AND {zone} IN ({zones})
         ) a FULL JOIN (
             SELECT DISTINCT year(order_deal_time) AS year, month(order_deal_time) AS month, 'key' AS key

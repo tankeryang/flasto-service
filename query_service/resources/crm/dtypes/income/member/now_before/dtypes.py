@@ -1,6 +1,6 @@
 ALL = {
     'brand': str,
-    'zone': str,
+    'zone': list,
     'member_type': str,
     'sales_income': float,
     'sales_income_proportion': float,

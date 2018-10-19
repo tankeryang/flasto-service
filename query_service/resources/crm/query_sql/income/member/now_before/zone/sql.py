@@ -138,7 +138,7 @@ ALL = """
     )
     SELECT DISTINCT
         t1.brand       AS brand,
-        t1.zone        AS zone,
+        array[t1.zone] AS zone,
         t1.member_type AS member_type,
         cast(COALESCE(SUM(t1.si), 0) AS DECIMAL(18, 3)) AS sales_income,
         cast(COALESCE(TRY(SUM(t1.si) * 1.0 / SUM(t1.ttsi)), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
@@ -151,7 +151,7 @@ ALL = """
     FROM t1 GROUP BY t1.brand, t1.zone, t1.member_type
     UNION SELECT DISTINCT
         t2.brand       AS brand,
-        t2.zone        AS zone,
+        array[t2.zone] AS zone,
         t2.member_type AS member_type,
         cast(COALESCE(SUM(t2.si), 0) AS DECIMAL(18, 3)) AS sales_income,
         cast(COALESCE(TRY(SUM(t2.si) * 1.0 / SUM(t2.ttsi)), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
