@@ -31,7 +31,7 @@
 * 目录结构
     ```
     flasto-service
-    ├── docker_compose: docker-compose 文件
+    ├── docker_deploy: docker-compose 文件
     ├── query_service: 查询服务
     │   ├── query_api: 查询接口定义
     │   ├── query_biz: 查询接口实现
@@ -47,29 +47,47 @@
 
 ### local
 
-* __query service__
+* __start up__
 
-    ```shell
+    ```bash
     > $ cd flasto-service
     > $ source venv/bin/activate
-    (venv) > $ gunicorn -c query_service/gun_query_app.py query_app:app
+    (venv) > $ sh gunicorn-startup.sh
+    ```
+
+* __stop__
+
+    ```bash
+    > $ cd flasto-service
+    > $ source venv/bin/activate
+    (venv) > $ sh gunicorn-kill.sh
     ```
 
 ### docker
 
-* __build & run__
+* __build & run on local__
     ```shell
-    > $ docker-compose -f docker_compose/docker-compose.build.yml up -d
+    > $ docker-compose -f docker_deploy/docker-compose.build-local.yml up -d
     ```
 
-* __local testing__
+* __build & run on remote(prod) server__
     ```shell
-    > $ docker-compose -f docker_compose/docker-compose.local.yml up -d
+    > $ docker-compose -f docker_deploy/docker-compose.build-remote.yml up -d
     ```
 
-* __prod deploy__
+* __run & develop on local (already build)__
     ```shell
-    > $ docker-compose -f docker_compose/docker-compose.yml up -d
+    > $ docker-compose -f docker_deploy/docker-compose.dev.yml up -d
+    ```
+
+* __run on local (already build)__
+    ```shell
+    > $ docker-compose -f docker_deploy/docker-compose.local.yml up -d
+    ```
+
+* __run on remote(prod) server__
+    ```shell
+    > $ docker-compose -f docker_deploy/docker-compose.yml up -d
     ```
 
 ## Usage
