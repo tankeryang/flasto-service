@@ -1,5 +1,5 @@
 from flask_restplus import fields
-from query_service.query_web.crm.controller.crm_controller import ns_2
+from query_service.query_web.crm.controller.income_analyse_controller import ns_2
 
 
 total_all_po = ns_2.model('MemberTotalIncomeReportModel', {

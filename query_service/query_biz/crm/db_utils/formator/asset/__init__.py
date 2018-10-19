@@ -1,0 +1,1 @@
+from .asset_analyse_formator import asset_analyse_formator

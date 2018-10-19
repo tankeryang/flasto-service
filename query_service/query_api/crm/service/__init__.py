@@ -1,3 +1,4 @@
 from .report_center_service import ReportCenterService
 from .income_analyse_service import IncomeAnalyseService
 from .asset_analyse_service import AssetAnalyseService
+from .recruit_analyse_service import RecruitAnalyseService

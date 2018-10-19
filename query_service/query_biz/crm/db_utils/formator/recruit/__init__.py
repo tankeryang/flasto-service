@@ -1,0 +1,1 @@
+from .recruit_analyse_formator import recruit_analyse_formator

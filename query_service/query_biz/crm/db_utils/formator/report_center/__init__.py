@@ -1,0 +1,1 @@
+from .daily_report_formator import daily_report_formator

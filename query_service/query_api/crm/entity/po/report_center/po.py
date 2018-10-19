@@ -1,5 +1,5 @@
 from flask_restplus import fields
-from query_service.query_web.crm.controller.crm_controller import ns_1
+from query_service.query_web.crm.controller.report_center_controller import ns_1
 
 daily_report_po = ns_1.model('CrmDailyReportModel', {
     'sales_area': fields.String(readOnly=True, description="区域"),
