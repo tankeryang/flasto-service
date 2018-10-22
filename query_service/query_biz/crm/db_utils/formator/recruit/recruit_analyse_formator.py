@@ -1,5 +1,5 @@
 from query_service.query_biz.crm.db_utils.validator import validator
-import query_service.query_api.crm.entity.dto.asset as dto
+import query_service.query_api.crm.entity.dto.recruit as dto
 
 
 def recruit_analyse_formator(sql, payload):
