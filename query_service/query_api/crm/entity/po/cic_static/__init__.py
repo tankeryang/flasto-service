@@ -1,0 +1,1 @@
+from .po import cic_static_list_po

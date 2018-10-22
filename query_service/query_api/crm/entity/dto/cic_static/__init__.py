@@ -1,0 +1,1 @@
+from .dto import cic_static_dto

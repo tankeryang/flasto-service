@@ -1,0 +1,1 @@
+from .cic_static_formator import cic_static_formator

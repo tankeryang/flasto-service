@@ -17,6 +17,7 @@ api = Api(
 
 
 def register_api():
+    from query_service.query_web.crm.controller.cic_static_controller import ns_0 as cic_static
     from query_service.query_web.crm.controller.report_center_controller import ns_1 as report_center
     from query_service.query_web.crm.controller.income_analyse_controller import ns_2 as income_analyse
     from query_service.query_web.crm.controller.asset_analyse_controller import ns_3 as asset_analyse
@@ -24,6 +25,7 @@ def register_api():
 
     from query_service.query_web import api
     
+    api.add_namespace(cic_static)
     api.add_namespace(report_center)
     api.add_namespace(income_analyse)
     api.add_namespace(asset_analyse)
