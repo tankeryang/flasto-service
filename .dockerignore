@@ -1,15 +1,12 @@
 .idea/
 .git/
 venv/
-docker_compose/
+docker_deploy/
 **/test/
 **/__pycache__/
 **/log/
-
+**/.DS_Store
 .gitignore
 README.md
-docker-compose.dev.yml
-docker-compose.yml
 Dockerfile
-nohup.out
 **/nohup.out
