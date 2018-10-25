@@ -11,7 +11,8 @@ import query_service.resources.crm.dtypes as dtypes
 
 class ReportCenterServiceImpl(ReportCenterService):
     
-    def get_daily_report_data(self, dto):
+    @classmethod
+    def get_daily_report_data(cls, dto):
         """
         查询日报
         :param dto: restplus.Api.payload

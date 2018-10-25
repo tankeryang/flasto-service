@@ -1,3 +1,5 @@
+# TODO: 日报改多品牌，member_type 字段需要调整
+
 DAILY = """
     SELECT DISTINCT
         {cmail_sales_area} AS sales_area,

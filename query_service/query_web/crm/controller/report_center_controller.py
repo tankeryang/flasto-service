@@ -18,5 +18,4 @@ class CrmDailyReportController(Resource):
         日报查询
         全国，大区，城市，门店
         """
-        return ReportCenterServiceImpl() \
-            .get_daily_report_data(ns_1.payload)
+        return ReportCenterServiceImpl.get_daily_report_data(ns_1.payload)
