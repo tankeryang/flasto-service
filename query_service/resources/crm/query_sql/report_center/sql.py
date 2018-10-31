@@ -39,6 +39,8 @@ DAILY = """
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
+        AND coid.brand_code = '2'
+        AND coid.channel_type = '自营'
         GROUP BY coid.{zone}, coid.dr_member_type
     ) sm
     ON cmail.{zone} = sm.{zone}
@@ -50,6 +52,8 @@ DAILY = """
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
+        AND coid.brand_code = '2'
+        AND coid.channel_type = '自营'
         GROUP BY coid.{zone}
     ) sm_tt
     ON cmail.{zone} = sm_tt.{zone}
@@ -61,6 +65,8 @@ DAILY = """
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
         AND coid.dr_member_type != '非会员'
+        AND coid.brand_code = '2'
+        AND coid.channel_type = '自营'
         GROUP BY coid.{zone}
     ) sm_mb_tt
     ON cmail.{zone} = sm_mb_tt.{zone}
@@ -71,6 +77,8 @@ DAILY = """
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date(date('{end_date}') - interval '1' year)
         AND date(coid.order_deal_time) >= date(date('{start_date}') - interval '1' year)
+        AND coid.brand_code = '2'
+        AND coid.channel_type = '自营'
         GROUP BY coid.{zone}, coid.dr_member_type
     ) lyst
     ON cmail.{zone} = lyst.{zone}
@@ -83,6 +91,8 @@ DAILY = """
         WHERE coid.dr_member_type IN ('普通会员', 'VIP会员')
         AND date(coid.order_deal_time) <= date(date('{start_date}') - interval '1' day)
         AND date(coid.order_deal_time) >= date(date('{start_date}') - interval '12' month)
+        AND coid.brand_code = '2'
+        AND coid.channel_type = '自营'
         GROUP BY coid.{zone}, coid.dr_member_type
     ) lmr
     ON cmail.{zone} = lmr.{zone}
@@ -97,6 +107,8 @@ DAILY = """
         AND coid.last_grade_change_time IS NOT NULL
         AND date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
+        AND coid.brand_code = '2'
+        AND coid.channel_type = '自营'
         GROUP BY coid.{zone}, coid.dr_member_type
     ) new_vip
     ON cmail.{zone} = new_vip.{zone}
@@ -110,6 +122,8 @@ DAILY = """
         AND coid.last_grade_change_time IS NULL
         AND date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
+        AND coid.brand_code = '2'
+        AND coid.channel_type = '自营'
         GROUP BY coid.{zone}, coid.dr_member_type
     ) new_normal
     ON cmail.{zone} = new_normal.{zone}
@@ -123,6 +137,8 @@ DAILY = """
         AND date(coid.last_grade_change_time) = date(coid.order_deal_time)
         AND date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
+        AND coid.brand_code = '2'
+        AND coid.channel_type = '自营'
         GROUP BY coid.{zone}, coid.dr_member_type
     ) ugm
     ON cmail.{zone} = ugm.{zone}
@@ -134,6 +150,8 @@ DAILY = """
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
+        AND coid.brand_code = '2'
+        AND coid.channel_type = '自营'
         GROUP BY coid.{zone}
     ) stm
     ON cmail.{zone} = stm.{zone}
