@@ -19,6 +19,7 @@ daily_report_po = ns_1.model('CrmDailyReportModel', {
     'new_vip_member_amount': fields.Integer(readOnly=True, description="会员招募-VIP"),
     'new_normal_member_amount': fields.Integer(readOnly=True, description="会员招募-普通会员"),
     'upgraded_member_amount': fields.Integer(readOnly=True, description="会员升级"),
+    'store_amount': fields.Integer(readOnly=True, description="店铺数"),
     'member_amount_per_store': fields.Float(readOnly=True, description="店均消费总数"),
     'sales_amount_per_member': fields.Float(readOnly=True, description="人均销售金额"),
     'sales_item_quantity_per_member': fields.Float(readOnly=True, description="人均销售件数"),

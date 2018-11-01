@@ -16,6 +16,7 @@ DAILY = {
     'new_vip_member_amount': int,
     'new_normal_member_amount': int,
     'upgraded_member_amount': int,
+    'store_amount': int,
     'member_amount_per_store': float,
     'sales_amount_per_member': float,
     'sales_item_quantity_per_member': float,
