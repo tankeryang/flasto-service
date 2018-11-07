@@ -14,6 +14,8 @@ api = Api(
     contact="@Yang.Yang",
     contact_email="yang.yang@trendy-global.com",
     contact_url="https://tankeryang.github.io",
+    authorizations=dict(key={'type': 'apiKey', 'in': 'Header', 'name': 'X-API-KEY'}),
+    serve_challenge_on_401=True,
     validate=True,
     format_checker=FormatChecker(formats=("date-time", "date",))
 )

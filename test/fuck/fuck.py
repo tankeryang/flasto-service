@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restplus import Resource, Api, fields, abort
+from functools import wraps
 
 
 class Config:
@@ -8,7 +9,9 @@ class Config:
 
 app = Flask(__name__)
 app.config.from_object(Config)
-api = Api(app, prefix="/v1", title="Users", description="Users CURD api.")
+api = Api(app, prefix="/v1", title="Users", description="Users CURD api.",
+          authorizations=dict(key={'type': 'apiKey', 'in': 'Header', 'name': 'X-API-KEY'}),
+          )
 
 
 language = api.model('language', {
@@ -27,6 +30,22 @@ python = {'language': 'python'}
 languages.append(python)
 
 
+def authorized(func):
+    @wraps(func)
+    def decorator(*args, **kwargs):
+        token = None
+        
+        if 'X-API-KEY' in request.headers:
+            token = request.headers['X-API-KEY']
+        
+        if not token:
+            return dict(message="Token is missing"), 401
+        
+        return func(*args, **kwargs)
+    return decorator
+    
+
+
 @api.errorhandler
 # @api.marshal_with(a_language, code=400)
 def handle_fake_exception_with_header(error):
@@ -34,16 +53,19 @@ def handle_fake_exception_with_header(error):
 
 
 @api.route('/language')
-@api.response(400, 'Validation error', a_language)
+@api.response(401, 'Authorized error', a_language)
 class Language(Resource):
     
+    @api.doc(security='key')
     @api.marshal_with(a_language, envelope='result')
+    @authorized
     def get(self):
         """
         get lang
         :return:
         """
         return languages
+
 
     @api.marshal_with(a_language, envelope='result')
     @api.expect(language, validate=True)
