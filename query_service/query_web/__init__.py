@@ -10,7 +10,10 @@ api = Api(
     version='1.0',
     prefix='/query',
     title="Presto Query Api",
-    description="Presto 查询服务",
+    description="Presto 查询服务 - by Flask, Flask-RESTPlus",
+    contact="@Yang.Yang",
+    contact_email="yang.yang@trendy-global.com",
+    contact_url="https://tankeryang.github.io",
     validate=True,
     format_checker=FormatChecker(formats=("date-time", "date",))
 )
