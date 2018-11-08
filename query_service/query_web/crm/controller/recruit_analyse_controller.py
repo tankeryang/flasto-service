@@ -3,6 +3,7 @@ from flask_restplus import Resource, Namespace
 ns_4 = Namespace('CRM 招募会员', path='/crm/recruit', description='招募会员api')
 
 from query_service.query_biz.crm.service.impl.recruit_analyse_service_impl import RecruitAnalyseServiceImpl
+from query_service.query_web.utils import authorized
 
 import query_service.query_api.crm.entity.dto.recruit as dto
 import query_service.query_api.crm.entity.po.recruit as po
@@ -11,6 +12,9 @@ import query_service.query_api.crm.entity.po.recruit as po
 @ns_4.route('/RecruitAmountReport')
 class RecruitAmountReportController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_zone_dto)
     @ns_4.marshal_with(po.recruit_amount_list_po)
     def post(self):
@@ -25,6 +29,9 @@ class RecruitAmountReportController(Resource):
 @ns_4.route('/StoreRecruitAmountReport')
 class StoreRecruitAmountReportController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_store_dto)
     @ns_4.marshal_with(po.recruit_amount_list_po)
     def post(self):
@@ -39,6 +46,9 @@ class StoreRecruitAmountReportController(Resource):
 @ns_4.route('/RecruitAmountDailyDetail')
 class RecruitAmountDailyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_zone_dto)
     @ns_4.marshal_with(po.recruit_amount_daily_list_po)
     def post(self):
@@ -53,6 +63,9 @@ class RecruitAmountDailyDetailController(Resource):
 @ns_4.route('/StoreRecruitAmountDailyDetail')
 class StoreRecruitAmountDailyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_store_dto)
     @ns_4.marshal_with(po.recruit_amount_daily_list_po)
     def post(self):
@@ -67,6 +80,9 @@ class StoreRecruitAmountDailyDetailController(Resource):
 @ns_4.route('/RecruitAmountMonthlyDetail')
 class RecruitAmountMonthlyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_zone_dto)
     @ns_4.marshal_with(po.recruit_amount_monthly_list_po)
     def post(self):
@@ -81,6 +97,9 @@ class RecruitAmountMonthlyDetailController(Resource):
 @ns_4.route('/StoreRecruitAmountMonthlyDetail')
 class StoreRecruitAmountMonthlyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_store_dto)
     @ns_4.marshal_with(po.recruit_amount_monthly_list_po)
     def post(self):
@@ -95,6 +114,9 @@ class StoreRecruitAmountMonthlyDetailController(Resource):
 @ns_4.route('/RecruitConsumedAmountDailyDetail')
 class RecruitConsumedAmountDailyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_zone_dto)
     @ns_4.marshal_with(po.recruit_consumed_amount_daily_list_po)
     def post(self):
@@ -109,6 +131,9 @@ class RecruitConsumedAmountDailyDetailController(Resource):
 @ns_4.route('/RecruitConsumedAmountMonthlyDetail')
 class RecruitConsumedAmountMonthlyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_zone_dto)
     @ns_4.marshal_with(po.recruit_consumed_amount_monthly_list_po)
     def post(self):
@@ -123,6 +148,9 @@ class RecruitConsumedAmountMonthlyDetailController(Resource):
 @ns_4.route('/StoreRecruitConsumedAmountDailyDetail')
 class StoreRecruitConsumedAmountDailyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_store_dto)
     @ns_4.marshal_with(po.recruit_consumed_amount_daily_list_po)
     def post(self):
@@ -137,6 +165,9 @@ class StoreRecruitConsumedAmountDailyDetailController(Resource):
 @ns_4.route('/StoreRecruitConsumedAmountMonthlyDetail')
 class StoreRecruitConsumedAmountMonthlyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_store_dto)
     @ns_4.marshal_with(po.recruit_consumed_amount_monthly_list_po)
     def post(self):
@@ -151,6 +182,9 @@ class StoreRecruitConsumedAmountMonthlyDetailController(Resource):
 @ns_4.route('/RecruitUnconsumedAmountDailyDetail')
 class RecruitUnconsumedAmountDailyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_zone_dto)
     @ns_4.marshal_with(po.recruit_unconsumed_amount_daily_list_po)
     def post(self):
@@ -165,6 +199,9 @@ class RecruitUnconsumedAmountDailyDetailController(Resource):
 @ns_4.route('/RecruitUnconsumedAmountMonthlyDetail')
 class RecruitUnconsumedAmountMonthlyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_zone_dto)
     @ns_4.marshal_with(po.recruit_unconsumed_amount_monthly_list_po)
     def post(self):
@@ -179,6 +216,9 @@ class RecruitUnconsumedAmountMonthlyDetailController(Resource):
 @ns_4.route('/StoreRecruitUnconsumedAmountDailyDetail')
 class StoreRecruitUnconsumedAmountDailyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_store_dto)
     @ns_4.marshal_with(po.recruit_unconsumed_amount_daily_list_po)
     def post(self):
@@ -193,6 +233,9 @@ class StoreRecruitUnconsumedAmountDailyDetailController(Resource):
 @ns_4.route('/StoreRecruitUnconsumedAmountMonthlyDetail')
 class StoreRecruitUnconsumedAmountMonthlyDetailController(Resource):
     
+    @ns_4.doc(security='key')
+    @ns_4.response(401, "Token authorized error")
+    @authorized
     @ns_4.expect(dto.recruit_analyse_store_dto)
     @ns_4.marshal_with(po.recruit_unconsumed_amount_monthly_list_po)
     def post(self):

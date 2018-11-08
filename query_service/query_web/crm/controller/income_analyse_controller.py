@@ -3,6 +3,7 @@ from flask_restplus import Resource, Namespace
 ns_2 = Namespace('CRM 业绩分析', path='/crm/income', description='业绩分析api')
 
 from query_service.query_biz.crm.service.impl.income_analyse_service_impl import IncomeAnalyseServiceImpl
+from query_service.query_web.utils import authorized
 
 import query_service.query_api.crm.entity.dto.income as dto
 import query_service.query_api.crm.entity.po.income as po
@@ -11,6 +12,9 @@ import query_service.query_api.crm.entity.po.income as po
 @ns_2.route('/TotalIncomeReport')
 class TotalIncomeReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.total_all_list_po)
     def post(self):
@@ -25,6 +29,9 @@ class TotalIncomeReportController(Resource):
 @ns_2.route('/StoreTotalIncomeReport')
 class StoreTotalIncomeReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.total_all_list_po)
     def post(self):
@@ -39,6 +46,9 @@ class StoreTotalIncomeReportController(Resource):
 @ns_2.route('/TotalDailyIncomeDetail')
 class TotalDailyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.total_daily_list_po)
     def post(self):
@@ -53,6 +63,9 @@ class TotalDailyIncomeDetailController(Resource):
 @ns_2.route('/StoreTotalDailyIncomeDetail')
 class StoreTotalDailyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.total_daily_list_po)
     def post(self):
@@ -67,6 +80,9 @@ class StoreTotalDailyIncomeDetailController(Resource):
 @ns_2.route('/TotalMonthlyIncomeDetail')
 class TotalMonthlyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.total_monthly_list_po)
     def post(self):
@@ -81,6 +97,9 @@ class TotalMonthlyIncomeDetailController(Resource):
 @ns_2.route('/StoreTotalMonthlyIncomeDetail')
 class StoreTotalMonthlyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.total_monthly_list_po)
     def post(self):
@@ -95,6 +114,9 @@ class StoreTotalMonthlyIncomeDetailController(Resource):
 @ns_2.route('/MemberNowBeforeIncomeReport')
 class MemberNowBeforeIncomeReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.now_before_all_list_po)
     def post(self):
@@ -109,6 +131,9 @@ class MemberNowBeforeIncomeReportController(Resource):
 @ns_2.route('/StoreMemberNowBeforeIncomeReport')
 class StoreMemberNowBeforeIncomeReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.now_before_all_list_po)
     def post(self):
@@ -123,6 +148,9 @@ class StoreMemberNowBeforeIncomeReportController(Resource):
 @ns_2.route('/MemberNewOldIncomeReport')
 class MemberNewOldIncomeReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.new_old_all_list_po)
     def post(self):
@@ -137,6 +165,9 @@ class MemberNewOldIncomeReportController(Resource):
 @ns_2.route('/StoreMemberNewOldIncomeReport')
 class StoreMemberNewOldIncomeReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.new_old_all_list_po)
     def post(self):
@@ -151,6 +182,9 @@ class StoreMemberNewOldIncomeReportController(Resource):
 @ns_2.route('/MemberNewOldDailyIncomeDetail')
 class MemberNewOldDailyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.new_old_daily_list_po)
     def post(self):
@@ -165,6 +199,9 @@ class MemberNewOldDailyIncomeDetailController(Resource):
 @ns_2.route('/StoreMemberNewOldDailyIncomeDetail')
 class StoreMemberNewOldDailyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.new_old_daily_list_po)
     def post(self):
@@ -179,6 +216,9 @@ class StoreMemberNewOldDailyIncomeDetailController(Resource):
 @ns_2.route('/MemberNewOldMonthlyIncomeDetail')
 class MemberNewOldMonthlyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.new_old_monthly_list_po)
     def post(self):
@@ -193,6 +233,9 @@ class MemberNewOldMonthlyIncomeDetailController(Resource):
 @ns_2.route('/StoreMemberNewOldMonthlyIncomeDetail')
 class StoreMemberNewOldMonthlyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.new_old_monthly_list_po)
     def post(self):
@@ -207,6 +250,9 @@ class StoreMemberNewOldMonthlyIncomeDetailController(Resource):
 @ns_2.route('/MemberLevelIncomeReport')
 class MemberLevelIncomeReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.level_all_list_po)
     def post(self):
@@ -221,6 +267,9 @@ class MemberLevelIncomeReportController(Resource):
 @ns_2.route('/StoreMemberLevelIncomeReport')
 class StoreMemberLevelIncomeReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.level_all_list_po)
     def post(self):
@@ -235,6 +284,9 @@ class StoreMemberLevelIncomeReportController(Resource):
 @ns_2.route('/MemberLevelDailyIncomeDetail')
 class MemberLevelDailyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.level_daily_list_po)
     def post(self):
@@ -249,6 +301,9 @@ class MemberLevelDailyIncomeDetailController(Resource):
 @ns_2.route('/StoreMemberLevelDailyIncomeDetail')
 class StoreMemberLevelDailyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.level_daily_list_po)
     def post(self):
@@ -263,6 +318,9 @@ class StoreMemberLevelDailyIncomeDetailController(Resource):
 @ns_2.route('/MemberLevelMonthlyIncomeDetail')
 class MemberLevelMonthlyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.level_monthly_list_po)
     def post(self):
@@ -277,6 +335,9 @@ class MemberLevelMonthlyIncomeDetailController(Resource):
 @ns_2.route('/StoreMemberLevelMonthlyIncomeDetail')
 class StoreMemberLevelMonthlyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.level_monthly_list_po)
     def post(self):
@@ -291,6 +352,9 @@ class StoreMemberLevelMonthlyIncomeDetailController(Resource):
 @ns_2.route('/MemberMulDimIncomeReport')
 class MemberMulDimIncomeReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_all_list_po)
     def post(self):
@@ -305,6 +369,9 @@ class MemberMulDimIncomeReportController(Resource):
 @ns_2.route('/StoreMemberMulDimIncomeReport')
 class StoreMemberMulDimIncomeReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_all_list_po)
     def post(self):
@@ -319,6 +386,9 @@ class StoreMemberMulDimIncomeReportController(Resource):
 @ns_2.route('/MemberMulDimDailyIncomeDetail')
 class MemberMulDimDailyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_daily_list_po)
     def post(self):
@@ -333,6 +403,9 @@ class MemberMulDimDailyIncomeDetailController(Resource):
 @ns_2.route('/StoreMemberMulDimDailyIncomeDetail')
 class StoreMemberMulDimDailyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_daily_list_po)
     def post(self):
@@ -347,6 +420,9 @@ class StoreMemberMulDimDailyIncomeDetailController(Resource):
 @ns_2.route('/MemberMulDimMonthlyIncomeDetail')
 class MemberMulDimMonthlyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_monthly_list_po)
     def post(self):
@@ -361,6 +437,9 @@ class MemberMulDimMonthlyIncomeDetailController(Resource):
 @ns_2.route('/StoreMemberMulDimMonthlyIncomeDetail')
 class StoreMemberMulDimMonthlyIncomeDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.mul_dim_monthly_list_po)
     def post(self):
@@ -375,6 +454,9 @@ class StoreMemberMulDimMonthlyIncomeDetailController(Resource):
 @ns_2.route('/MemberRegisterProportionReport')
 class MemberRegisterProportionReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.rgp_list_po)
     def post(self):
@@ -389,6 +471,9 @@ class MemberRegisterProportionReportController(Resource):
 @ns_2.route('/StoreMemberRegisterProportionReport')
 class StoreMemberRegisterProportionReportController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.rgp_list_po)
     def post(self):
@@ -403,6 +488,9 @@ class StoreMemberRegisterProportionReportController(Resource):
 @ns_2.route('/MemberDailyRegisterProportionDetail')
 class MemberDailyRegisterProportionDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.rgp_daily_list_po)
     def post(self):
@@ -417,6 +505,9 @@ class MemberDailyRegisterProportionDetailController(Resource):
 @ns_2.route('/StoreMemberDailyRegisterProportionDetail')
 class StoreMemberDailyRegisterProportionDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.rgp_daily_list_po)
     def post(self):
@@ -431,6 +522,9 @@ class StoreMemberDailyRegisterProportionDetailController(Resource):
 @ns_2.route('/MemberMonthlyRegisterProportionDetail')
 class MemberMonthlyRegisterProportionDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
     @ns_2.marshal_with(po.rgp_monthly_list_po)
     def post(self):
@@ -445,6 +539,9 @@ class MemberMonthlyRegisterProportionDetailController(Resource):
 @ns_2.route('/StoreMemberMonthlyRegisterProportionDetail')
 class StoreMemberMonthlyRegisterProportionDetailController(Resource):
     
+    @ns_2.doc(security='key')
+    @ns_2.response(401, "Token authorized error")
+    @authorized
     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
     @ns_2.marshal_with(po.rgp_monthly_list_po)
     def post(self):

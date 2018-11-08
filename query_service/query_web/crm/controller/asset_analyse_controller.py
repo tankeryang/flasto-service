@@ -3,6 +3,7 @@ from flask_restplus import Resource, Namespace
 ns_3 = Namespace('CRM 会员资产', path='/crm/asset', description='会员资产api')
 
 from query_service.query_biz.crm.service.impl.asset_analyse_service_impl import AssetAnalyseServiceImpl
+from query_service.query_web.utils import authorized
 
 import query_service.query_api.crm.entity.dto.asset as dto
 import query_service.query_api.crm.entity.po.asset as po
@@ -11,8 +12,11 @@ import query_service.query_api.crm.entity.po.asset as po
 @ns_3.route('/MemberAmountReport')
 class MemberAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_amount_list_po)
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     def post(self):
         """
         查询会员计数详情
@@ -25,6 +29,9 @@ class MemberAmountReportController(Resource):
 @ns_3.route('/StoreMemberAmountReport')
 class StoreMemberAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_amount_list_po)
     def post(self):
@@ -39,6 +46,9 @@ class StoreMemberAmountReportController(Resource):
 @ns_3.route('/MemberNewOldAmountReport')
 class MemberNewOldAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_newold_amount_list_po)
     def post(self):
@@ -53,6 +63,9 @@ class MemberNewOldAmountReportController(Resource):
 @ns_3.route('/StoreMemberNewOldAmountReport')
 class StoreMemberNewOldAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_newold_amount_list_po)
     def post(self):
@@ -67,6 +80,9 @@ class StoreMemberNewOldAmountReportController(Resource):
 @ns_3.route('/MemberLevelAmountReport')
 class MemberLevelAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_level_amount_list_po)
     def post(self):
@@ -81,6 +97,9 @@ class MemberLevelAmountReportController(Resource):
 @ns_3.route('/StoreMemberLevelAmountReport')
 class StoreMemberLevelAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_level_amount_list_po)
     def post(self):
@@ -95,6 +114,9 @@ class StoreMemberLevelAmountReportController(Resource):
 @ns_3.route('/MemberRemainAmountReport')
 class MemberRemainAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_remain_amount_list_po)
     def post(self):
@@ -109,6 +131,9 @@ class MemberRemainAmountReportController(Resource):
 @ns_3.route('/StoreMemberRemainAmountReport')
 class StoreMemberRemainAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_remain_amount_list_po)
     def post(self):
@@ -123,6 +148,9 @@ class StoreMemberRemainAmountReportController(Resource):
 @ns_3.route('/MemberActiveAmountReport')
 class MemberActiveAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_active_amount_list_po)
     def post(self):
@@ -137,6 +165,9 @@ class MemberActiveAmountReportController(Resource):
 @ns_3.route('/StoreMemberActiveAmountReport')
 class StoreMemberActiveAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_active_amount_list_po)
     def post(self):
@@ -151,6 +182,9 @@ class StoreMemberActiveAmountReportController(Resource):
 @ns_3.route('/MemberFrequencyAmountReport')
 class MemberFrequencyAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_frequency_amount_list_po)
     def post(self):
@@ -165,6 +199,9 @@ class MemberFrequencyAmountReportController(Resource):
 @ns_3.route('/StoreMemberFrequencyAmountReport')
 class StoreMemberFrequencyAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_frequency_amount_list_po)
     def post(self):
@@ -179,6 +216,9 @@ class StoreMemberFrequencyAmountReportController(Resource):
 @ns_3.route('/MemberRecencyAmountReport')
 class MemberRecencyAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_recency_amount_list_po)
     def post(self):
@@ -193,6 +233,9 @@ class MemberRecencyAmountReportController(Resource):
 @ns_3.route('/StoreMemberRecencyAmountReport')
 class StoreMemberRecencyAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_recency_amount_list_po)
     def post(self):
@@ -207,6 +250,9 @@ class StoreMemberRecencyAmountReportController(Resource):
 @ns_3.route('/MemberMonetaryAmountReport')
 class MemberMonetaryAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_monetary_amount_list_po)
     def post(self):
@@ -221,6 +267,9 @@ class MemberMonetaryAmountReportController(Resource):
 @ns_3.route('/StoreMemberMonetaryAmountReport')
 class StoreMemberMonetaryAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_monetary_amount_list_po)
     def post(self):
@@ -235,6 +284,9 @@ class StoreMemberMonetaryAmountReportController(Resource):
 @ns_3.route('/MemberTimeAmountReport')
 class MemberTimeAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_time_amount_list_po)
     def post(self):
@@ -249,6 +301,9 @@ class MemberTimeAmountReportController(Resource):
 @ns_3.route('/StoreMemberTimeAmountReport')
 class StoreMemberTimeAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_time_amount_list_po)
     def post(self):
@@ -263,6 +318,9 @@ class StoreMemberTimeAmountReportController(Resource):
 @ns_3.route('/MemberDiscountAmountReport')
 class MemberDiscountAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_discount_amount_list_po)
     def post(self):
@@ -277,6 +335,9 @@ class MemberDiscountAmountReportController(Resource):
 @ns_3.route('/StoreMemberDiscountAmountReport')
 class StoreMemberDiscountAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_discount_amount_list_po)
     def post(self):
@@ -291,6 +352,9 @@ class StoreMemberDiscountAmountReportController(Resource):
 @ns_3.route('/MemberSipoAmountReport')
 class MemberSipoAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_zone_dto)
     @ns_3.marshal_with(po.member_sipo_amount_list_po)
     def post(self):
@@ -305,6 +369,9 @@ class MemberSipoAmountReportController(Resource):
 @ns_3.route('/StoreMemberSipoAmountReport')
 class StoreMemberSipoAmountReportController(Resource):
     
+    @ns_3.doc(security='key')
+    @ns_3.response(401, "Token authorized error")
+    @authorized
     @ns_3.expect(dto.asset_analyse_store_dto)
     @ns_3.marshal_with(po.member_sipo_amount_list_po)
     def post(self):
