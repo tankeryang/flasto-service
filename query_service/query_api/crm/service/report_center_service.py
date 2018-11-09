@@ -1,11 +1,11 @@
-from abc import ABCMeta, abstractclassmethod
+from abc import ABCMeta, abstractmethod
 
 
 class ReportCenterService:
     
     __metaclass__ = ABCMeta
     
-    @abstractclassmethod
+    @abstractmethod
     def get_daily_report_data(self, dto):
         """
         日报查询

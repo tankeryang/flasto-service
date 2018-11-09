@@ -3,7 +3,7 @@ from flask_restplus import Resource, Namespace
 ns_0 = Namespace('CRM cic首页静态展示', path='/crm/cic', description='cic 首页静态数据 api')
 
 from query_service.query_biz.crm.service.impl.cic_static_service_impl import CicStaticServiceImpl
-from query_service.query_web.utils import authorized
+from query_service.query_web.crm.utils import authorized
 
 import query_service.query_api.crm.entity.dto.cic_static as dto
 import query_service.query_api.crm.entity.po.cic_static as po

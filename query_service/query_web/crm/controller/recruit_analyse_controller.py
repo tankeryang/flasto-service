@@ -3,7 +3,7 @@ from flask_restplus import Resource, Namespace
 ns_4 = Namespace('CRM 招募会员', path='/crm/recruit', description='招募会员api')
 
 from query_service.query_biz.crm.service.impl.recruit_analyse_service_impl import RecruitAnalyseServiceImpl
-from query_service.query_web.utils import authorized
+from query_service.query_web.crm.utils import authorized
 
 import query_service.query_api.crm.entity.dto.recruit as dto
 import query_service.query_api.crm.entity.po.recruit as po

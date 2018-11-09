@@ -3,7 +3,7 @@ from flask_restplus import Resource, Namespace
 ns_3 = Namespace('CRM 会员资产', path='/crm/asset', description='会员资产api')
 
 from query_service.query_biz.crm.service.impl.asset_analyse_service_impl import AssetAnalyseServiceImpl
-from query_service.query_web.utils import authorized
+from query_service.query_web.crm.utils import authorized
 
 import query_service.query_api.crm.entity.dto.asset as dto
 import query_service.query_api.crm.entity.po.asset as po

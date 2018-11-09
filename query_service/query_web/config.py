@@ -11,16 +11,16 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "presto://dev@10.10.22.5:10300/dev_hive/cdm_crm"
+    PRESTO_SERVER_URI = "presto://dev@10.10.22.5:10300/dev_hive/cdm_crm"
 
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "presto://dev@10.10.22.5:10300/dev_hive/cdm_crm"
+    PRESTO_SERVER_URI = "presto://dev@10.10.22.5:10300/dev_hive/cdm_crm"
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = "presto://crm@10.10.22.8:10300/prod_hive/cdm_crm"
+    PRESTO_SERVER_URI = "presto://crm@10.10.22.8:10300/prod_hive/cdm_crm"
 
 
 config = {

@@ -3,7 +3,7 @@ from flask_restplus import Resource, Namespace
 ns_2 = Namespace('CRM 业绩分析', path='/crm/income', description='业绩分析api')
 
 from query_service.query_biz.crm.service.impl.income_analyse_service_impl import IncomeAnalyseServiceImpl
-from query_service.query_web.utils import authorized
+from query_service.query_web.crm.utils import authorized
 
 import query_service.query_api.crm.entity.dto.income as dto
 import query_service.query_api.crm.entity.po.income as po
