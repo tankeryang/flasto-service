@@ -1,4 +1,4 @@
-from query_service.query_biz.crm.db_utils.validator import validator
+from query_service.query_biz.crm.utils.validator import validator
 import query_service.query_api.crm.entity.dto.cic_static as dto
 
 
@@ -15,7 +15,7 @@ def cic_static_formator(sql, payload):
     if not validator(necessary_param, payload):
         return None
     
-    if len(payload['brands']) < 1:
+    if 'brands' not in payload.keys() or len(payload['brands']) < 1:
         return None
     
     brands = str(payload['brands']).strip('[').strip(']')

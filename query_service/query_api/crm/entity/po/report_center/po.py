@@ -4,7 +4,7 @@ from query_service.query_web.crm.controller.report_center_controller import ns_1
 daily_report_po = ns_1.model('CrmDailyReportModel', {
     'sales_area': fields.String(readOnly=True, description="区域"),
     'city': fields.String(readOnly=True, description="城市"),
-    'store_code': fields.String(readOnly=True, description='门店'),
+    'store_code': fields.String(readOnly=True, description="门店"),
     'member_type': fields.String(readOnly=True, description="会员类型"),
     'sales_amount': fields.Float(readOnly=True, description="销售金额"),
     'sales_amount_proportion': fields.Float(readOnly=True, description="销售金额占比"),

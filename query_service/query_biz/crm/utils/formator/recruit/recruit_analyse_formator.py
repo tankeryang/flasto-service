@@ -1,8 +1,8 @@
-from query_service.query_biz.crm.db_utils.validator import validator
-import query_service.query_api.crm.entity.dto.income as dto
+from query_service.query_biz.crm.utils.validator import validator
+import query_service.query_api.crm.entity.dto.recruit as dto
 
 
-def income_analyse_formator(sql, payload):
+def recruit_analyse_formator(sql, payload):
     """
     payload 参数校验
     sql 参数填充
@@ -13,25 +13,25 @@ def income_analyse_formator(sql, payload):
     
     if 'store_codes' not in payload.keys():
         # 校验参数
-        necessary_param = dto.income_analyse_zone_dto.keys()
+        necessary_param = dto.recruit_analyse_zone_dto.keys()
         if not validator(necessary_param, payload):
             return None
         
-        if len(payload['brands']) < 1:
+        if 'brands' not in payload.keys() or len(payload['brands']) < 1:
             return None
-        elif len(payload['cities']) > 0:
+        elif 'cities' in payload.keys() and len(payload['cities']) > 0:
             zone = 'city'
             zones = str(payload['cities']).strip('[').strip(']')
-        elif len(payload['provinces']) > 0:
+        elif 'province' in payload.keys() and (payload['provinces']) > 0:
             zone = 'province'
             zones = str(payload['provinces']).strip('[').strip(']')
-        elif len(payload['sales_areas']) > 0:
+        elif 'sales_areas' in payload.keys() and len(payload['sales_areas']) > 0:
             zone = 'sales_area'
             zones = str(payload['sales_areas']).strip('[').strip(']')
-        elif len(payload['sales_districts']) > 0:
+        elif 'sales_districts' in payload.keys() and len(payload['sales_districts']) > 0:
             zone = 'sales_district'
             zones = str(payload['sales_district']).strip('[').strip(']')
-        elif len(payload['country']) > 0:
+        elif 'country' in payload.keys() and len(payload['country']) > 0:
             zone = 'country'
             zones = str(payload['country']).strip('[').strip(']')
         else:
@@ -54,7 +54,7 @@ def income_analyse_formator(sql, payload):
     
     else:
         # 校验参数
-        necessary_param = dto.income_analyse_store_dto.keys()
+        necessary_param = dto.recruit_analyse_store_dto.keys()
         if not validator(necessary_param, payload):
             return None
         

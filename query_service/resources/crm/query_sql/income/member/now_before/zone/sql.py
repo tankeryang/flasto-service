@@ -42,7 +42,8 @@ ALL = """
         FROM (
             SELECT DISTINCT brand_name, {zone}, order_channel, sales_mode, store_type, store_level, channel_type, member_type
             FROM cdm_crm.member_analyse_index_label
-            WHERE member_type = '会员' ) cmail
+            WHERE member_type = '会员'
+            AND store_code IS NULL) cmail
         LEFT JOIN (
             SELECT brand_name, {zone}, order_channel, sales_mode, store_type, store_level, channel_type, member_type,
             sum(coid.order_fact_amount) * 1.0   AS si,
@@ -95,7 +96,8 @@ ALL = """
         FROM (
             SELECT DISTINCT brand_name, {zone}, order_channel, sales_mode, store_type, store_level, channel_type, member_nowbefore_type
             FROM cdm_crm.member_analyse_index_label
-            WHERE member_type = '会员') cmail2
+            WHERE member_type = '会员'
+            AND store_code IS NULL) cmail2
         LEFT JOIN (
             SELECT brand_name, {zone}, order_channel, sales_mode, store_type, store_level, channel_type, member_nowbefore_type,
             sum(coid.order_fact_amount) * 1.0   AS si,

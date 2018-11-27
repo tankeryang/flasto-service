@@ -1,8 +1,8 @@
 import pandas as pd
 
 from query_service.query_api.crm.service import IncomeAnalyseService
-from query_service.query_biz.crm.db_utils import get_presto_engine
-from query_service.query_biz.crm.db_utils.formator.income import income_analyse_formator
+from query_service.query_biz.crm.utils import get_presto_engine
+from query_service.query_biz.crm.utils.formator.income import income_analyse_formator
 
 # resources
 import query_service.resources.crm.query_sql as query_sql
