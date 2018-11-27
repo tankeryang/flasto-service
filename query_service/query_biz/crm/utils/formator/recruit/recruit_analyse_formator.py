@@ -1,7 +1,3 @@
-from query_service.query_biz.crm.utils.validator import validator
-import query_service.query_api.crm.entity.dto.recruit as dto
-
-
 def recruit_analyse_formator(sql, payload):
     """
     payload 参数校验
@@ -12,10 +8,6 @@ def recruit_analyse_formator(sql, payload):
     """
     
     if 'store_codes' not in payload.keys():
-        # 校验参数
-        necessary_param = dto.recruit_analyse_zone_dto.keys()
-        if not validator(necessary_param, payload):
-            return None
         
         if 'brands' not in payload.keys() or len(payload['brands']) < 1:
             return None
@@ -53,10 +45,6 @@ def recruit_analyse_formator(sql, payload):
         )
     
     else:
-        # 校验参数
-        necessary_param = dto.recruit_analyse_store_dto.keys()
-        if not validator(necessary_param, payload):
-            return None
         
         if len(payload['brands']) < 1:
             return None

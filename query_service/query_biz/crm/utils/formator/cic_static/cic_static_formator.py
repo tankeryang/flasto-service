@@ -1,7 +1,3 @@
-from query_service.query_biz.crm.utils.validator import validator
-import query_service.query_api.crm.entity.dto.cic_static as dto
-
-
 def cic_static_formator(sql, payload):
     """
     payload 参数校验
@@ -10,10 +6,6 @@ def cic_static_formator(sql, payload):
     :param payload: restplus.Api.payload 传入参数
     :return: 填充参数后的sql
     """
-    
-    necessary_param = dto.cic_static_dto.keys()
-    if not validator(necessary_param, payload):
-        return None
     
     if 'brands' not in payload.keys() or len(payload['brands']) < 1:
         return None
