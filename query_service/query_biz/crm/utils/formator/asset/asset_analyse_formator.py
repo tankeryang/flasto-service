@@ -14,7 +14,7 @@ def asset_analyse_formator(sql, payload):
         elif 'cities' in payload.keys() and len(payload['cities']) > 0:
             zone = 'city'
             zones = str(payload['cities']).strip('[').strip(']')
-        elif 'provinces' in payload.keys() and (payload['provinces']) > 0:
+        elif 'provinces' in payload.keys() and len(payload['provinces']) > 0:
             zone = 'province'
             zones = str(payload['provinces']).strip('[').strip(']')
         elif 'sales_areas' in payload.keys() and len(payload['sales_areas']) > 0:
