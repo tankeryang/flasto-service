@@ -11,7 +11,7 @@ current_dir_path = os.path.split(current_file_path)[0]
 chdir = current_dir_path
 
 # log
-loglevel = 'error'
+loglevel = 'debug'
 accesslog = '%s/log/%s.access.log' % (current_dir_path, project_name)
 access_log_format = '%(t)s %(p)s %(h)s "%(r)s" %(s)s %(L)s %(b)s %(f)s" "%(a)s"'
 errorlog = '%s/log/%s.error.log' % (current_dir_path, project_name)
