@@ -20,7 +20,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    PRESTO_SERVER_URI = "presto://crm@10.10.22.8:10300/dev_hive/cdm_crm"
+    PRESTO_SERVER_URI = "presto://prod@10.10.22.8:10300/dev_hive/cdm_crm"
 
 
 config = {
