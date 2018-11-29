@@ -6,6 +6,11 @@ DAILY = """
         {cmail_city} AS city,
         {cmail_store_code} AS store_code,
         cmail.dr_member_type AS member_type,
+        CASE cmail.dr_member_type
+            WHEN '新会员' THEN 1
+            WHEN '普通会员' THEN 2
+            WHEN 'VIP会员' THEN 3
+        ELSE NULL END AS member_type_num,
         cast(COALESCE(sm.sa, 0) AS DECIMAL(18, 2)) AS sales_amount,
         cast(COALESCE(TRY(sm.sa * 1.0000 / sm_tt.sa), 0) AS DECIMAL(18, 4)) AS sales_amount_proportion,
         cast(COALESCE(TRY(sm_mb_tt.sa * 1.0000 / sm_tt.sa), 0) AS DECIMAL(18, 4)) AS sales_amount_proportion_total,
