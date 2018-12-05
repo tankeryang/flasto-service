@@ -18,7 +18,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = income_analyse_formator(query_sql.income.total.zone.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.total.zone.ALL, query_sql.income.total.zone.STATIC_ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -36,7 +36,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = income_analyse_formator(query_sql.income.total.store.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.total.store.ALL, query_sql.income.total.store.STATIC_ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
@@ -54,7 +54,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = income_analyse_formator(query_sql.income.total.zone.DAILY, dto)
+        sql = income_analyse_formator(query_sql.income.total.zone.DAILY, query_sql.income.total.zone.DAILY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
         
@@ -72,7 +72,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = income_analyse_formator(query_sql.income.total.store.DAILY, dto)
+        sql = income_analyse_formator(query_sql.income.total.store.DAILY, query_sql.income.total.store.DAILY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
         
@@ -90,7 +90,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = income_analyse_formator(query_sql.income.total.zone.MONTHLY, dto)
+        sql = income_analyse_formator(query_sql.income.total.zone.MONTHLY, query_sql.income.total.zone.MONTHLY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
         
@@ -108,7 +108,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = income_analyse_formator(query_sql.income.total.store.MONTHLY, dto)
+        sql = income_analyse_formator(query_sql.income.total.store.MONTHLY, query_sql.income.total.store.MONTHLY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
         
@@ -162,7 +162,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         :param dto: restplus.Api.payload
         :return: response dict
         """
-        sql = income_analyse_formator(query_sql.income.member.new_old.zone.ALL, dto)
+        sql = income_analyse_formator(query_sql.income.member.new_old.zone.ALL, query_sql.income.member.new_old.zone.STATIC_ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
         
