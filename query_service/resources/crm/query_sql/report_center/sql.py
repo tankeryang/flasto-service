@@ -12,35 +12,35 @@ DAILY = """
             WHEN 'VIP会员' THEN 3
         ELSE NULL END AS member_type_num,
         cast(COALESCE(sm.sa, 0) AS DECIMAL(18, 2)) AS sales_amount,
-        cast(COALESCE(TRY(sm.sa / sm_tt.sa * 1.0000), 0) AS DECIMAL(18, 4)) AS sales_amount_proportion,
-        cast(COALESCE(TRY(sm_mb_tt.sa / sm_tt.sa * 1.0000), 0) AS DECIMAL(18, 4)) AS sales_amount_proportion_total,
+        cast(COALESCE(TRY(sm.sa / sm_tt.sa), 0) AS DECIMAL(18, 4)) AS sales_amount_proportion,
+        cast(COALESCE(TRY(sm_mb_tt.sa / sm_tt.sa), 0) AS DECIMAL(18, 4)) AS sales_amount_proportion_total,
         cast(COALESCE(lyst.sa, 0) AS DECIMAL(18, 2)) AS last_year_same_time_sales_amount,
-        cast(COALESCE(TRY((sm.sa - lyst.sa) / lyst.sa * 1.0000), 0) AS DECIMAL(18, 4)) AS like_for_like_sales_growth,
+        cast(COALESCE(TRY((sm.sa - lyst.sa) / lyst.sa), 0) AS DECIMAL(18, 4)) AS like_for_like_sales_growth,
         cast(COALESCE(sm.siq, 0) AS INTEGER) AS sales_item_quantity,
-        cast(COALESCE(TRY(sm.sa / sm.ra * 1.0000), 0) AS DECIMAL(18, 2)) AS discount_rate,
+        cast(COALESCE(TRY(sm.sa / sm.ra), 0) AS DECIMAL(18, 2)) AS discount_rate,
         cast(COALESCE(sm.ma, 0) AS INTEGER) AS member_amount,
         cast(COALESCE(lmr.ma, 0) AS INTEGER) AS past_12_month_remain_member_amount,
-        cast(COALESCE(TRY(sm.ma / lmr.ma * 1.0000), 0) AS DECIMAL(18, 4)) AS second_trade_rate,
+        cast(COALESCE(TRY(sm.ma / lmr.ma), 0) AS DECIMAL(18, 4)) AS second_trade_rate,
         cast(COALESCE(new_vip.ma, 0) AS INTEGER) AS new_vip_member_amount,
         cast(COALESCE(new_normal.ma, 0) AS INTEGER) AS new_normal_member_amount,
         cast(COALESCE(ugm.ma, 0) AS INTEGER) AS upgraded_member_amount,
         cast(COALESCE(stm.sa, 0) AS INTEGER) AS store_amount,
-        cast(COALESCE(TRY(sm.ma / stm.sa * 1.0000), 0) AS DECIMAL(18, 2)) AS member_amount_per_store,
-        cast(COALESCE(TRY(sm.sa / sm.ma * 1.0000), 0) AS DECIMAL(18, 2)) AS sales_amount_per_member,
-        cast(COALESCE(TRY(sm.siq / sm.ma * 1.0000), 0) AS DECIMAL(18, 2)) AS sales_item_quantity_per_member,
-        cast(COALESCE(TRY(sm.siq / sm.oa * 1.0000), 0) AS DECIMAL(18, 2)) AS su_per_member,
-        cast(COALESCE(TRY(sm.oa / sm.ma * 1.0000), 0) AS DECIMAL(18, 2)) AS order_amount_per_member
+        cast(COALESCE(TRY(sm.ma / stm.sa), 0) AS DECIMAL(18, 2)) AS member_amount_per_store,
+        cast(COALESCE(TRY(sm.sa / sm.ma), 0) AS DECIMAL(18, 2)) AS sales_amount_per_member,
+        cast(COALESCE(TRY(sm.siq / sm.ma), 0) AS DECIMAL(18, 2)) AS sales_item_quantity_per_member,
+        cast(COALESCE(TRY(sm.siq / sm.oa), 0) AS DECIMAL(18, 2)) AS su_per_member,
+        cast(COALESCE(TRY(sm.oa / sm.ma), 0) AS DECIMAL(18, 2)) AS order_amount_per_member
     FROM (
         SELECT DISTINCT {zone_index}, dr_member_type
         FROM cdm_crm.member_analyse_index_label) cmail
 
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
-        cast(sum(coid.order_fact_amount AS DECIMAL(18, 4)))        AS sa,
-        cast(sum(coid.order_amount AS DECIMAL(18, 4)))             AS ra,
-        cast(sum(coid.order_type_num AS DECIMAL(18, 4)))           AS oa,
-        cast(sum(coid.order_item_quantity AS DECIMAL(18, 4)))      AS siq,
-        cast(count(distinct coid.member_no AS DECIMAL(18, 4)))     AS ma
+        cast(sum(coid.order_fact_amount) AS DECIMAL(18, 4))        AS sa,
+        cast(sum(coid.order_amount) AS DECIMAL(18, 4))             AS ra,
+        cast(sum(coid.order_type_num) AS DECIMAL(18, 4))           AS oa,
+        cast(sum(coid.order_item_quantity) AS DECIMAL(18, 4))      AS siq,
+        cast(count(distinct coid.member_no) AS DECIMAL(18, 4))     AS ma
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
