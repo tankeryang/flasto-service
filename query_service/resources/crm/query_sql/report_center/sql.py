@@ -26,7 +26,7 @@ DAILY = """
         cast(COALESCE(ugm.ma, 0) AS INTEGER) AS upgraded_member_amount,
         cast(COALESCE(stm.sa, 0) AS INTEGER) AS store_amount,
         cast(COALESCE(TRY(sm.ma / stm.sa * 1.0000), 0) AS DECIMAL(18, 2)) AS member_amount_per_store,
-        cast(COALESCE(TRY(sm.sa /sm.ma * 1.0000), 0) AS DECIMAL(18, 2)) AS sales_amount_per_member,
+        cast(COALESCE(TRY(sm.sa / sm.ma * 1.0000), 0) AS DECIMAL(18, 2)) AS sales_amount_per_member,
         cast(COALESCE(TRY(sm.siq / sm.ma * 1.0000), 0) AS DECIMAL(18, 2)) AS sales_item_quantity_per_member,
         cast(COALESCE(TRY(sm.siq / sm.oa * 1.0000), 0) AS DECIMAL(18, 2)) AS su_per_member,
         cast(COALESCE(TRY(sm.oa / sm.ma * 1.0000), 0) AS DECIMAL(18, 2)) AS order_amount_per_member
@@ -36,11 +36,11 @@ DAILY = """
 
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
-        sum(coid.order_fact_amount)         AS sa,
-        sum(coid.order_amount)              AS ra,
-        count(distinct coid.outer_order_no) AS oa,
-        sum(coid.order_item_quantity)       AS siq,
-        count(distinct coid.member_no)      AS ma
+        cast(sum(coid.order_fact_amount AS DECIMAL(18, 4)))        AS sa,
+        cast(sum(coid.order_amount AS DECIMAL(18, 4)))             AS ra,
+        cast(sum(coid.order_type_num AS DECIMAL(18, 4)))           AS oa,
+        cast(sum(coid.order_item_quantity AS DECIMAL(18, 4)))      AS siq,
+        cast(count(distinct coid.member_no AS DECIMAL(18, 4)))     AS ma
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
@@ -53,7 +53,7 @@ DAILY = """
 
     LEFT JOIN (
         SELECT coid.{zone},
-        sum(coid.order_fact_amount) AS sa
+        cast(sum(coid.order_fact_amount) AS DECIMAL(18, 4)) AS sa
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
@@ -65,7 +65,7 @@ DAILY = """
 
     LEFT JOIN (
         SELECT coid.{zone},
-        sum(coid.order_fact_amount) AS sa
+        cast(sum(coid.order_fact_amount) AS DECIMAL(18, 4)) AS sa
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
@@ -78,7 +78,7 @@ DAILY = """
 
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
-        sum(coid.order_fact_amount) AS sa
+        cast(sum(coid.order_fact_amount) AS DECIMAL(18, 4)) AS sa
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date(date('{end_date}') - interval '1' year)
         AND date(coid.order_deal_time) >= date(date('{start_date}') - interval '1' year)
@@ -91,7 +91,7 @@ DAILY = """
 
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
-        count(distinct coid.member_no) AS ma
+        cast(count(distinct coid.member_no) AS DECIMAL(18, 4)) AS ma
         FROM cdm_crm.order_info_detail coid
         WHERE coid.dr_member_type IN ('普通会员', 'VIP会员')
         AND date(coid.order_deal_time) <= date(date('{start_date}') - interval '1' day)
@@ -105,7 +105,7 @@ DAILY = """
 
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
-        count(distinct coid.member_no) AS ma
+        cast(count(distinct coid.member_no) AS DECIMAL(18, 4)) AS ma
         FROM cdm_crm.order_info_detail coid
         WHERE coid.dr_member_type = '新会员'
         AND date(coid.member_register_time) = date(coid.order_deal_time)
@@ -121,7 +121,7 @@ DAILY = """
 
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
-        count(distinct coid.member_no) AS ma
+        cast(count(distinct coid.member_no) AS DECIMAL(18, 4)) AS ma
         FROM cdm_crm.order_info_detail coid
         WHERE coid.dr_member_type = '新会员'
         AND coid.last_grade_change_time IS NULL
@@ -136,7 +136,7 @@ DAILY = """
 
     LEFT JOIN (
         SELECT coid.{zone}, coid.dr_member_type,
-        count(distinct coid.member_no) AS ma
+        cast(count(distinct coid.member_no) AS DECIMAL(18, 4)) AS ma
         FROM cdm_crm.order_info_detail coid
         WHERE coid.dr_member_type IN ('新会员', '普通会员')
         AND date(coid.last_grade_change_time) = date(coid.order_deal_time)
@@ -151,7 +151,7 @@ DAILY = """
 
     LEFT JOIN (
         SELECT coid.{zone},
-        count(distinct coid.store_code) AS sa
+        cast(count(distinct coid.store_code) AS DECIMAL(18, 4)) AS sa
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
