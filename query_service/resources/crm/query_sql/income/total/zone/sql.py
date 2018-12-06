@@ -10,8 +10,12 @@ ALL = """
         AND store_type IN ({store_types})
         AND store_level IN ({store_levels})
         AND channel_type IN ({channel_types})
-        AND date <= date('{end_date}')
-        AND date >= date('{start_date}')
+        AND year <= substr('{end_date}', 1, 4)
+        AND year >= substr('{start_date}', 1, 4)
+        AND month <= substr('{end_date}', 6, 2)
+        AND month >= substr('{start_date}', 6, 2)
+        AND vchr_date <= '{end_date}'
+        AND vchr_date >= '{start_date}'
         GROUP BY brand_name, {zone}
     ), lyst AS (
         SELECT brand_name, {zone}, member_type,
@@ -25,8 +29,12 @@ ALL = """
         AND store_type IN ({store_types})
         AND store_level IN ({store_levels})
         AND channel_type IN ({channel_types})
-        AND date <= date(date('{end_date}') - interval '1' year)
-        AND date >= date(date('{start_date}') - interval '1' year)
+        AND year <= substr(cast(date('{end_date}') - interval '1' year AS VARCHAR), 1, 4)
+        AND year >= substr(cast(date('{start_date}') - interval '1' year AS VARCHAR), 1, 4)
+        AND month <= substr(cast(date('{end_date}') - interval '1' year AS VARCHAR), 6, 2)
+        AND month >= substr(cast(date('{start_date}') - interval '1' year AS VARCHAR), 6, 2)
+        AND vchr_date <= cast(date('{end_date}') - interval '1' year AS VARCHAR)
+        AND vchr_date >= cast(date('{start_date}') - interval '1' year AS VARCHAR)
         GROUP BY brand_name, {zone}, member_type
     )
     SELECT DISTINCT
@@ -54,8 +62,12 @@ ALL = """
     AND f.store_type IN ({store_types})
     AND f.store_level IN ({store_levels})
     AND f.channel_type IN ({channel_types})
-    AND f.date <= date('{end_date}')
-    AND f.date >= date('{start_date}')
+    AND year <= substr('{end_date}', 1, 4)
+    AND year >= substr('{start_date}', 1, 4)
+    AND month <= substr('{end_date}', 6, 2)
+    AND month >= substr('{start_date}', 6, 2)
+    AND f.vchr_date <= '{end_date}'
+    AND f.vchr_date >= '{start_date}'
     GROUP BY f.brand_name, f.{zone}, f.member_type, tt.sales_income, lyst.sales_income
 """
 
@@ -89,9 +101,10 @@ DAILY = """
             sales_income_proportion,
             compared_with_lyst,
             compared_with_ss_lyst,
-            date
+            date,
+            vchr_date
         FROM ads_crm.member_analyse_income_total_zone_daily
-        WHERE date <= date('{end_date}') AND date >= date('{start_date}')
+        WHERE vchr_date <= '{end_date}' AND vchr_date >= '{start_date}'
         AND brand IN ({brands})
         AND zone IN ({zones})
         AND order_channel IN ({order_channels})
