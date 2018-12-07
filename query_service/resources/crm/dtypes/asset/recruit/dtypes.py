@@ -36,8 +36,7 @@ MONTHLY = {
     'unconsumed_member_amount': int,
     'unconsumed_member_amount_proportion': float,
     'uma_compared_with_lyst': float,
-    'year': str,
-    'month': str
+    'year_month': str
 }
 
 CONSUMED_DAILY = {
@@ -55,8 +54,7 @@ CONSUMED_MONTHLY = {
     'member_recruit_type': str,
     'member_amount': int,
     'member_amount_proportion': float,
-    'year': str,
-    'month': str
+    'year_month': str
 }
 
 UNCONSUMED_DAILY = {
@@ -74,6 +72,5 @@ UNCONSUMED_MONTHLY = {
     'member_register_type': str,
     'member_amount': int,
     'member_amount_proportion': float,
-    'year': str,
-    'month': str
+    'year_month': str
 }

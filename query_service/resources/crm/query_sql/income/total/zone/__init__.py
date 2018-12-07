@@ -1,1 +1,1 @@
-from .sql import ALL, DAILY, MONTHLY, STATIC_ALL
+from .sql import ALL, DAILY, MONTHLY

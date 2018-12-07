@@ -6,7 +6,7 @@ DAILY = """
              FROM ads_crm.member_recruit_analyse_fold_index_label
              WHERE brand_name IN ({brands}) AND member_recruit_type IS NOT NULL AND member_recruit_type != '未升级' AND store_code IN ({zones})
          ) a FULL JOIN (
-             SELECT DISTINCT date(order_deal_time) date, 'key' AS key
+             SELECT DISTINCT order_deal_date AS date, 'key' AS key
              FROM cdm_crm.order_info_detail
              WHERE date(order_deal_time) <= date('{end_date}') - interval '1' day
              AND date(order_deal_time) >= date('{start_date}')
@@ -33,11 +33,13 @@ DAILY = """
         FROM ads_crm.member_recruit_analyse_fold_daily_income_detail f
         LEFT JOIN tt ON f.brand_name = tt.brand_name
         WHERE f.member_recruit_type IS NOT NULL AND f.member_recruit_type != '未升级' AND f.member_register_type IS NULL
-        AND f.brand_name IN ({brands})
-        AND f.order_channel IN ({order_channels})
-        AND f.store_code IN ({zones})
-        AND f.date <= DATE('{end_date}') - INTERVAL '1' DAY
-        AND f.date >= DATE('{start_date}')
+            AND f.brand_name IN ({brands})
+            AND f.order_channel IN ({order_channels})
+            AND f.store_code IN ({zones})
+            AND f.year_month <= substr('{end_date}', 1, 7)
+            AND f.year_month >= substr('{start_date}', 1, 7)
+            AND f.vchr_date <= '{end_date}'
+            AND f.vchr_date >= '{start_date}'
         GROUP BY f.brand_name, f.member_recruit_type, f.date, tt.register_member_array, tt.register_member_amount
     )
     SELECT DISTINCT l.brand, l.zone, l.member_recruit_type,
@@ -51,28 +53,32 @@ DAILY = """
 
 MONTHLY = """
      WITH l AS (
-         SELECT DISTINCT a.brand_name AS brand, array_distinct(array_agg(a.store_code)) AS zone, a.member_recruit_type, b.year, b.month
+         SELECT DISTINCT a.brand_name AS brand, array_distinct(array_agg(a.store_code)) AS zone, a.member_recruit_type, b.year_month
          FROM (
              SELECT DISTINCT brand_name, member_recruit_type, store_code, 'key' AS key
              FROM ads_crm.member_recruit_analyse_fold_index_label
              WHERE brand_name IN ({brands}) AND member_recruit_type IS NOT NULL AND member_recruit_type != '未升级' AND store_code IN ({zones})
          ) a FULL JOIN (
-             SELECT DISTINCT year(order_deal_time) AS year, month(order_deal_time) AS month, 'key' AS key
+             SELECT DISTINCT
+                substr(cast(order_deal_date AS VARCHAR), 1, 7) AS year_month,
+                'key' AS key
              FROM cdm_crm.order_info_detail
              WHERE date(order_deal_time) <= date('{end_date}') - interval '1' day
              AND date(order_deal_time) >= date('{start_date}')
          ) b ON a.key = b.key
-         GROUP BY a.brand_name, a.store_code, a.member_recruit_type, b.year, b.month
+         GROUP BY a.brand_name, a.store_code, a.member_recruit_type, b.year_month
     ), tt AS (
-        SELECT brand_name,
-        array_distinct(flatten(array_agg(register_member_array))) AS register_member_array,
-        cardinality(array_distinct(flatten(array_agg(register_member_array)))) AS register_member_amount
+        SELECT
+            brand_name,
+            array_distinct(flatten(array_agg(register_member_array))) AS register_member_array,
+            cardinality(array_distinct(flatten(array_agg(register_member_array)))) AS register_member_amount,
+            substr(cast(date AS VARCHAR), 1, 7) AS year_month
         FROM ads_crm.member_register_detail
         WHERE brand_name IN ({brands})
-        AND store_code IN ({zones})
-        AND date <= date('{end_date}') - interval '1' day
-        AND date >= date('{start_date}')
-        GROUP BY brand_name
+            AND store_code IN ({zones})
+            AND date <= date('{end_date}') - interval '1' day
+            AND date >= date('{start_date}')
+        GROUP BY brand_name, substr(cast(date AS VARCHAR), 1, 7)
     ), d AS (
         SELECT DISTINCT
             f.brand_name AS brand,
@@ -80,22 +86,25 @@ MONTHLY = """
             f.member_recruit_type,
             cast(COALESCE(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))), 0) AS INTEGER) AS member_amount,
             cast(COALESCE(TRY(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount), 0) AS DECIMAL(18, 4)) AS member_amount_proportion,
-            year(f.date) AS year,
-            month(f.date) AS month
+            f.year_month
         FROM ads_crm.member_recruit_analyse_fold_daily_income_detail f
         LEFT JOIN tt ON f.brand_name = tt.brand_name
+            AND f.year_month = tt.year_month
         WHERE f.member_recruit_type IS NOT NULL AND f.member_recruit_type != '未升级' AND f.member_register_type IS NULL
-        AND f.brand_name IN ({brands})
-        AND f.order_channel IN ({order_channels})
-        AND f.store_code IN ({zones})
-        AND f.date <= DATE('{end_date}') - INTERVAL '1' DAY
-        AND f.date >= DATE('{start_date}')
-        GROUP BY f.brand_name, f.member_recruit_type, year(f.date), month(f.date), tt.register_member_array, tt.register_member_amount
+            AND f.brand_name IN ({brands})
+            AND f.order_channel IN ({order_channels})
+            AND f.store_code IN ({zones})
+            AND f.year_month <= substr('{end_date}', 1, 7)
+            AND f.year_month >= substr('{start_date}', 1, 7)
+            AND f.vchr_date <= '{end_date}'
+            AND f.vchr_date >= '{start_date}'
+        GROUP BY f.brand_name, f.member_recruit_type, tt.register_member_array, tt.register_member_amount, f.year_month
     )
     SELECT DISTINCT l.brand, l.zone, l.member_recruit_type,
-    COALESCE(d.member_amount, 0) AS member_amount,
-    COALESCE(d.member_amount_proportion, 0) AS member_amount_proportion,
-    l.year, l.month
-    FROM l LEFT JOIN d ON l.brand = d.brand AND l.member_recruit_type = d.member_recruit_type
-    AND l.year = d.year AND l.month = d.month
+        COALESCE(d.member_amount, 0) AS member_amount,
+        COALESCE(d.member_amount_proportion, 0) AS member_amount_proportion,
+        l.year_month
+    FROM l LEFT JOIN d ON l.brand = d.brand
+        AND l.member_recruit_type = d.member_recruit_type
+        AND l.year_month = d.year_month
 """

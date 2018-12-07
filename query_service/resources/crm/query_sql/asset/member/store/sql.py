@@ -23,7 +23,8 @@ ALL = """
     AND f.brand_name IN ({brands})
     AND f.order_channel IN ({order_channels})
     AND f.store_code IN ({zones})
-    AND f.date <= date('{end_date}') - interval '1' day
+    AND f.year_month <= substr(cast(date('{end_date}') - interval '1' day AS VARCHAR), 1, 7)
+    AND f.vchr_date <= cast(date('{end_date}') - interval '1' day AS VARCHAR)
     GROUP BY f.brand_name, f.store_code, tt.register_member_amount, tt.register_member_array
 """
 
@@ -52,7 +53,8 @@ NEW_OLD = """
     AND f.brand_name IN ({brands})
     AND f.order_channel IN ({order_channels})
     AND f.store_code IN ({zones})
-    AND f.date <= date('{end_date}') - interval '1' day
+    AND f.year_month <= substr(cast(date('{end_date}') - interval '1' day AS VARCHAR), 1, 7)
+    AND f.vchr_date <= cast(date('{end_date}') - interval '1' day AS VARCHAR)
     GROUP BY f.brand_name, f.store_code, tt.register_member_amount
 """
 
@@ -72,8 +74,11 @@ LEVEL = """
         mi.brand_name AS brand,
         mi.store_code     AS zone,
         CASE mi.member_grade_id
-        WHEN 13 THEN '普通会员'
-        WHEN 14 THEN 'VIP会员'
+            WHEN 13 THEN '普通会员'
+            WHEN 9 THEN '普通会员'
+            WHEN 14 THEN 'VIP会员'
+            WHEN 10 THEN 'VIP会员'
+            WHEN 11 THEN 'VIP会员'
         ELSE NULL END  AS member_level_type,
         cast(count(DISTINCT mi.member_no) AS INTEGER) AS member_level_amount,
         cast(count(DISTINCT mi.member_no) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS member_level_amount_proportion
@@ -84,9 +89,12 @@ LEVEL = """
     AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
     GROUP BY mi.brand_name, mi.store_code, tt.register_member_amount,
     CASE mi.member_grade_id
-    WHEN 13 THEN '普通会员'
-    WHEN 14 THEN 'VIP会员'
-    ELSE NULL END
+        WHEN 13 THEN '普通会员'
+        WHEN 9 THEN '普通会员'
+        WHEN 14 THEN 'VIP会员'
+        WHEN 10 THEN 'VIP会员'
+        WHEN 11 THEN 'VIP会员'
+    ELSE NULL END  AS member_level_type,
 """
 
 ########################################################################################################################

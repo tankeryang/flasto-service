@@ -111,38 +111,38 @@ class StoreTotalMonthlyIncomeDetailController(Resource):
             .get_store_total_monthly_income_detail_data(ns_2.payload)
 
 
-@ns_2.route('/MemberNowBeforeIncomeReport')
-class MemberNowBeforeIncomeReportController(Resource):
-    
-    @ns_2.doc(security='key')
-    @ns_2.response(401, "Token authorized error")
-    @authorized
-    @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
-    @ns_2.marshal_with(po.now_before_all_list_po)
-    def post(self):
-        """
-        查询会员收入分析
-        会员，当月会员，当年会员，往年会员
-        """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_now_before_income_report_data(ns_2.payload)
-
-
-@ns_2.route('/StoreMemberNowBeforeIncomeReport')
-class StoreMemberNowBeforeIncomeReportController(Resource):
-    
-    @ns_2.doc(security='key')
-    @ns_2.response(401, "Token authorized error")
-    @authorized
-    @ns_2.expect(dto.income_analyse_store_dto, validate=True)
-    @ns_2.marshal_with(po.now_before_all_list_po)
-    def post(self):
-        """
-        查询门店会员收入分析
-        会员，当月会员，当年会员，往年会员
-        """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_now_before_income_report_data(ns_2.payload)
+# @ns_2.route('/MemberNowBeforeIncomeReport')
+# class MemberNowBeforeIncomeReportController(Resource):
+#
+#     @ns_2.doc(security='key')
+#     @ns_2.response(401, "Token authorized error")
+#     @authorized
+#     @ns_2.expect(dto.income_analyse_zone_dto, validate=True)
+#     @ns_2.marshal_with(po.now_before_all_list_po)
+#     def post(self):
+#         """
+#         查询会员收入分析
+#         会员，当月会员，当年会员，往年会员
+#         """
+#         return IncomeAnalyseServiceImpl() \
+#             .get_member_now_before_income_report_data(ns_2.payload)
+#
+#
+# @ns_2.route('/StoreMemberNowBeforeIncomeReport')
+# class StoreMemberNowBeforeIncomeReportController(Resource):
+#
+#     @ns_2.doc(security='key')
+#     @ns_2.response(401, "Token authorized error")
+#     @authorized
+#     @ns_2.expect(dto.income_analyse_store_dto, validate=True)
+#     @ns_2.marshal_with(po.now_before_all_list_po)
+#     def post(self):
+#         """
+#         查询门店会员收入分析
+#         会员，当月会员，当年会员，往年会员
+#         """
+#         return IncomeAnalyseServiceImpl() \
+#             .get_store_member_now_before_income_report_data(ns_2.payload)
 
 
 @ns_2.route('/MemberNewOldIncomeReport')
