@@ -49,8 +49,7 @@ total_monthly_po = ns_2.model('MemberTotalMonthlyIncomeDetailModel', {
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
     'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
-    'year': fields.String(readOnly=True, description="年份"),
-    'month': fields.String(readOnly=True, description="月份")
+    'year_month': fields.String(readOnly=True, description="年-月")
 })
 total_monthly_list_po = ns_2.model('MemberTotalMonthlyIncomeDetailListModel', {
     'data': fields.List(fields.Nested(total_monthly_po)),
@@ -126,8 +125,7 @@ new_old_monthly_po = ns_2.model('MemberNewOldMonthlyIncomeDetailModel', {
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
     'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
-    'year': fields.String(readOnly=True, description="年份"),
-    'month': fields.String(readOnly=True, description="月份")
+    'year_month': fields.String(readOnly=True, description="年-月")
 })
 new_old_monthly_list_po = ns_2.model('MemberNewOldMonthlyIncomeDetailListModel', {
     'data': fields.List(fields.Nested(new_old_monthly_po)),
@@ -182,8 +180,7 @@ level_monthly_po = ns_2.model('MemberLevelMonthlyIncomeDetailModel', {
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
     'compared_with_lyst': fields.Float(readOnly=True, description="去年同比"),
     'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
-    'year': fields.String(readOnly=True, description="年份"),
-    'month': fields.String(readOnly=True, description="月份")
+    'year_month': fields.String(readOnly=True, description="年-月")
 })
 level_monthly_list_po = ns_2.model('MemberLevelMonthlyIncomeDetailListModel', {
     'data': fields.List(fields.Nested(level_monthly_po)),
@@ -240,8 +237,7 @@ mul_dim_monthly_po = ns_2.model('MemberMulDimMonthlyIncomeDetailModel', {
     'sales_income': fields.Float(readOnly=True, description="销售收入(元)"),
     'sales_income_proportion': fields.Float(readOnly=True, description='销售收入(占比)'),
     'compared_with_ss_lyst': fields.Float(readOnly=True, description="同店同比"),
-    'year': fields.String(readOnly=True, description="年份"),
-    'month': fields.String(readOnly=True, description="月份")
+    'year_month': fields.String(readOnly=True, description="年-月")
 })
 mul_dim_monthly_list_po = ns_2.model('MemberMulDimMonthlyIncomeDetailListModel', {
     'data': fields.List(fields.Nested(mul_dim_monthly_po)),

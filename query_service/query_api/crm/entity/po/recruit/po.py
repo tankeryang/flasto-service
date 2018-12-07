@@ -52,8 +52,7 @@ recruit_amount_monthly_po = ns_4.model('RecruitAmountMonthlyDetailModel', {
     'unconsumed_member_amount': fields.Integer(readOnly=True, description="未消费会员数"),
     'unconsumed_member_amount_proportion': fields.Float(readOnly=True, description="未消费会员数占比"),
     'uma_compared_with_lyst': fields.Float(readOnly=True, description="未消费会员数同比"),
-    'year': fields.String(readOnly=True, description="年份"),
-    'month': fields.String(readOnly=True, description="月份")
+    'year_month': fields.String(readOnly=True, description="年-月")
 })
 recruit_amount_monthly_list_po = ns_4.model('RecruitAmountMonthlyDetailListModel', {
     'data': fields.List(fields.Nested(recruit_amount_monthly_po)),
@@ -83,8 +82,7 @@ recruit_consumed_amount_monthly_po = ns_4.model('RecruitConsumedAmountMonthlyDet
     'member_recruit_type': fields.String(readOnly=True, description="招募会员类型"),
     'member_amount': fields.Integer(readOnly=True, description="会员数"),
     'member_amount_proportion': fields.Float(readOnly=True, description="占比"),
-    'year': fields.String(readOnly=True, description="年份"),
-    'month': fields.String(readOnly=True, description="月份")
+    'year_month': fields.String(readOnly=True, description="年-月")
 })
 recruit_consumed_amount_monthly_list_po = ns_4.model('RecruitConsumedAmountMonthlyDetailListModel', {
     'data': fields.List(fields.Nested(recruit_consumed_amount_monthly_po)),
@@ -114,8 +112,7 @@ recruit_unconsumed_amount_monthly_po = ns_4.model('RecruitUnconsumedAmountMonthl
     'member_register_type': fields.String(readOnly=True, description="会员注册类型"),
     'member_amount': fields.Integer(readOnly=True, description="会员数"),
     'member_amount_proportion': fields.Float(readOnly=True, description="占比"),
-    'year': fields.String(readOnly=True, description="年份"),
-    'month': fields.String(readOnly=True, description="月份")
+    'year_month': fields.String(readOnly=True, description="年-月")
 })
 recruit_unconsumed_amount_monthly_list_po = ns_4.model('RecruitUnconsumedAmountMonthlyDetailListModel', {
     'data': fields.List(fields.Nested(recruit_unconsumed_amount_monthly_po)),

@@ -3,6 +3,7 @@ import pandas as pd
 from query_service.query_api.crm.service import IncomeAnalyseService
 from query_service.query_biz.crm.utils import get_presto_engine
 from query_service.query_biz.crm.utils.formator.income import income_analyse_formator
+from query_service.query_biz.crm.const import QueryType
 
 # resources
 import query_service.resources.crm.query_sql as query_sql
@@ -26,6 +27,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.ALL)
+        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -44,6 +46,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.ALL)
+        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -62,6 +65,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.DAILY)
+        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -80,6 +84,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.DAILY)
+        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -98,6 +103,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.MONTHLY)
+        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -116,6 +122,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.MONTHLY)
+        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -170,6 +177,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.ALL)
+        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -188,6 +196,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.ALL)
+        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -206,6 +215,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.DAILY)
+        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -224,6 +234,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.DAILY)
+        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -242,6 +253,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.MONTHLY)
+        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -260,6 +272,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.MONTHLY)
+        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -278,6 +291,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.ALL)
+        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -296,6 +310,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.ALL)
+        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -314,6 +329,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.DAILY)
+        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -332,6 +348,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.DAILY)
+        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -350,6 +367,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.MONTHLY)
+        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -368,6 +386,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.MONTHLY)
+        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -386,6 +405,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.ALL)
+        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -404,6 +424,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.ALL)
+        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -422,6 +443,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.DAILY)
+        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -440,6 +462,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.DAILY)
+        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -458,6 +481,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.MONTHLY)
+        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -476,6 +500,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.MONTHLY)
+        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict

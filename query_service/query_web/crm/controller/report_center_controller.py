@@ -14,9 +14,9 @@ class CrmDailyReportController(Resource):
     
     @ns_1.doc(security='key')
     @ns_1.expect(dto.daily_report_dto, validate=True)
+    @authorized
     @ns_1.marshal_with(po.daily_report_list_po)
     @ns_1.response(401, "Token authorized error")
-    @authorized
     def post(self):
         """
         日报查询

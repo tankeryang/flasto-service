@@ -62,14 +62,15 @@ NEW_OLD = """
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
     WHERE f.member_newold_type = '新会员' AND f.member_type IS NULL AND f.member_level_type IS NULL
-    AND f.brand_name IN ({brands})
-    AND f.order_channel IN ({order_channels})
-    AND f.{zone} IN ({zones})
-    AND f.sales_mode IN ({sales_modes})
-    AND f.store_type IN ({store_types})
-    AND f.store_level IN ({store_levels})
-    AND f.channel_type IN ({channel_types})
-    AND f.date <= date('{end_date}') - interval '1' day
+        AND f.brand_name IN ({brands})
+        AND f.order_channel IN ({order_channels})
+        AND f.{zone} IN ({zones})
+        AND f.sales_mode IN ({sales_modes})
+        AND f.store_type IN ({store_types})
+        AND f.store_level IN ({store_levels})
+        AND f.channel_type IN ({channel_types})
+        AND f.year_month <= substr(cast(date('{end_date}') - interval '1' day AS VARCHAR), 1, 7)
+        AND f.vchr_date <= cast(date('{end_date}') - interval '1' day AS VARCHAR)
     GROUP BY f.brand_name, f.{zone}, tt.register_member_amount
 """
 
@@ -93,24 +94,30 @@ LEVEL = """
         mi.brand_name AS brand,
         mi.{zone}     AS zone,
         CASE mi.member_grade_id
-        WHEN 13 THEN '普通会员'
-        WHEN 14 THEN 'VIP会员'
+            WHEN 13 THEN '普通会员'
+            WHEN 9 THEN '普通会员'
+            WHEN 14 THEN 'VIP会员'
+            WHEN 10 THEN 'VIP会员'
+            WHEN 11 THEN 'VIP会员'
         ELSE NULL END  AS member_level_type,
         cast(count(DISTINCT mi.member_no) AS INTEGER) AS member_level_amount,
         cast(count(DISTINCT mi.member_no) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS member_level_amount_proportion
     FROM cdm_crm.member_info_detail mi
     LEFT JOIN tt ON mi.brand_name = tt.brand_name AND mi.{zone} = tt.{zone}
     WHERE mi.brand_name IN ({brands})
-    AND mi.{zone} IN ({zones})
-    AND mi.sales_mode IN ({sales_modes})
-    AND mi.store_type IN ({store_types})
-    AND mi.store_level IN ({store_levels})
-    AND mi.channel_type IN ({channel_types})
-    AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
+        AND mi.{zone} IN ({zones})
+        AND mi.sales_mode IN ({sales_modes})
+        AND mi.store_type IN ({store_types})
+        AND mi.store_level IN ({store_levels})
+        AND mi.channel_type IN ({channel_types})
+        AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
     GROUP BY mi.brand_name, mi.{zone}, tt.register_member_amount,
     CASE mi.member_grade_id
-    WHEN 13 THEN '普通会员'
-    WHEN 14 THEN 'VIP会员'
+        WHEN 13 THEN '普通会员'
+        WHEN 9 THEN '普通会员'
+        WHEN 14 THEN 'VIP会员'
+        WHEN 10 THEN 'VIP会员'
+        WHEN 11 THEN 'VIP会员'
     ELSE NULL END
 """
 
