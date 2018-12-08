@@ -22,6 +22,6 @@ recruit_analyse_store_dto = ns_4.model('RecruitAnalyseStoreReqDtoModel', {
     'brands': fields.List(fields.String(description="品牌名", example="FivePlus"), required=True),
     'store_codes': fields.List(fields.String(description="门店编码", example="1102"), required=True),
     'order_channels': fields.String(required=True, description="订单类型(线上/线下)", example='线下', enum=['全部', '线上', '线下']),
-    'start_date': fields.Date(required=True, description="开始日期(yyyy-mm-dd)", example='2018-05-10'),
-    'end_date': fields.Date(required=True, description="结束日期(yyyy-mm-dd)", example='2018-08-10')
+    'start_date': fields.Date(required=True, description="开始日期(yyyy-mm-dd)", example='2018-11-30'),
+    'end_date': fields.Date(required=True, description="结束日期(yyyy-mm-dd)", example='2018-11-30')
 })
