@@ -123,7 +123,7 @@ MONTHLY = """
         cast(COALESCE(TRY(
             ne_m.order_amount * 1.0 / (IF(no_m.order_amount IS NOT NULL, no_m.order_amount, 0) + IF(ne_m.order_amount IS NOT NULL, ne_m.order_amount, 0))
         ), 0) AS DECIMAL(18, 4)) AS register_proportion,
-        year_month
+        f.year_month
     FROM ads_crm.member_analyse_fold_daily_income_detail f
     LEFT JOIN ne_m ON f.brand_name = ne_m.brand_name
         AND f.store_code = ne_m.store_code
