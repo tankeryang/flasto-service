@@ -275,8 +275,7 @@ rgp_monthly_po = ns_2.model('MemberMonthlyRegisterProportionReportModel', {
     'brand': fields.String(readOnly=True, description="品牌名"),
     'zone': fields.String(readOnly=True, description="查询范围"),
     'register_proportion': fields.Float(readOnly=True, description="登记率"),
-    'year': fields.String(readOnly=True, description="年份"),
-    'month': fields.String(readOnly=True, description="月份")
+    'year_month': fields.String(readOnly=True, description="年-月")
 })
 rgp_monthly_list_po = ns_2.model('MemberMonthlyRegisterProportionReportListModel', {
     'data': fields.List(fields.Nested(rgp_monthly_po)),

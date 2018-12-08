@@ -15,6 +15,5 @@ MONTHLY = {
     'brand': str,
     'zone': str,
     'register_proportion': float,
-    'year': str,
-    'month': str
+    'year_month': str,
 }

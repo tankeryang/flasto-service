@@ -519,6 +519,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.ALL)
+        df_result.sort_values(by=['brand', 'zone'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -537,6 +538,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.ALL)
+        df_result.sort_values(by=['brand', 'zone'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -555,6 +557,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.DAILY)
+        df_result.sort_values(by=['brand', 'zone', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -573,6 +576,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.DAILY)
+        df_result.sort_values(by=['brand', 'zone', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -591,6 +595,7 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.MONTHLY)
+        
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
