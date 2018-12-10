@@ -128,7 +128,7 @@ DAILY = """
             order_deal_date AS date
         FROM cdm_crm.order_info_detail f
         INNER JOIN tt_lyst_num ON f.brand_name = tt_lyst_num.brand_name AND f.{zone} = tt_lyst_num.{zone}
-            AND f.order_deal_date = tt_lyst.date
+            AND f.order_deal_date = tt_lyst_num.date
         WHERE f.member_type = '会员'
         AND f.brand_name IN ({brands})
         AND f.order_channel IN ({order_channels})
