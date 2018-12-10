@@ -8,7 +8,7 @@ def judge_all(query_param, query_field):
     :param query_field:
     :return:
     """
-    if query_param == QueryField.ALL:
+    if QueryField.ALL in query_param:
         return str(list(query_field)).strip('[').strip(']')
     else:
-        return str([query_param]).strip('[').strip(']')
+        return str(query_param).strip('[').strip(']')
