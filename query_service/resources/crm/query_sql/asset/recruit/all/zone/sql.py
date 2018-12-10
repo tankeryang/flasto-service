@@ -250,7 +250,7 @@ MONTHLY = """
         AND f.channel_type IN ({channel_types})
         AND date(f.order_deal_time) <= date('{end_date}') - interval '1' year
         AND date(f.order_deal_time) >= date('{start_date}') - interval '1' year
-        GROUP BY f.brand_name, f.{zone}, tt_lyst_num.register_member_amount, substr(cast(order_deal_date AS VARCHAR), 1, 7)
+        GROUP BY f.brand_name, f.{zone}, tt_lyst_num.register_member_amount, substr(cast(f.order_deal_date AS VARCHAR), 1, 7)
     ), d AS (
         SELECT DISTINCT
             f.brand_name AS brand,
