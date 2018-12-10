@@ -152,7 +152,7 @@ DAILY = """
             cast(tt_num.register_member_amount - count(DISTINCT f.member_no) AS INTEGER) AS unconsumed_member_amount,
             cast(1.0000 - COALESCE(TRY(count(DISTINCT f.member_no) * 1.0000 / tt_num.register_member_amount), 0) AS DECIMAL(18, 4)) AS unconsumed_member_amount_proportion,
             cast(COALESCE(TRY((tt_num.register_member_amount - count(DISTINCT f.member_no)) * 1.0000 / cs_lyst.unconsumed_member_amount), 0) AS DECIMAL(18, 4)) AS uma_compared_with_lyst,
-            f.oeder_deal_date AS date
+            f.order_deal_date AS date
         FROM cdm_crm.order_info_detail f
         INNER JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone} AND f.member_no = tt.member_no AND f.order_deal_date = tt.date
         INNER JOIN tt_num ON f.brand_name = tt_num.brand_name AND f.{zone} = tt_num.{zone} AND f.order_deal_date = tt_num.date
