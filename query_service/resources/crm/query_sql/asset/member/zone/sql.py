@@ -61,7 +61,7 @@ NEW_OLD = """
         cast(1 - (count(DISTINCT f.member_no) * 1.0000 / tt.register_member_amount) AS DECIMAL(18, 4)) AS old_member_amount_proportion
     FROM cdm_crm.order_info_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
-    WHERE f.member_newold_type = '新会员' AND f.member_type IS NULL AND f.member_level_type IS NULL
+    WHERE f.member_newold_type = '新会员'
         AND f.brand_name IN ({brands})
         AND f.order_channel IN ({order_channels})
         AND f.{zone} IN ({zones})
