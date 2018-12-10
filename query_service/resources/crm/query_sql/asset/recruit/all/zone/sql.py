@@ -1,5 +1,80 @@
 ALL = """
     WITH tt AS (
+        SELECT DISTINCT brand_name, {zone}, member_no
+        FROM cdm_crm.member_info_detail
+        WHERE brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date(member_register_time) >= date('{start_date}')
+        AND date(member_register_time) <= date('{end_date}') - interval '1' day
+    ), tt_num AS (
+        SELECT brand_name, {zone}, count(DISTINCT member_no) AS register_member_amount
+        FROM tt GROUP BY brand_name, {zone}
+    ), tt_lyst AS (
+        SELECT DISTINCT brand_name, {zone}, member_no
+        FROM cdm_crm.member_info_detail
+        WHERE brand_name IN ({brands})
+        AND {zone} IN ({zones})
+        AND sales_mode IN ({sales_modes})
+        AND store_type IN ({store_types})
+        AND store_level IN ({store_levels})
+        AND channel_type IN ({channel_types})
+        AND date(member_register_time) >= date('{start_date}') - interval '1' year
+        AND date(member_register_time) <= date('{end_date}') - interval '1' year
+    ), tt_lyst_num AS (
+        SELECT brand_name, {zone}, count(DISTINCT member_no) AS register_member_amount
+        FROM tt GROUP BY brand_name, {zone}
+    ), cs_lyst AS (
+        SELECT DISTINCT
+            f.brand_name AS brand,
+            f.{zone} AS zone,
+            cast(count(DISTINCT f.member_no) AS INTEGER) AS consumed_member_amount,
+            cast(tt_lyst_num.register_member_amount - count(DISTINCT f.member_no) AS INTEGER) AS unconsumed_member_amount
+        FROM cdm_crm.order_info_detail f
+        INNER JOIN tt_lyst_num ON f.brand_name = tt_lyst_num.brand_name AND f.{zone} = tt_lyst_num.{zone}
+        WHERE f.member_type = '会员'
+        AND f.brand_name IN ({brands})
+        AND f.order_channel IN ({order_channels})
+        AND f.{zone} IN ({zones})
+        AND f.sales_mode IN ({sales_modes})
+        AND f.store_type IN ({store_types})
+        AND f.store_level IN ({store_levels})
+        AND f.channel_type IN ({channel_types})
+        AND date(f.order_deal_time) <= date('{end_date}') - interval '1' day
+        GROUP BY f.brand_name, f.{zone}, tt_lyst_num.register_member_amount
+    )
+    SELECT DISTINCT
+        f.brand_name AS brand,
+        f.{zone} AS zone,
+        cast(tt_num.register_member_amount AS INTEGER) AS register_member_amount,
+        cast(COALESCE(TRY(tt_num.register_member_amount * 1.0 / tt_lyst_num.register_member_amount), 0) AS DECIMAL(18, 4)) AS rma_compared_with_lyst,
+        cast(count(DISTINCT f.member_no) AS INTEGER) AS consumed_member_amount,
+        cast(count(DISTINCT f.member_no) * 1.0000 / tt_num.register_member_amount AS DECIMAL(18, 4)) AS consumed_member_amount_proportion,
+        count(DISTINCT f.member_no) * 1.0 / cs_lyst.consumed_member_amount
+        cast(tt_num.register_member_amount - count(DISTINCT f.member_no) AS INTEGER) AS unconsumed_member_amount,
+        cast(1.0000 - (count(DISTINCT f.member_no) * 1.0000 / tt_num.register_member_amount) AS DECIMAL(18, 4)) AS unconsumed_member_amount_proportion
+    FROM cdm_crm.order_info_detail f
+    INNER JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone} AND f.member_no = tt.member_no
+    INNER JOIN tt_num ON f.brand_name = tt_num.brand_name AND f.{zone} = tt_num.{zone}
+    WHERE f.member_type = '会员'
+    AND f.brand_name IN ({brands})
+    AND f.order_channel IN ({order_channels})
+    AND f.{zone} IN ({zones})
+    AND f.sales_mode IN ({sales_modes})
+    AND f.store_type IN ({store_types})
+    AND f.store_level IN ({store_levels})
+    AND f.channel_type IN ({channel_types})
+    AND date(f.order_deal_time) <= date('{end_date}') - interval '1' day
+    GROUP BY f.brand_name, f.{zone}, tt_num.register_member_amount
+"""
+
+########################################################################################################################
+
+ALL_ = """
+    WITH tt AS (
         SELECT brand_name, {zone},
         array_distinct(flatten(array_agg(register_member_array))) AS register_member_array,
         cardinality(array_distinct(flatten(array_agg(register_member_array)))) AS register_member_amount
