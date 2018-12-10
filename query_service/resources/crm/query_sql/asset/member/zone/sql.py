@@ -55,11 +55,11 @@ NEW_OLD = """
     SELECT DISTINCT
         f.brand_name AS brand,
         f.{zone} AS zone,
-        cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS new_member_amount,
-        cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS new_member_amount_proportion,
-        cast(tt.register_member_amount - cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS old_member_amount,
-        cast(1 - (cardinality(array_distinct(flatten(array_agg(f.customer_array)))) * 1.0000 / tt.register_member_amount) AS DECIMAL(18, 4)) AS old_member_amount_proportion
-    FROM ads_crm.member_analyse_fold_daily_income_detail f
+        cast(count(DISTINCT f.member_no) AS INTEGER) AS new_member_amount,
+        cast(count(DISTINCT f.member_no) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS new_member_amount_proportion,
+        cast(tt.register_member_amount - count(DISTINCT f.member_no) AS INTEGER) AS old_member_amount,
+        cast(1 - (count(DISTINCT f.member_no) * 1.0000 / tt.register_member_amount) AS DECIMAL(18, 4)) AS old_member_amount_proportion
+    FROM cdm_crm.order_info_detail f
     LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
     WHERE f.member_newold_type = '新会员' AND f.member_type IS NULL AND f.member_level_type IS NULL
         AND f.brand_name IN ({brands})
@@ -69,8 +69,7 @@ NEW_OLD = """
         AND f.store_type IN ({store_types})
         AND f.store_level IN ({store_levels})
         AND f.channel_type IN ({channel_types})
-        AND f.year_month <= substr(cast(date('{end_date}') - interval '1' day AS VARCHAR), 1, 7)
-        AND f.vchr_date <= cast(date('{end_date}') - interval '1' day AS VARCHAR)
+        AND f.order_deal_date <= date('{end_date}') - interval '1' day
     GROUP BY f.brand_name, f.{zone}, tt.register_member_amount
 """
 
