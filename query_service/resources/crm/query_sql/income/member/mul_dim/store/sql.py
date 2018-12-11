@@ -87,8 +87,11 @@ DAILY = """
             SELECT DISTINCT
                 order_deal_date AS date,
                 'key' AS key
-            FROM cdm_crm.order_info_detail
-            WHERE order_deal_date <= date('{end_date}') AND order_deal_date >= date('{start_date}')
+            FROM ads_crm.order_info_detail
+            WHERE year_month <= substr('{end_date}', 1, 7)
+                AND year_month >= substr('{start_date}', 1, 7)
+                AND vchr_date <= '{end_date}'
+                AND vchr_date >= '{start_date}'
         ) b ON a.key = b.key
         GROUP BY a.brand, a.member_newold_type, a.member_level_type, b.date
     ), tt AS (
@@ -194,10 +197,13 @@ MONTHLY = """
                 AND {zone} IN ({zones})
         ) a FULL JOIN (
             SELECT DISTINCT
-                substr(cast(order_deal_date AS VARCHAR), 1, 7) AS year_month,
+                year_month,
                 'key' AS key
-            FROM cdm_crm.order_info_detail
-            WHERE order_deal_date <= date('{end_date}') AND order_deal_date >= date('{start_date}')
+            FROM ads_crm.order_info_detail
+            WHERE year_month <= substr('{end_date}', 1, 7)
+                AND year_month >= substr('{start_date}', 1, 7)
+                AND vchr_date <= '{end_date}'
+                AND vchr_date >= '{start_date}'
         ) b ON a.key = b.key
         GROUP BY a.brand, a.member_newold_type, a.member_level_type, b.year_month
     ), tt AS (
@@ -273,8 +279,7 @@ MONTHLY = """
         l.year_month
     FROM l
     LEFT JOIN tmp
-    ON l.brand = tmp.brand
-        AND l.zone = tmp.zone
+    ON l.brand = tmp.brand AND l.zone = tmp.zone
         AND l.member_newold_type = tmp.member_newold_type
         AND l.member_level_type = tmp.member_level_type
         AND l.year_month = tmp.year_month
