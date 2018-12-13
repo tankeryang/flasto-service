@@ -30,11 +30,11 @@ def register_api():
 
     from query_service.query_web import api
     
-    # api.add_namespace(cic_static)
+    api.add_namespace(cic_static)
     api.add_namespace(report_center)
-    # api.add_namespace(income_analyse)
-    # api.add_namespace(asset_analyse)
-    # api.add_namespace(recruit_analyse)
+    api.add_namespace(income_analyse)
+    api.add_namespace(asset_analyse)
+    api.add_namespace(recruit_analyse)
     api.namespaces.pop(0)
 
 
