@@ -8,6 +8,7 @@ ALL = """
             AND brand_name IN ({brands})
             AND store_code IN ({zones})
             AND order_channel IN ({order_channels})
+            AND trade_source IN ({trade_source})
             AND year_month <= substr('{end_date}', 1, 7)
             AND year_month >= substr('{start_date}', 1, 7)
             AND vchr_date <= '{end_date}'
@@ -24,6 +25,7 @@ ALL = """
             AND brand_name IN ({brands})
             AND store_code IN ({zones})
             AND order_channel IN ({order_channels})
+            AND trade_source IN ({trade_source})
             AND year_month <= substr(cast(date('{end_date}') - interval '1' year AS VARCHAR), 1, 7)
             AND year_month >= substr(cast(date('{start_date}') - interval '1' year AS VARCHAR), 1, 7)
             AND vchr_date <= cast(date('{end_date}') - interval '1' year AS VARCHAR)
@@ -54,6 +56,7 @@ ALL = """
         AND f.brand_name IN ({brands})
         AND f.store_code IN ({zones})
         AND f.order_channel IN ({order_channels})
+        AND f.trade_source IN ({trade_source})
         AND year_month <= substr('{end_date}', 1, 7)
         AND year_month >= substr('{start_date}', 1, 7)
         AND f.vchr_date <= '{end_date}'
@@ -104,6 +107,7 @@ DAILY = """
             AND brand_name IN ({brands})
             AND store_code IN ({zones})
             AND order_channel IN ({order_channels})
+            AND trade_source IN ({trade_source})
             AND year_month <= substr('{end_date}', 1, 7)
             AND year_month >= substr('{start_date}', 1, 7)
             AND vchr_date <= '{end_date}'
@@ -121,6 +125,7 @@ DAILY = """
             AND brand_name IN ({brands})
             AND store_code IN ({zones})
             AND order_channel IN ({order_channels})
+            AND trade_source IN ({trade_source})
             AND year_month <= substr(cast(date('{end_date}') - interval '1' year AS VARCHAR), 1, 7)
             AND year_month >= substr(cast(date('{start_date}') - interval '1' year AS VARCHAR), 1, 7)
             AND vchr_date <= cast(date('{end_date}') - interval '1' year AS VARCHAR)
@@ -148,6 +153,7 @@ DAILY = """
             AND f.brand_name IN ({brands})
             AND f.store_code IN ({zones})
             AND f.order_channel IN ({order_channels})
+            AND f.trade_source IN ({trade_source})
             AND year_month <= substr('{end_date}', 1, 7)
             AND year_month >= substr('{start_date}', 1, 7)
             AND f.vchr_date <= '{end_date}'
@@ -216,6 +222,7 @@ MONTHLY = """
             AND brand_name IN ({brands})
             AND store_code IN ({zones})
             AND order_channel IN ({order_channels})
+            AND trade_source IN ({trade_source})
             AND year_month <= substr('{end_date}', 1, 7)
             AND year_month >= substr('{start_date}', 1, 7)
             AND vchr_date <= '{end_date}'
@@ -233,6 +240,7 @@ MONTHLY = """
             AND brand_name IN ({brands})
             AND store_code IN ({zones})
             AND order_channel IN ({order_channels})
+            AND trade_source IN ({trade_source})
             AND year_month <= substr(cast(date('{end_date}') - interval '1' year AS VARCHAR), 1, 7)
             AND year_month >= substr(cast(date('{start_date}') - interval '1' year AS VARCHAR), 1, 7)
             AND vchr_date <= cast(date('{end_date}') - interval '1' year AS VARCHAR)
@@ -261,6 +269,7 @@ MONTHLY = """
             AND f.brand_name IN ({brands})
             AND f.store_code IN ({zones})
             AND f.order_channel IN ({order_channels})
+            AND f.trade_source IN ({trade_source})
             AND f.year_month <= substr('{end_date}', 1, 7)
             AND f.year_month >= substr('{start_date}', 1, 7)
             AND f.vchr_date <= '{end_date}'

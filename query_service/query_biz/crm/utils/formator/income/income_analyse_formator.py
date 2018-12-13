@@ -35,6 +35,7 @@ def income_analyse_formator(sql, payload):
 
         brands = str(payload['brands']).strip('[').strip(']')
         order_channels = judge_all(payload['order_channels'], QueryField.ORDER_CHANNELS)
+        trade_source = judge_all(payload['trade_source'], QueryField.TRADE_SOURCE)
         sales_modes = judge_all(payload['sales_modes'], QueryField.SALES_MODES)
         store_types = judge_all(payload['store_types'], QueryField.STORE_TYPES)
         store_levels = judge_all(payload['store_levels'], QueryField.STORE_LEVELS)
@@ -44,8 +45,8 @@ def income_analyse_formator(sql, payload):
         
         return sql.format(
             brands=brands, zone=zone, zones=zones,
-            order_channels=order_channels, sales_modes=sales_modes,
-            store_types=store_types, store_levels=store_levels, channel_types=channel_types,
+            order_channels=order_channels, trade_source=trade_source,
+            sales_modes=sales_modes, store_types=store_types, store_levels=store_levels, channel_types=channel_types,
             start_date=start_date, end_date=end_date
         )
 
@@ -58,10 +59,12 @@ def income_analyse_formator(sql, payload):
         zones = str(payload['store_codes']).strip('[').strip(']')
         brands = str(payload['brands']).strip('[').strip(']')
         order_channels = judge_all(payload['order_channels'], QueryField.ORDER_CHANNELS)
+        trade_source = judge_all(payload['trade_source'], QueryField.TRADE_SOURCE)
         start_date = payload['start_date']
         end_date = payload['end_date']
         
         return sql.format(
             brands=brands, zone=zone, zones=zones,
-            order_channels=order_channels, start_date=start_date, end_date=end_date
+            order_channels=order_channels, trade_source=trade_source,
+            start_date=start_date, end_date=end_date
         )

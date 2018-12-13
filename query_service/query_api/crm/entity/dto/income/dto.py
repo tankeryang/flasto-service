@@ -14,6 +14,7 @@ income_analyse_zone_dto = ns_2.model('MemberAnalyseReqDtoModel', {
     'store_levels': fields.List(fields.String(description="门店等级", example='A', enum=['全部', 'I', 'A', 'B', 'C', 'D']), required=True),
     'channel_types': fields.List(fields.String(description="经营方式/渠道", example='自营', enum=['全部', '自营', '联营', '特许']), required=True),
     'order_channels': fields.List(fields.String(description="订单类型(线上/线下)", example='线下', enum=['全部', '线上', '线下']), required=True),
+    'trade_source': fields.List(fields.String(description="订单渠道(FPOS/OMIS/官网/其他)", example='FPOS', enum=['全部', 'FPOS', 'OMIS', '官网', '其他']), required=True),
     'start_date': fields.Date(required=True, description="开始日期(yyyy-mm-dd)", example='2018-11-01'),
     'end_date': fields.Date(required=True, description="结束日期(yyyy-mm-dd)", example='2018-11-30')
 })
