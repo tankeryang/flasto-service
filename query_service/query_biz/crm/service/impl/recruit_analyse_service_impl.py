@@ -61,6 +61,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.DAILY)
+        df_result.sort_values(by=['brand', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -79,6 +80,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.DAILY)
+        df_result.sort_values(by=['brand', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -97,6 +99,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.MONTHLY)
+        df_result.sort_values(by=['brand', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -115,6 +118,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.MONTHLY)
+        df_result.sort_values(by=['brand', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -133,6 +137,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.CONSUMED_DAILY)
+        df_result.sort_values(by=['brand', 'member_recruit_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -151,6 +156,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.CONSUMED_MONTHLY)
+        df_result.sort_values(by=['brand', 'member_recruit_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -169,6 +175,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.CONSUMED_DAILY)
+        df_result.sort_values(by=['brand', 'member_recruit_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -187,6 +194,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.CONSUMED_MONTHLY)
+        df_result.sort_values(by=['brand', 'member_recruit_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -205,6 +213,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.UNCONSUMED_DAILY)
+        df_result.sort_values(by=['brand', 'member_register_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -223,6 +232,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.UNCONSUMED_MONTHLY)
+        df_result.sort_values(by=['brand', 'member_register_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -241,6 +251,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.UNCONSUMED_DAILY)
+        df_result.sort_values(by=['brand', 'member_register_type', 'date'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
@@ -259,6 +270,7 @@ class RecruitAnalyseServiceImpl(RecruitAnalyseService):
         con = presto_engine.connect()
         
         df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.recruit.UNCONSUMED_MONTHLY)
+        df_result.sort_values(by=['brand', 'member_register_type', 'year_month'], inplace=True)
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict

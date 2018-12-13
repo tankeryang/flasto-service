@@ -1,3 +1,7 @@
+from query_service.query_biz.crm.const import QueryField
+from query_service.query_biz.crm.utils.judge_all import judge_all
+
+
 def asset_analyse_formator(sql, payload):
     """
     payload 参数校验
@@ -6,9 +10,9 @@ def asset_analyse_formator(sql, payload):
     :param payload: restplus.Api.payload 传入参数
     :return: 填充参数后的sql
     """
-    
+
+    # 区域查询
     if 'store_codes' not in payload.keys():
-        
         if 'brands' not in payload.keys() or len(payload['brands']) < 1:
             return None
         elif 'cities' in payload.keys() and len(payload['cities']) > 0:
@@ -28,34 +32,34 @@ def asset_analyse_formator(sql, payload):
             zones = str(payload['country']).strip('[').strip(']')
         else:
             return None
-        
-        brands = str(payload['brands']).strip('[').strip(']')
-        order_channels = str(payload['order_channels']).strip('[').strip(']')
-        sales_modes = str(payload['sales_modes']).strip('[').strip(']')
-        store_types = str(payload['store_types']).strip('[').strip(']')
-        store_levels = str(payload['store_levels']).strip('[').strip(']')
-        channel_types = str(payload['channel_types']).strip('[').strip(']')
-        end_date = payload['end_date']
-        
-        return sql.format(
-            brands=brands, zone=zone, zones=zones, end_date=end_date,
-            order_channels=order_channels, sales_modes=sales_modes, store_types=store_types,
-            store_levels=store_levels, channel_types=channel_types
-        )
     
-    else:
-        
-        if len(payload['brands']) < 1:
-            return None
-        elif len(payload['store_codes']) > 0:
-            zones = str(payload['store_codes']).strip('[').strip(']')
-        else:
-            return None
-        
         brands = str(payload['brands']).strip('[').strip(']')
-        order_channels = str(payload['order_channels']).strip('[').strip(']')
+        order_channels = judge_all(payload['order_channels'], QueryField.ORDER_CHANNELS)
+        sales_modes = judge_all(payload['sales_modes'], QueryField.SALES_MODES)
+        store_types = judge_all(payload['store_types'], QueryField.STORE_TYPES)
+        store_levels = judge_all(payload['store_levels'], QueryField.STORE_LEVELS)
+        channel_types = judge_all(payload['channel_types'], QueryField.CHANNEL_TYPES)
         end_date = payload['end_date']
-        
+    
         return sql.format(
-            brands=brands, zones=zones, order_channels=order_channels, end_date=end_date
+            brands=brands, zone=zone, zones=zones,
+            order_channels=order_channels, sales_modes=sales_modes,
+            store_types=store_types, store_levels=store_levels, channel_types=channel_types,
+            end_date=end_date
+        )
+
+    # 门店查询
+    elif 'store_codes' in payload.keys():
+        if 'brands' not in payload.keys() or len(payload['brands']) < 1:
+            return None
+    
+        zone = 'store_code'
+        zones = str(payload['store_codes']).strip('[').strip(']')
+        brands = str(payload['brands']).strip('[').strip(']')
+        order_channels = judge_all(payload['order_channels'], QueryField.ORDER_CHANNELS)
+        end_date = payload['end_date']
+    
+        return sql.format(
+            brands=brands, zone=zone, zones=zones,
+            order_channels=order_channels, end_date=end_date
         )

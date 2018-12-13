@@ -34,6 +34,5 @@ MONTHLY = {
     'sales_income': float,
     'sales_income_proportion': float,
     'compared_with_ss_lyst': float,
-    'year': str,
-    'month': str
+    'year_month': str,
 }

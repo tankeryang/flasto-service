@@ -1,104 +1,130 @@
 ALL = """
     WITH tt AS (
-        SELECT brand_name, store_code,
-        array_distinct(flatten(array_agg(register_member_array))) AS register_member_array,
-        cardinality(array_distinct(flatten(array_agg(register_member_array)))) AS register_member_amount
-        FROM ads_crm.member_register_detail
+        SELECT DISTINCT
+            brand_name, {zone}, member_no
+        FROM cdm_crm.member_info_detail
         WHERE brand_name IN ({brands})
-        AND store_code IN ({zones})
-        AND date <= date('{end_date}') - interval '1' day
-        GROUP BY brand_name, store_code
+            AND {zone} IN ({zones})
+        AND date(member_register_time) <= date('{end_date}') - interval '1' day
+    ), tt_num AS (
+        SELECT
+            brand_name,
+            {zone},
+            count(DISTINCT member_no) AS register_member_amount
+        FROM tt
+        GROUP BY brand_name, {zone}
     )
     SELECT DISTINCT
         f.brand_name AS brand,
-        f.store_code AS zone,
-        cast(tt.register_member_amount AS INTEGER) AS register_member_amount,
-        cast(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) AS INTEGER) AS consumed_member_amount,
-        cast(cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS consumed_member_amount_proportion,
-        cast(tt.register_member_amount - cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) AS INTEGER) AS unconsumed_member_amount,
-        cast(1.0000 - (cardinality(array_intersect(tt.register_member_array, array_distinct(flatten(array_agg(f.customer_array))))) * 1.0000 / tt.register_member_amount) AS DECIMAL(18, 4)) AS unconsumed_member_amount_proportion
-    FROM ads_crm.member_analyse_fold_daily_income_detail f
-    LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.store_code = tt.store_code
-    WHERE f.member_type = '会员' AND f.member_newold_type IS NULL AND f.member_level_type IS NULL
-    AND f.brand_name IN ({brands})
-    AND f.order_channel IN ({order_channels})
-    AND f.store_code IN ({zones})
-    AND f.date <= date('{end_date}') - interval '1' day
-    GROUP BY f.brand_name, f.store_code, tt.register_member_amount, tt.register_member_array
+        f.{zone} AS zone,
+        cast(tt_num.register_member_amount AS INTEGER) AS register_member_amount,
+        cast(count(DISTINCT f.member_no) AS INTEGER) AS consumed_member_amount,
+        cast(count(DISTINCT f.member_no) * 1.0000 / tt_num.register_member_amount AS DECIMAL(18, 4)) AS consumed_member_amount_proportion,
+        cast(tt_num.register_member_amount - count(DISTINCT f.member_no) AS INTEGER) AS unconsumed_member_amount,
+        cast(1.0000 - (count(DISTINCT f.member_no) * 1.0000 / tt_num.register_member_amount) AS DECIMAL(18, 4)) AS unconsumed_member_amount_proportion
+    FROM ads_crm.order_info_detail f
+    INNER JOIN tt ON f.brand_name = tt.brand_name
+        AND f.{zone} = tt.{zone}
+        AND f.member_no = tt.member_no
+    INNER JOIN tt_num ON f.brand_name = tt_num.brand_name
+        AND f.{zone} = tt_num.{zone}
+    WHERE f.member_type = '会员'
+        AND f.brand_name IN ({brands})
+        AND f.order_channel IN ({order_channels})
+        AND f.{zone} IN ({zones})
+        AND f.year_month <= substr('{end_date}', 1, 7)
+        AND f.vchr_date <= cast(date('{end_date}') - interval '1' day AS VARCHAR)
+    GROUP BY f.brand_name, f.{zone}, tt_num.register_member_amount
 """
 
 ########################################################################################################################
 
 NEW_OLD = """
     WITH tt AS (
-        SELECT brand_name, store_code,
-        count(DISTINCT member_no) AS register_member_amount
+        SELECT
+            brand_name,
+            {zone},
+            count(DISTINCT member_no) AS register_member_amount
         FROM cdm_crm.member_info_detail
         WHERE brand_name IN ({brands})
-        AND store_code IN ({zones})
-        AND date(member_register_time) <= date('{end_date}') - INTERVAL '1' DAY
-        GROUP BY brand_name, store_code
+            AND {zone} IN ({zones})
+            AND date(member_register_time) <= date('{end_date}') - INTERVAL '1' DAY
+        GROUP BY brand_name, {zone}
     )
     SELECT DISTINCT
         f.brand_name AS brand,
-        f.store_code AS zone,
-        cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS new_member_amount,
-        cast(cardinality(array_distinct(flatten(array_agg(f.customer_array)))) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS new_member_amount_proportion,
-        cast(tt.register_member_amount - cardinality(array_distinct(flatten(array_agg(f.customer_array)))) AS INTEGER) AS old_member_amount,
-        cast(1 - (cardinality(array_distinct(flatten(array_agg(f.customer_array)))) * 1.0000 / tt.register_member_amount) AS DECIMAL(18, 4)) AS old_member_amount_proportion
-    FROM ads_crm.member_analyse_fold_daily_income_detail f
-    LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.store_code = tt.store_code
-    WHERE f.member_newold_type = '新会员' AND f.member_type IS NULL AND f.member_level_type IS NULL
-    AND f.brand_name IN ({brands})
-    AND f.order_channel IN ({order_channels})
-    AND f.store_code IN ({zones})
-    AND f.date <= date('{end_date}') - interval '1' day
-    GROUP BY f.brand_name, f.store_code, tt.register_member_amount
+        f.{zone} AS zone,
+        cast(count(DISTINCT f.member_no) AS INTEGER) AS new_member_amount,
+        cast(count(DISTINCT f.member_no) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS new_member_amount_proportion,
+        cast(tt.register_member_amount - count(DISTINCT f.member_no) AS INTEGER) AS old_member_amount,
+        cast(1 - (count(DISTINCT f.member_no) * 1.0000 / tt.register_member_amount) AS DECIMAL(18, 4)) AS old_member_amount_proportion
+    FROM ads_crm.order_info_detail f
+    LEFT JOIN tt ON f.brand_name = tt.brand_name AND f.{zone} = tt.{zone}
+    WHERE f.member_newold_type = '新会员'
+        AND f.brand_name IN ({brands})
+        AND f.order_channel IN ({order_channels})
+        AND f.{zone} IN ({zones})
+        AND f.year_month <= substr('{end_date}', 1, 7)
+        AND f.vchr_date <= cast(date('{end_date}') - interval '1' day AS VARCHAR)
+    GROUP BY f.brand_name, f.{zone}, tt.register_member_amount
 """
 
 ########################################################################################################################
 
 LEVEL = """
     WITH tt AS (
-        SELECT brand_name, store_code,
-        count(DISTINCT member_no) AS register_member_amount
+        SELECT
+            brand_name,
+            store_code,
+            count(DISTINCT member_no) AS register_member_amount
         FROM cdm_crm.member_info_detail
         WHERE brand_name IN ({brands})
-        AND store_code IN ({zones})
-        AND date(member_register_time) <= date('{end_date}') - INTERVAL '1' DAY
+            AND store_code IN ({zones})
+            AND date(member_register_time) <= date('{end_date}') - INTERVAL '1' DAY
         GROUP BY brand_name, store_code
     )
     SELECT DISTINCT
         mi.brand_name AS brand,
         mi.store_code     AS zone,
         CASE mi.member_grade_id
-        WHEN 13 THEN '普通会员'
-        WHEN 14 THEN 'VIP会员'
+            WHEN 13 THEN '普通会员'
+            WHEN 9 THEN '普通会员'
+            WHEN 14 THEN 'VIP会员'
+            WHEN 10 THEN 'VIP会员'
+            WHEN 11 THEN 'VIP会员'
         ELSE NULL END  AS member_level_type,
         cast(count(DISTINCT mi.member_no) AS INTEGER) AS member_level_amount,
         cast(count(DISTINCT mi.member_no) * 1.0000 / tt.register_member_amount AS DECIMAL(18, 4)) AS member_level_amount_proportion
     FROM cdm_crm.member_info_detail mi
     LEFT JOIN tt ON mi.brand_name = tt.brand_name AND mi.store_code = tt.store_code
     WHERE mi.brand_name IN ({brands})
-    AND mi.store_code IN ({zones})
-    AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
-    GROUP BY mi.brand_name, mi.store_code, tt.register_member_amount,
-    CASE mi.member_grade_id
-    WHEN 13 THEN '普通会员'
-    WHEN 14 THEN 'VIP会员'
-    ELSE NULL END
+        AND mi.store_code IN ({zones})
+        AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
+    GROUP BY
+        mi.brand_name,
+        mi.store_code,
+        tt.register_member_amount,
+        CASE mi.member_grade_id
+            WHEN 13 THEN '普通会员'
+            WHEN 9 THEN '普通会员'
+            WHEN 14 THEN 'VIP会员'
+            WHEN 10 THEN 'VIP会员'
+            WHEN 11 THEN 'VIP会员'
+        ELSE NULL END
 """
 
 ########################################################################################################################
 
 REMAIN = """
     WITH tt AS (
-        SELECT brand_name, store_code,
-        count(DISTINCT member_no) AS register_member_amount
+        SELECT
+            brand_name,
+            store_code,
+            count(DISTINCT member_no) AS register_member_amount
         FROM cdm_crm.member_info_detail
         WHERE brand_name IN ({brands})
-        AND store_code IN ({zones})
-        AND date(member_register_time) <= date('{end_date}') - INTERVAL '1' DAY
+            AND store_code IN ({zones})
+            AND date(member_register_time) <= date('{end_date}') - INTERVAL '1' DAY
         GROUP BY brand_name, store_code
     )
     SELECT DISTINCT
@@ -111,9 +137,9 @@ REMAIN = """
     FROM cdm_crm.member_info_detail mi
     LEFT JOIN tt ON mi.brand_name = tt.brand_name AND mi.store_code = tt.store_code
     WHERE mi.brand_name IN ({brands})
-    AND mi.store_code IN ({zones})
-    AND date(mi.member_last_order_time) <= date('{end_date}') - interval '1' day
-    AND date(mi.member_last_order_time) >= date('{end_date}') - interval '1' year
+        AND mi.store_code IN ({zones})
+        AND date(mi.member_last_order_time) <= date('{end_date}') - interval '1' day
+        AND date(mi.member_last_order_time) >= date('{end_date}') - interval '1' year
     GROUP BY mi.brand_name, mi.store_code, tt.register_member_amount
 """
 
@@ -121,31 +147,37 @@ REMAIN = """
 
 ACTIVE = """
     WITH tt AS (
-        SELECT brand_name, store_code,
-        count(DISTINCT member_no) AS member_amount
+        SELECT
+            brand_name,
+            store_code,
+            count(DISTINCT member_no) AS member_amount
         FROM cdm_crm.member_info_detail
         WHERE brand_name IN ({brands})
-        AND store_code IN ({zones})
-        AND date(member_last_order_time) <= date('{end_date}') - INTERVAL '1' DAY
-        AND date(member_last_order_time) >= date('{end_date}') - interval '1' year
+            AND store_code IN ({zones})
+            AND date(member_last_order_time) <= date('{end_date}') - INTERVAL '1' DAY
+            AND date(member_last_order_time) >= date('{end_date}') - interval '1' year
         GROUP BY brand_name, store_code
     ), t_36 AS (
-        SELECT brand_name, store_code,
-        count(DISTINCT member_no) AS member_amount
+        SELECT
+            brand_name,
+            store_code,
+            count(DISTINCT member_no) AS member_amount
         FROM cdm_crm.member_info_detail
         WHERE brand_name IN ({brands})
-        AND store_code IN ({zones})
-        AND date(member_last_order_time) <= date('{end_date}') - INTERVAL '3' month
-        AND date(member_last_order_time) >= date('{end_date}') - interval '6' month
+            AND store_code IN ({zones})
+            AND date(member_last_order_time) <= date('{end_date}') - INTERVAL '3' month
+            AND date(member_last_order_time) >= date('{end_date}') - interval '6' month
         GROUP BY brand_name, store_code
     ), t_69 AS (
-        SELECT brand_name, store_code,
-        count(DISTINCT member_no) AS member_amount
+        SELECT
+            brand_name,
+            store_code,
+            count(DISTINCT member_no) AS member_amount
         FROM cdm_crm.member_info_detail
         WHERE brand_name IN ({brands})
-        AND store_code IN ({zones})
-        AND date(member_last_order_time) <= date('{end_date}') - INTERVAL '6' month
-        AND date(member_last_order_time) >= date('{end_date}') - interval '9' month
+            AND store_code IN ({zones})
+            AND date(member_last_order_time) <= date('{end_date}') - INTERVAL '6' month
+            AND date(member_last_order_time) >= date('{end_date}') - interval '9' month
         GROUP BY brand_name, store_code
     )
     SELECT DISTINCT
@@ -164,10 +196,15 @@ ACTIVE = """
     LEFT JOIN t_36 ON mi.brand_name = t_36.brand_name AND mi.store_code = t_36.store_code
     LEFT JOIN t_69 ON mi.brand_name = t_69.brand_name AND mi.store_code = t_69.store_code
     WHERE mi.brand_name IN ({brands})
-    AND mi.store_code IN ({zones})
-    AND date(mi.member_last_order_time) <= date('{end_date}') - interval '1' day
-    AND date(mi.member_last_order_time) >= date('{end_date}') - interval '3' month
-    GROUP BY mi.brand_name, mi.store_code, tt.member_amount, t_36.member_amount, t_69.member_amount
+        AND mi.store_code IN ({zones})
+        AND date(mi.member_last_order_time) <= date('{end_date}') - interval '1' day
+        AND date(mi.member_last_order_time) >= date('{end_date}') - interval '3' month
+    GROUP BY
+        mi.brand_name,
+        mi.store_code,
+        tt.member_amount,
+        t_36.member_amount,
+        t_69.member_amount
 """
 
 ########################################################################################################################
@@ -200,8 +237,8 @@ TIME = """
             ) time
         FROM cdm_crm.member_info_detail mi
         WHERE mi.brand_name IN ({brands})
-        AND mi.store_code IN ({zones})
-        AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
+            AND mi.store_code IN ({zones})
+            AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
     )
     SELECT DISTINCT
         brand_name AS brand,
@@ -238,9 +275,9 @@ DISCOUNT = """
             ELSE NULL END discount
         FROM cdm_crm.order_info_detail oi
         WHERE oi.order_amount > 0
-        AND oi.brand_name IN ({brands})
-        AND oi.store_code IN ({zones})
-        AND date(oi.order_deal_time) <= date('{end_date}') - interval '1' day
+            AND oi.brand_name IN ({brands})
+            AND oi.store_code IN ({zones})
+            AND date(oi.order_deal_time) <= date('{end_date}') - interval '1' day
         GROUP BY oi.brand_name, oi.store_code, oi.member_no
     )
     SELECT DISTINCT
@@ -278,9 +315,9 @@ SI_PO = """
             ELSE NULL END sales_income_per_order
         FROM cdm_crm.order_info_detail oi
         WHERE oi.order_item_quantity > 0
-        AND oi.brand_name IN ({brands})
-        AND oi.store_code IN ({zones})
-        AND date(oi.order_deal_time) <= date('{end_date}') - interval '1' day
+            AND oi.brand_name IN ({brands})
+            AND oi.store_code IN ({zones})
+            AND date(oi.order_deal_time) <= date('{end_date}') - interval '1' day
         GROUP BY oi.brand_name, oi.store_code, oi.member_no
     )
     SELECT DISTINCT
@@ -322,8 +359,8 @@ RECENCY = """
             ) recency
         FROM cdm_crm.member_info_detail mi
         WHERE mi.brand_name IN ({brands})
-        AND mi.store_code IN ({zones})
-        AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
+            AND mi.store_code IN ({zones})
+            AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
     )
     SELECT DISTINCT
         brand_name AS brand,
@@ -354,8 +391,8 @@ FREQUENCY = """
         FROM cdm_crm.member_info_detail mi
         LEFT JOIN ods_crm.order_info oi ON mi.member_no = oi.member_no
         WHERE mi.brand_name IN ({brands})
-        AND mi.store_code IN ({zones})
-        AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
+            AND mi.store_code IN ({zones})
+            AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
         GROUP BY mi.member_no, mi.brand_name, mi.store_code
     )
     SELECT DISTINCT
@@ -397,8 +434,8 @@ MONETARY = """
         FROM cdm_crm.member_info_detail mi
         LEFT JOIN ods_crm.order_info oi ON mi.member_no = oi.member_no
         WHERE mi.brand_name IN ({brands})
-        AND mi.store_code IN ({zones})
-        AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
+            AND mi.store_code IN ({zones})
+            AND date(mi.member_register_time) <= date('{end_date}') - interval '1' day
         GROUP BY mi.member_no, mi.brand_name, mi.store_code
     )
     SELECT DISTINCT
