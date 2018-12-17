@@ -24,7 +24,7 @@ class PreProductionConfig(Config):
 
 
 class ProductionConfig(Config):
-    PRESTO_SERVER_URI = "presto://api@emr-header-1:9090/hive/cdm_crm"
+    PRESTO_SERVER_URI = "presto://api@10.4.21.169:9090/hive/cdm_crm"
 
 
 config = {
