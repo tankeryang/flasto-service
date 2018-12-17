@@ -60,6 +60,8 @@ DAILY = """
             AND f.brand_name IN ({brands})
             AND f.order_channel IN ({order_channels})
             AND f.{zone} IN ({zones})
+            AND date(f.member_register_time) >= date('{start_date}')
+            AND date(f.member_register_time) <= date('{end_date}')
             AND f.year_month <= substr('{end_date}', 1, 7)
             AND f.year_month >= substr('{start_date}', 1, 7)
             AND f.vchr_date <= '{end_date}'
@@ -147,6 +149,8 @@ MONTHLY = """
             AND f.brand_name IN ({brands})
             AND f.order_channel IN ({order_channels})
             AND f.{zone} IN ({zones})
+            AND date(f.member_register_time) >= date('{start_date}')
+            AND date(f.member_register_time) <= date('{end_date}')
             AND f.year_month <= substr('{end_date}', 1, 7)
             AND f.year_month >= substr('{start_date}', 1, 7)
             AND f.vchr_date <= '{end_date}'
