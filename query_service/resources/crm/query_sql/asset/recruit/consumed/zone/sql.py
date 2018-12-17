@@ -69,6 +69,8 @@ DAILY = """
             AND f.store_type IN ({store_types})
             AND f.store_level IN ({store_levels})
             AND f.channel_type IN ({channel_types})
+            AND date(f.member_register_time) >= date('{start_date}')
+            AND date(f.member_register_time) <= date('{end_date}')
             AND f.year_month <= substr('{end_date}', 1, 7)
             AND f.year_month >= substr('{start_date}', 1, 7)
             AND f.vchr_date <= '{end_date}'
@@ -161,6 +163,8 @@ MONTHLY = """
             AND f.store_type IN ({store_types})
             AND f.store_level IN ({store_levels})
             AND f.channel_type IN ({channel_types})
+            AND date(f.member_register_time) >= date('{start_date}')
+            AND date(f.member_register_time) <= date('{end_date}')
             AND f.year_month <= substr('{end_date}', 1, 7)
             AND f.year_month >= substr('{start_date}', 1, 7)
             AND f.vchr_date <= '{end_date}'
