@@ -124,9 +124,9 @@ DAILY = """
             array_distinct(array_agg(f.store_code)) AS zone,
             f.member_type AS member_type,
             cast(sum(f.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-            cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
-            cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
-            cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(lyst_sales_income)), 0) AS DECIMAL(18, 4)) AS compared_with_ss_lyst,
+            cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income * 1.0), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
+            cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income * 1.0), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
+            cast(COALESCE(TRY(sum(f.sales_income) / sum(lyst_sales_income) * 1.0), 0) AS DECIMAL(18, 4)) AS compared_with_ss_lyst,
             f.date
         FROM ads_crm.member_analyse_fold_daily_income_detail f
         LEFT JOIN tt ON f.brand_name = tt.brand_name
@@ -225,9 +225,9 @@ MONTHLY = """
             array_distinct(array_agg(f.store_code)) AS zone,
             f.member_type AS member_type,
             cast(sum(f.sales_income) AS DECIMAL(18, 3)) AS sales_income,
-            cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / tt.sales_income), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
-            cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / lyst.sales_income), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
-            cast(COALESCE(TRY(sum(f.sales_income) * 1.0 / sum(lyst_sales_income)), 0) AS DECIMAL(18, 4)) AS compared_with_ss_lyst,
+            cast(COALESCE(TRY(sum(f.sales_income) / tt.sales_income * 1.0), 0) AS DECIMAL(18, 4)) AS sales_income_proportion,
+            cast(COALESCE(TRY(sum(f.sales_income) / lyst.sales_income * 1.0), 0) AS DECIMAL(18, 4)) AS compared_with_lyst,
+            cast(COALESCE(TRY(sum(f.sales_income) / sum(lyst_sales_income) * 1.0), 0) AS DECIMAL(18, 4)) AS compared_with_ss_lyst,
             f.year_month
         FROM ads_crm.member_analyse_fold_daily_income_detail f
         LEFT JOIN tt ON f.brand_name = tt.brand_name
