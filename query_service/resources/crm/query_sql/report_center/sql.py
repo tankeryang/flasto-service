@@ -107,6 +107,7 @@ DAILY = """
             WHEN '华东' THEN 3
             WHEN '华南' THEN 4
             WHEN '华中' THEN 5
+            WHEN '西北' THEN 6
         ELSE NULL END AS sales_area_num,
         {cmail_city} AS city,
         {cmail_store_code} AS store_code,
