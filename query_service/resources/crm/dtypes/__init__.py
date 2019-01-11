@@ -3,4 +3,5 @@ from query_service.resources.crm.dtypes import (
     income,
     asset,
     cic_static,
+    member_coupon_order,
 )
