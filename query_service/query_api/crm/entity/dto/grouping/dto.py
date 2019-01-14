@@ -295,7 +295,7 @@ cml_avg_sales_amount_per_item = ns_5.model('CumulativeAverageSalesAmountPerItemC
 })
 
 cml_consumption_model = ns_5.model('CumulativeConsumptionModel', {
-    'cml_consumption_date': fields.List(fields.Date(description="累计消费日期"), example=['2018-11-01', '2018-11-31'], required=True),
+    'cml_consumption_date': fields.List(fields.Date(description="累计消费日期"), example=['2018-11-01', '2018-11-30'], required=True),
     'cml_consumption_store': fields.String(description="累计消费门店", example='1102'),
     'cml_consumption_times': fields.Nested(cml_consumption_times, description="累计消费次数"),
     'cml_consumption_item_quantity': fields.Nested(cml_consumption_item_quantity, description="累计消费件数"),
