@@ -27,6 +27,7 @@ def register_api():
     from query_service.query_web.crm.controller.income_analyse_controller import ns_2 as income_analyse
     from query_service.query_web.crm.controller.asset_analyse_controller import ns_3 as asset_analyse
     from query_service.query_web.crm.controller.recruit_analyse_controller import ns_4 as recruit_analyse
+    from query_service.query_web.crm.controller.member_grouping_controller import ns_5 as member_grouping
     from query_service.query_web.crm.controller.member_coupon_order_controller import ns_6 as member_coupon_order
 
     from query_service.query_web import api
@@ -36,6 +37,7 @@ def register_api():
     api.add_namespace(income_analyse)
     api.add_namespace(asset_analyse)
     api.add_namespace(recruit_analyse)
+    api.add_namespace(member_grouping)
     api.add_namespace(member_coupon_order)
     api.namespaces.pop(0)
 

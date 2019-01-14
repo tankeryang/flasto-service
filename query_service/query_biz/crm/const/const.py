@@ -36,16 +36,16 @@ class ComparedType:
     """比较常量"""
     D = {
         'n': {
-            'lt': 'AND {column} < {condition}',
-            'gt': 'AND {column} > {condition}',
-            'eq': 'AND {column} = {condition}',
-            'bt': 'AND {column} > {condition_1} AND {column} < {condition_2}'
+            'lt': 'AND {column} < {condition} ',
+            'gt': 'AND {column} > {condition} ',
+            'eq': 'AND {column} = {condition} ',
+            'bt': 'AND {column} > {condition_1} AND {column} < {condition_2} '
         },
         's': {
-            'lt': "AND '{column}' < '{condition}'",
-            'gt': "AND '{column}' > '{condition}'",
-            'eq': "AND '{column}' = '{condition}'",
-            'bt': "AND '{column}' > '{condition_1}' AND '{column}' < '{condition_2}'"
+            'lt': "AND {column} < '{condition}' ",
+            'gt': "AND {column} > '{condition}' ",
+            'eq': "AND {column} = '{condition}' ",
+            'bt': "AND {column} > '{condition_1}' AND {column} < '{condition_2}' "
         }
     }
     N = "AND {column} IN ({condition})"

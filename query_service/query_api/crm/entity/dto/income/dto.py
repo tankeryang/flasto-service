@@ -24,6 +24,7 @@ income_analyse_store_dto = ns_2.model('MemberAnalyseStoreReqDtoModel', {
     'brands': fields.List(fields.String(description="品牌名", example="FivePlus"), required=True),
     'store_codes': fields.List(fields.String(description="门店编码", example="1102"), required=True),
     'order_channels': fields.List(fields.String(description="订单类型(线上/线下)", example='线下', enum=['全部', '线上', '线下']), required=True),
+    'trade_source': fields.List(fields.String(description="订单渠道(FPOS/IPOS/OMIS/官网/其他)", example='FPOS', enum=['全部', 'FPOS', 'IPOS', 'OMIS', '官网', '其他']), required=True),
     'start_date': fields.Date(required=True, description="开始日期(yyyy-mm-dd)", example='2018-11-01'),
     'end_date': fields.Date(required=True, description="结束日期(yyyy-mm-dd)", example='2018-11-30')
 })

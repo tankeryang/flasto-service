@@ -1,4 +1,10 @@
 from query_service.query_biz.crm.const import ComparedType, MemberGroupingParamType
+from query_service.resources.crm.query_sql.grouping import (
+    MEMBER_INFO,
+    COUPON_INFO,
+    COUPON_INFO_WITH_AMOUNT,
+    CML_CONSUMPTION_INFO,
+)
 
 
 def sql_builder(column, condition):
@@ -17,23 +23,62 @@ def sql_builder(column, condition):
                 column=column, condition_1=condition[compared_type][0], condition_2=condition[compared_type][1]
             )
         else:
-            return ComparedType.D[param_type][compared_type].format(column=column, condition=condition)
+            return ComparedType.D[param_type][compared_type].format(column=column, condition=condition[compared_type])
     else:
         if isinstance(condition, list):
             return ComparedType.N.format(column=column, condition=str(condition).strip('[').strip(']'))
         else:
             return ComparedType.N.format(column=column, condition=str([condition]).strip('[').strip(']'))
 
-def member_grouping_formator(sql, payload):
+
+def member_grouping_formator(payload):
     """
     sql 填充
-    :param sql:
     :param payload:
     :return:
     """
+    sql_list = []
     if 'brand_code' not in payload.keys() or len(payload['brand_code']) == 0:
         return None
     
-    brand_code = payload['brand_code']
+    brand_code = payload.pop('brand_code')
     
+    for model in payload.keys():
+        if model == 'member_info_model':
+            condition_sql = ''
+            for column in payload[model].keys():
+                condition_sql += sql_builder(column, payload[model][column])
+            sql_list.append(MEMBER_INFO.format(brand_code=brand_code, condition_sql=condition_sql))
+        
+        if model == 'coupon_info_model':
+            condition_sql = ''
+            if 'coupon_amount' in payload[model].keys():
+                coupon_condition_sql = sql_builder('coupon_amount', payload[model].pop('coupon_amount'))
+                for column in payload[model].keys():
+                    condition_sql += sql_builder(column, payload[model][column])
+                sql_list.append(COUPON_INFO_WITH_AMOUNT.format(
+                    brand_code=brand_code, condition_sql=condition_sql, coupon_condition_sql=coupon_condition_sql
+                ))
+            else:
+                for column in payload[model].keys():
+                    condition_sql += sql_builder(column, payload[model][column])
+                sql_list.append(COUPON_INFO.format(condition_sql=condition_sql))
+        
+        if model == 'cml_consumption_model':
+            condition_sql = ''
+
+            cml_consumption_date = payload[model].pop('cml_consumption_date')
+            start_date = cml_consumption_date[0]
+            end_date = cml_consumption_date[1]
+            
+            if 'cml_consumption_store' in payload[model].keys():
+                condition_sql += "AND contains(cml_consumption_store, '{cml_consumption_store}')".format(
+                    cml_consumption_store=payload[model].pop('cml_consumption_store')
+                )
+            for column in payload[model].keys():
+                condition_sql += sql_builder(column, payload[model][column])
+            sql_list.append(CML_CONSUMPTION_INFO.format(
+                brand_code=brand_code, start_date=start_date, end_date=end_date, condition_sql=condition_sql
+            ))
     
+    return sql_list
