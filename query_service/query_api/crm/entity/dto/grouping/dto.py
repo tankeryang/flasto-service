@@ -128,7 +128,7 @@ member_info_model = ns_5.model('MemberInfoModel', {
     'member_is_batch_mobile': fields.Integer(description="是否绑定手机(1:是/0:否)", example=1, min=0, max=1),
     'member_is_batch_wechat': fields.Integer(description="是否绑定微信(1:是/0:否)", example=1, min=0, max=1),
     'member_is_batch_taobao': fields.Integer(description="是否绑定淘宝(1:是/0:否)", example=1, min=0, max=1),
-    'member_grade_id': fields.Integer(description="会员等级id", example=[13, 14]),
+    'member_grade_id': fields.List(fields.Integer(description="会员等级id"), example=[13, 14]),
     'member_grade_expiration_date': fields.Nested(member_grade_expiration_date, description="会员等级到期日期"),
     'member_score': fields.Nested(member_score, description="会员积分"),
     'member_will_score': fields.Nested(member_will_score, description="会员未到账积分"),
