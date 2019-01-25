@@ -22,3 +22,18 @@ class MemberCouponOrderController(Resource):
         查询会员-券-订单关联数据
         """
         return MemberCouponOrderServiceImpl().get_member_coupon_order_data(ns_6.payload)
+
+
+@ns_6.route('/CouponDenominationSum')
+class CouponDenominationSumController(Resource):
+    
+    @ns_6.doc(security='key')
+    @ns_6.response(401, "Token authorized error")
+    @authorized
+    @ns_6.expect(dto.coupon_denomination_sum_dto, validate=True)
+    @ns_6.marshal_with(po.coupon_denomination_sum_list_po)
+    def post(self):
+        """
+        查询订单使用消费券总面额
+        """
+        return MemberCouponOrderServiceImpl().get_coupon_denomination_sum(ns_6.payload)

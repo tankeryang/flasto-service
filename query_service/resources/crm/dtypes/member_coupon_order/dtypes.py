@@ -24,3 +24,8 @@ ALL = {
     'order_discount': float,
     'order_item_quantity': int
 }
+
+COUPON_DENOMINATION_SUM = {
+    'outer_order_no': list,
+    'coupon_denomination_sum': float
+}

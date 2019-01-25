@@ -16,3 +16,8 @@ member_coupon_order_dto = ns_6.model('MemberCouponOrderReqDtoModel', {
     'coupon_status': fields.List(fields.String(description="券状态")),
     'coupon_start_date': fields.List(fields.Date(description="券开始日期"), example=['2018-12-01'])
 })
+
+
+coupon_denomination_sum_dto = ns_6.model('OrderIncludeCouponDtoModel', {
+    'outer_order_no': fields.List(fields.String(description="订单号"), required=True)
+})
