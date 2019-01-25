@@ -13,3 +13,13 @@ class MemberCouponOrderService:
         :return:
         """
         pass
+    
+    
+    @abstractmethod
+    def get_coupon_denomination_sum(self, dto):
+        """
+        查询订单使用现金券总面额
+        :param dto:
+        :return:
+        """
+        pass
