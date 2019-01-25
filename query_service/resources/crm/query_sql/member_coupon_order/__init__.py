@@ -1,1 +1,1 @@
-from .sql import ALL
+from .sql import ALL, COUPON_DEMONINATION_SUM

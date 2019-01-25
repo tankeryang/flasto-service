@@ -1,1 +1,1 @@
-from .member_coupon_order_formator import member_coupon_order_formator
+from .member_coupon_order_formator import member_coupon_order_formator, coupon_denomination_sum_formator
