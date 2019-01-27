@@ -61,7 +61,7 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         
         response = make_response(send_from_directory(path, filename, as_attachment=True))
         response.headers['Content-Type'] = 'text/csv'
-        response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+        response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename.encode().decode('latin-1'))
 
         return response
 
