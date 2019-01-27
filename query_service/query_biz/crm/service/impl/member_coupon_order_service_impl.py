@@ -40,9 +40,9 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         return resp_dict
 
 
-    def export_member_coupon_order_data_csv(self, dto):
+    def export_member_coupon_order_data_xlsx(self, dto):
         """
-        查询会员-券-订单关联数据
+        导出会员-券-订单关联数据
         :param dto:
         :return:
         """
@@ -67,7 +67,7 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         output.seek(0)
         
         # response = make_response(send_from_directory(path, filename, as_attachment=True))
-        # # response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        # # response.headers['Content-Type'] = 'text/csv'
         # response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
         
         return send_file(output, attachment_filename=filename, as_attachment=True)

@@ -16,7 +16,7 @@ class MemberCouponOrderService:
     
     
     @abstractmethod
-    def export_member_coupon_order_data_csv(self, dto):
+    def export_member_coupon_order_data_xlsx(self, dto):
         """
         导出会员-券-订单关联数据
         :param dto: member_coupon_order
