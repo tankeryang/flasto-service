@@ -62,8 +62,6 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         response.headers['Content-Type'] = 'text/csv'
         response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
         
-        os.remove(filename)
-    
         return response
 
 
