@@ -24,6 +24,20 @@ class MemberCouponOrderController(Resource):
         return MemberCouponOrderServiceImpl().get_member_coupon_order_data(ns_6.payload)
 
 
+@ns_6.route('/MemberCouponOrder/csv')
+class MemberCouponOrderController(Resource):
+    
+    @ns_6.doc(security='key')
+    @ns_6.response(401, "Token authorized error")
+    @authorized
+    @ns_6.expect(dto.member_coupon_order_dto, validate=True)
+    def post(self):
+        """
+        导出会员-券-订单关联数据
+        """
+        return MemberCouponOrderServiceImpl().export_member_coupon_order_data_csv(ns_6.payload)
+
+
 @ns_6.route('/CouponDenominationSum')
 class CouponDenominationSumController(Resource):
     
