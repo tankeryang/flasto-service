@@ -55,8 +55,8 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         
         now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
         path = const.ExportFilePath.PATH
-        filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv'
-        df_result.to_csv(path + filename, index=False, encoding='utf_8_sig')
+        filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.xlsx'
+        df_result.to_excel(path + filename, index=False, encoding='utf_8_sig', engine='xlsxwriter')
         
         response = make_response(send_from_directory(path, filename, as_attachment=True))
         response.headers['Content-Type'] = 'text/csv'
