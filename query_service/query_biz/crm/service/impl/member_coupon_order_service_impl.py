@@ -57,10 +57,10 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         
         now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
         output = BytesIO()
-        df_result.to_csv(const.ExportFilePath.PATH + const.MemberCouponOrder.CSV_FILE_NAME + now)
+        df_result.to_csv(const.ExportFilePath.PATH + const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv', encoding='utf_8_sig')
         output.seek(0)
 
-        return send_file(output, attachment_filename=const.MemberCouponOrder.CSV_FILE_NAME + now, as_attachment=True)
+        return send_file(output, attachment_filename=const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv', as_attachment=True)
 
 
     def get_coupon_denomination_sum(self, dto):
