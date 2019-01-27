@@ -28,7 +28,7 @@ member_coupon_order_po = ns_6.model('MemberCouponOrderModel', {
     'order_fact_amount': fields.Float(readOnly=True, description="销售金额(未扣券)"),
     'order_fact_amount_include_coupon': fields.Float(readOnly=True, description="销售金额(扣券)"),
     'order_retail_amount': fields.Float(readOnly=True, description="吊牌金额"),
-    'order_item_quantity': fields.Integer(readOnly=True, description="订单包含商品件数"),
+    'order_item_quantity': fields.Float(readOnly=True, description="订单包含商品件数"),
     'order_discount': fields.Float(readOnly=True, description="订单折扣"),
     'coupon_passcode': fields.String(readonly=True, description="券密码")
 })
