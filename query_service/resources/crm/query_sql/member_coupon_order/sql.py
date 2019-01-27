@@ -79,7 +79,7 @@ QUERY = """
         -- 吊牌金额
         order_retail_amount AS order_retail_amount,
         -- 订单件数
-        order_item_quantity AS order_item_quantity,
+        CAST(order_item_quantity AS DECIMAL(18, 2)) AS order_item_quantity,
         -- 订单折扣
         order_discount AS order_discount,
         -- 券密码
