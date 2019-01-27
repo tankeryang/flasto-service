@@ -59,7 +59,7 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         df_result.to_excel(path + filename, index=False, encoding='utf_8_sig', engine='xlsxwriter')
         
         response = make_response(send_from_directory(path, filename, as_attachment=True))
-        response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
         
         return response
