@@ -60,7 +60,7 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         df_result.to_csv(path + filename, encoding='utf_8_sig')
         
         response = make_response(send_from_directory(path, filename, as_attachment=True))
-        response['Content-Type'] = 'text/csv'
+        response.headers['Content-Type'] = 'text/csv'
         response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
 
         return response
