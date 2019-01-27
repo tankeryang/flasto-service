@@ -45,8 +45,6 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         :return:
         """
         sql = member_coupon_order_formator(query_sql.member_coupon_order.EXPORT, dto)
-        if sql is None:
-            return dict(success=False, message="参数错误")
 
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
