@@ -1,8 +1,9 @@
 import datetime
 import os
+from io import BytesIO
 
 import pandas as pd
-from flask import make_response, send_from_directory
+from flask import make_response, send_from_directory, send_file
 
 from query_service.query_api.crm.service.member_coupon_order_service import MemberCouponOrderService
 from query_service.query_biz.crm import const
@@ -39,9 +40,9 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         return resp_dict
 
 
-    def export_member_coupon_order_data_csv(self, dto):
+    def export_member_coupon_order_data_xlsx(self, dto):
         """
-        查询会员-券-订单关联数据
+        导出会员-券-订单关联数据
         :param dto:
         :return:
         """
@@ -54,15 +55,22 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         df_result.columns = const.MemberCouponOrder.DF_RESULT_COLUMNS
         
         now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
-        path = const.ExportFilePath.PATH
-        filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv'
-        df_result.to_csv(path + filename, index=False, encoding='utf_8_sig')
+        # path = const.ExportFilePath.PATH
+        filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.xlsx'
+
+        output = BytesIO()
         
-        response = make_response(send_from_directory(path, filename, as_attachment=True))
-        response.headers['Content-Type'] = 'text/csv'
-        response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        df_result.to_excel(writer, index=False, encoding='utf_8_sig', engine='xlsxwriter')
+        writer.close()
         
-        return response
+        output.seek(0)
+        
+        # response = make_response(send_from_directory(path, filename, as_attachment=True))
+        # # response.headers['Content-Type'] = 'text/csv'
+        # response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+        
+        return send_file(output, attachment_filename=filename, as_attachment=True)
 
 
     def get_coupon_denomination_sum(self, dto):
