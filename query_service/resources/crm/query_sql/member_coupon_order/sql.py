@@ -33,13 +33,13 @@ QUERY = """
             WHEN '-2' THEN '取消'
         ELSE '其他' END AS coupon_status,
         -- 券生效日期
-        DATE_FORMAT(coupon_start_time, '%Y-%m-%d %T') AS coupon_start_time,
+        CAST(coupon_start_time AS VARCHAR) AS coupon_start_time,
         -- 券失效日期
-        DATE_FORMAT(coupon_end_time, '%Y-%m-%d %T') AS coupon_end_time,
+        CAST(coupon_end_time AS VARCHAR) AS coupon_end_time,
         -- 券绑定日期
-        DATE_FORMAT(coupon_batch_time, '%Y-%m-%d %T') AS coupon_batch_time,
+        CAST(coupon_batch_time AS VARCHAR) AS coupon_batch_time,
         -- 券使用日期
-        DATE_FORMAT(coupon_used_time, '%Y-%m-%d %T') AS coupon_used_time,
+        CAST(coupon_used_time AS VARCHAR) AS coupon_used_time,
         -- 管理门店编号
         member_manage_store_code AS member_manage_store_code,
         -- 管理门店
@@ -124,13 +124,13 @@ EXPORT = """
             WHEN '-2' THEN '取消'
         ELSE '其他' END AS coupon_status,
         -- 券生效日期
-        IF(coupon_start_time IS NOT NULL, DATE_FORMAT(coupon_start_time, '%Y-%m-%d %T'), '') AS coupon_start_time,
+        IF(coupon_start_time IS NOT NULL, CAST(coupon_start_time AS VARCHAR), '') AS coupon_start_time,
         -- 券失效日期
-        IF(coupon_end_time IS NOT NULL, DATE_FORMAT(coupon_end_time, '%Y-%m-%d %T'), '') AS coupon_end_time,
+        IF(coupon_end_time IS NOT NULL, CAST(coupon_end_time AS VARCHAR), '') AS coupon_end_time,
         -- 券绑定日期
-        IF(coupon_batch_time IS NOT NULL, DATE_FORMAT(coupon_batch_time, '%Y-%m-%d %T'), '') AS coupon_batch_time,
+        IF(coupon_batch_time IS NOT NULL, CAST(coupon_batch_time AS VARCHAR), '') AS coupon_batch_time,
         -- 券使用日期
-        IF(coupon_used_time IS NOT NULL, DATE_FORMAT(coupon_used_time, '%Y-%m-%d %T'), '') AS coupon_used_time,
+        IF(coupon_used_time IS NOT NULL, CAST(coupon_used_time AS VARCHAR), '') AS coupon_used_time,
         -- 管理门店编号
         IF(member_manage_store_code IS NOT NULL, member_manage_store_code, '') AS member_manage_store_code,
         -- 管理门店
