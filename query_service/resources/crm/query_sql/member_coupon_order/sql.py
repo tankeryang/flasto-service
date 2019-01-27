@@ -47,7 +47,7 @@ QUERY = """
         -- 会员编号
         member_no,
         -- OpenID
-        member_weachat_id AS member_weachat_id,
+        member_wechat_id AS member_wechat_id,
         -- 会员名称
         member_name AS member_name,
         -- 会员手机号
@@ -138,7 +138,7 @@ EXPORT = """
         -- 会员编号
         member_no,
         -- OpenID
-        IF(member_weachat_id IS NOT NULL, member_weachat_id, '') AS member_weachat_id,
+        IF(member_wechat_id IS NOT NULL, member_wechat_id, '') AS member_wechat_id,
         -- 会员名称
         IF(member_name IS NOT NULL, member_name, '') AS member_name,
         -- 会员手机号
