@@ -6,3 +6,4 @@ nohup.out
 **/nohup.out
 **/*.xlsx
 **/.DS_Store
+**/tmp/
