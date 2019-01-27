@@ -1,4 +1,5 @@
 import datetime
+import os
 
 import pandas as pd
 from flask import make_response, send_from_directory
@@ -55,12 +56,14 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
         path = const.ExportFilePath.PATH
         filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv'
-        df_result.to_csv(path + filename, encoding='utf_8_sig')
+        df_result.to_csv(path + filename, encoding='utf-8', index=False)
         
         response = make_response(send_from_directory(path, filename, as_attachment=True))
         response.headers['Content-Type'] = 'text/csv'
         response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
-
+        
+        os.remove(filename)
+    
         return response
 
 
