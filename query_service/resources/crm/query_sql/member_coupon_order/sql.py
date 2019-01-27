@@ -71,7 +71,7 @@ QUERY = """
         -- 消费门店名称
         order_store_name AS order_store_name,
         -- 券使用订单编号
-        order_coupon_used_order_no AS coupon_used_order_no,
+        coupon_used_order_no AS coupon_used_order_no,
         -- 销售金额 (未扣券)
         order_fact_amount AS order_fact_amount,
         -- 销售金额 (扣券)
