@@ -174,7 +174,7 @@ EXPORT = """
         -- 订单折扣
         IF(order_discount IS NOT NULL, CAST(order_discount AS VARCHAR), '') AS order_discount,
         -- 券密码
-        IF(coupon_passcode IS NOT NULL, coupon_passcode, '')
+        IF(coupon_passcode IS NOT NULL, coupon_passcode, '') AS coupon_passcode
     FROM ads_crm.member_coupon_order_info_detail
     WHERE 1 = 1
     {condition_sql}
