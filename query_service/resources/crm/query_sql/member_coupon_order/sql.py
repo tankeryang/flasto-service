@@ -3,7 +3,7 @@ QUERY = """
         -- 券批次类型
         CASE coupon_category
             WHEN 'Cash' THEN '现金券'
-            WHEN 'DIscount' THEN '折扣券'
+            WHEN 'Discount' THEN '折扣券'
         ELSE '其他' END AS coupon_category,
         -- 券批次类型描述
         CASE coupon_type_detail
@@ -14,7 +14,7 @@ QUERY = """
             WHEN 'MaintainMember' THEN '顾客维系券'
             WHEN 'Fan' THEN '粉丝券'
             WHEN 'Other' THEN '其他'
-        ELSE '' END AS coupon_type_detail,
+        ELSE NULL END AS coupon_type_detail,
         -- 券活动名称
         coupon_name,
         -- 券批次号
@@ -63,7 +63,7 @@ QUERY = """
             WHEN 6  THEN 'Trendiano-银卡会员'
             WHEN 7  THEN 'Trendiano-金卡会员'
             WHEN 8  THEN 'Trendiano-黑卡会员'
-        ELSE '' END AS order_grade_id,
+        ELSE NULL END AS order_grade_id,
         -- 消费渠道
         order_trade_source AS order_trade_source,
         -- 消费门店编号
@@ -94,7 +94,7 @@ EXPORT = """
         -- 券批次类型
         CASE coupon_category
             WHEN 'Cash' THEN '现金券'
-            WHEN 'DIscount' THEN '折扣券'
+            WHEN 'Discount' THEN '折扣券'
         ELSE '其他' END AS coupon_category,
         -- 券批次类型描述
         CASE coupon_type_detail
