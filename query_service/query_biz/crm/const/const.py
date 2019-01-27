@@ -150,4 +150,4 @@ class MemberCouponOrder:
         '券密码'
     ]
     
-    CSV_FILE_NAME = '券发行监控(会员)列表_'
+    CSV_FILE_NAME = 'member_coupon_order_'

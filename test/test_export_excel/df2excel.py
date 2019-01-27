@@ -1,5 +1,5 @@
 from io import BytesIO
-from flask import Flask, send_file, make_response
+from flask import Flask, send_file, make_response, send_from_directory
 from flask_restplus import Api, Resource, fields
 import pandas as pd
 import numpy as np
@@ -26,11 +26,24 @@ class ExportExcelController(Resource):
                       ['one', 'two', 'one', 'two', 'one', 'two', ]]
             df = pd.DataFrame(np.random.randn(8, 6), columns=arrays)
             output = BytesIO()
-            df.to_excel('df.xlsx')
+            df.to_csv('df.csv')
             output.seek(0)
-            return send_file(output, attachment_filename="df.xlsx", as_attachment=True)
+            return send_file(output, mimetype='text/csv', attachment_filename="df.csv", as_attachment=True)
         else:
             return None
+    
+    def get(self):
+        arrays = [['bar', 'bar', 'baz', 'baz', 'foo', 'foo', ],
+                  ['one', 'two', 'one', 'two', 'one', 'two', ]]
+        df = pd.DataFrame(np.random.randn(8, 6), columns=arrays)
+        df.to_csv('df.csv')
+        
+        
+        # response = make_response(send_from_directory(path, filename, as_attachment=True))
+        # response.headers['Content-Type'] = 'text/csv'
+        # response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename.encode().decode('latin-1'))
+        #
+        # return send_file(output, mimetype='text/csv', attachment_filename="df.csv", as_attachment=True)
     
     
 if __name__ == '__main__':
