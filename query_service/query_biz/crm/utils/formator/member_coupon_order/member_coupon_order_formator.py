@@ -6,7 +6,7 @@ def sql_builder(query_key, query_value):
     :return:
     """
     if query_key in ['coupon_batch_date', 'coupon_start_date', 'coupon_end_date', 'coupon_used_date']:
-        return "AND {column} >= {condition_from} AND {column} <= {condition_to}\n".format(
+        return "AND {column} >= '{condition_from}' AND {column} <= '{condition_to}'\n".format(
             column=query_key, condition_from=query_value[0], condition_to=query_value[1]
         )
     if query_key == 'member_no_or_mobile':
