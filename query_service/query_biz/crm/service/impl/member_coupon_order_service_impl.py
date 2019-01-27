@@ -1,8 +1,7 @@
 import datetime
-from io import BytesIO
 
 import pandas as pd
-from flask import send_file
+from flask import make_response, send_from_directory
 
 from query_service.query_api.crm.service.member_coupon_order_service import MemberCouponOrderService
 from query_service.query_biz.crm import const
@@ -56,11 +55,15 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         df_result.columns = const.MemberCouponOrder.DF_RESULT_COLUMNS
         
         now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
-        output = BytesIO()
-        df_result.to_csv(const.ExportFilePath.PATH + const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv', encoding='utf_8_sig')
-        output.seek(0)
+        path = const.ExportFilePath.PATH
+        filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv'
+        df_result.to_csv(path + filename, encoding='utf_8_sig')
+        
+        response = make_response(send_from_directory(path, filename, as_attachment=True))
+        response['Content-Type'] = 'text/csv'
+        response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
 
-        return send_file(output, attachment_filename=const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv', as_attachment=True)
+        return response
 
 
     def get_coupon_denomination_sum(self, dto):
