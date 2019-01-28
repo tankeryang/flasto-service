@@ -30,6 +30,6 @@ EXPORT = {
 }
 
 COUPON_DENOMINATION_SUM = {
-    'outer_order_no': list,
+    'outer_order_no': str,
     'coupon_denomination_sum': float
 }
