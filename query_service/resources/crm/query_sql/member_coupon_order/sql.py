@@ -136,7 +136,7 @@ EXPORT = """
         -- 管理门店
         IF(member_manage_store_name IS NOT NULL , member_manage_store_name, '') AS member_manage_store_name,
         -- 会员编号
-        member_no,
+        IF(member_no IS NOT NULL, member_no, '') AS member_no,
         -- OpenID
         IF(member_wechat_id IS NOT NULL, member_wechat_id, '') AS member_wechat_id,
         -- 会员名称
