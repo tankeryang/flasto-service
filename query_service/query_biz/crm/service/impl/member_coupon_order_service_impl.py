@@ -60,9 +60,9 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
 
         output = BytesIO()
         
-        writer = pd.ExcelWriter(output, engine='xlsxwriter')
-        df_result.to_excel(writer, index=False, encoding='utf_8_sig', engine='xlsxwriter')
-        writer.close()
+        # writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        df_result.to_excel(output, index=False, encoding='utf_8_sig', engine='xlsxwriter')
+        # writer.close()
         
         output.seek(0)
         
