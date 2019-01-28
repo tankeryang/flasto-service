@@ -185,5 +185,5 @@ COUPON_DEMONINATION_SUM = """
         outer_order_no,
         coupon_denomination_sum
     FROM cdm_crm.order_coupon_info_detail
-    WHERE coupon_category = 'Cash' AND outer_order_no IN ({outer_order_no})
+    WHERE outer_order_no IN ({outer_order_no})
 """
