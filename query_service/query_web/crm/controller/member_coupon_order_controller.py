@@ -25,7 +25,7 @@ class MemberCouponOrderController(Resource):
 
 
 @ns_6.route('/MemberCouponOrder/xlsx')
-class MemberCouponOrderController(Resource):
+class MemberCouponOrderXlsxController(Resource):
     
     @ns_6.doc(security='key')
     @ns_6.response(401, "Token authorized error")
