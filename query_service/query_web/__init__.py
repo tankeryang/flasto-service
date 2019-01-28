@@ -7,7 +7,7 @@ from query_service.query_web.config import config
 flasto = Blueprint('flasto', __name__, url_prefix='/flasto/api')
 api = Api(
     flasto,
-    version='1.0',
+    version='1.1.0',
     prefix='/query',
     title="Presto Query Api",
     description="Presto 查询服务 - by Flask, Flask-RESTPlus",
