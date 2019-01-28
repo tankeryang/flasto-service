@@ -23,7 +23,7 @@ class QueryType:
 
 class ExportFilePath:
     """文件导出路径"""
-    PATH = '/Users/yang/workspace/PycharmProjects/FP-project/flasto-service/query_service/tmp/'
+    PATH = '/opt/flasto-service/query_service/tmp/'
 
 
 # CRM CIC ==============================================================================================================
