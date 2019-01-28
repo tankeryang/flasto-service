@@ -11,7 +11,8 @@ import query_service.resources.crm.dtypes as dtypes
 
 class CicStaticServiceImpl(CicStaticService):
     
-    def get_cic_static_detail_data(self, dto):
+    @classmethod
+    def get_cic_static_detail_data(cls, dto):
         """
         查询cic首页静态数据详情
         :param dto: restplus.Api.payload

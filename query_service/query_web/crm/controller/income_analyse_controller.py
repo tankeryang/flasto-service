@@ -22,8 +22,7 @@ class TotalIncomeReportController(Resource):
         查询整体收入分析
         整体，会员，非会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_total_income_report_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_total_income_report_data(ns_2.payload)
 
 
 @ns_2.route('/StoreTotalIncomeReport')
@@ -39,8 +38,7 @@ class StoreTotalIncomeReportController(Resource):
         查询门店整体收入分析
         整体，会员，非会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_total_income_report_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_total_income_report_data(ns_2.payload)
 
 
 @ns_2.route('/TotalDailyIncomeDetail')
@@ -56,8 +54,7 @@ class TotalDailyIncomeDetailController(Resource):
         查询整体收入每日趋势
         整体销售收入，同比，日期
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_total_daily_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_total_daily_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/StoreTotalDailyIncomeDetail')
@@ -73,8 +70,7 @@ class StoreTotalDailyIncomeDetailController(Resource):
         查询门店整体收入每日趋势
         整体销售收入，同比，日期
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_total_daily_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_total_daily_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/TotalMonthlyIncomeDetail')
@@ -90,8 +86,7 @@ class TotalMonthlyIncomeDetailController(Resource):
         查询整体收入每月趋势
         整体销售收入，同比，月份
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_total_monthly_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_total_monthly_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/StoreTotalMonthlyIncomeDetail')
@@ -107,8 +102,7 @@ class StoreTotalMonthlyIncomeDetailController(Resource):
         查询门店整体收入每月趋势
         整体销售收入，同比，月份
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_total_monthly_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_total_monthly_income_detail_data(ns_2.payload)
 
 
 # @ns_2.route('/MemberNowBeforeIncomeReport')
@@ -158,8 +152,7 @@ class MemberNewOldIncomeReportController(Resource):
         查询新老会员收入分析
         会员，新会员，老会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_new_old_income_report_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_new_old_income_report_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberNewOldIncomeReport')
@@ -175,8 +168,7 @@ class StoreMemberNewOldIncomeReportController(Resource):
         查询门店新老会员收入分析
         会员，新会员，老会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_new_old_income_report_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_new_old_income_report_data(ns_2.payload)
 
 
 @ns_2.route('/MemberNewOldDailyIncomeDetail')
@@ -192,8 +184,7 @@ class MemberNewOldDailyIncomeDetailController(Resource):
         查询新老会员每日收入趋势
         会员，新会员，老会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_new_old_daily_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_new_old_daily_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberNewOldDailyIncomeDetail')
@@ -209,8 +200,7 @@ class StoreMemberNewOldDailyIncomeDetailController(Resource):
         查询门店新老会员每日收入趋势
         会员，新会员，老会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_new_old_daily_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_new_old_daily_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/MemberNewOldMonthlyIncomeDetail')
@@ -226,8 +216,7 @@ class MemberNewOldMonthlyIncomeDetailController(Resource):
         查询新老会员每月收入趋势
         会员，新会员，老会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_new_old_monthly_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_new_old_monthly_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberNewOldMonthlyIncomeDetail')
@@ -243,8 +232,7 @@ class StoreMemberNewOldMonthlyIncomeDetailController(Resource):
         查询门店新老会员每月收入趋势
         会员，新会员，老会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_new_old_monthly_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_new_old_monthly_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/MemberLevelIncomeReport')
@@ -260,8 +248,7 @@ class MemberLevelIncomeReportController(Resource):
         查询会员等级收入分析
         会员，普通会员，VIP会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_level_income_report_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_level_income_report_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberLevelIncomeReport')
@@ -277,8 +264,7 @@ class StoreMemberLevelIncomeReportController(Resource):
         查询门店会员等级收入分析
         会员，普通会员，VIP会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_level_income_report_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_level_income_report_data(ns_2.payload)
 
 
 @ns_2.route('/MemberLevelDailyIncomeDetail')
@@ -294,8 +280,7 @@ class MemberLevelDailyIncomeDetailController(Resource):
         查询会员等级每日收入趋势
         会员，普通会员，VIP会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_level_daily_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_level_daily_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberLevelDailyIncomeDetail')
@@ -311,8 +296,7 @@ class StoreMemberLevelDailyIncomeDetailController(Resource):
         查询门店会员等级每日收入趋势
         会员，普通会员，VIP会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_level_daily_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_level_daily_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/MemberLevelMonthlyIncomeDetail')
@@ -328,8 +312,7 @@ class MemberLevelMonthlyIncomeDetailController(Resource):
         查询会员等级每月收入趋势
         会员，普通会员，VIP会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_level_monthly_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_level_monthly_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberLevelMonthlyIncomeDetail')
@@ -345,8 +328,7 @@ class StoreMemberLevelMonthlyIncomeDetailController(Resource):
         查询门店会员等级每月收入趋势
         会员，普通会员，VIP会员
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_level_monthly_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_level_monthly_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/MemberMulDimIncomeReport')
@@ -362,8 +344,7 @@ class MemberMulDimIncomeReportController(Resource):
         查询多维度收入分析
         新会员: {普通会员, VIP会员} 老会员:{普通会员, VIP会员}
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_mul_dim_income_report_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_mul_dim_income_report_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberMulDimIncomeReport')
@@ -379,8 +360,7 @@ class StoreMemberMulDimIncomeReportController(Resource):
         查询门店多维度收入分析
         新会员: {普通会员, VIP会员} 老会员:{普通会员, VIP会员}
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_mul_dim_income_report_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_mul_dim_income_report_data(ns_2.payload)
 
 
 @ns_2.route('/MemberMulDimDailyIncomeDetail')
@@ -396,8 +376,7 @@ class MemberMulDimDailyIncomeDetailController(Resource):
         查询多维度每日收入趋势
         新会员: {普通会员, VIP会员} 老会员:{普通会员, VIP会员}
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_mul_dim_daily_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_mul_dim_daily_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberMulDimDailyIncomeDetail')
@@ -413,8 +392,7 @@ class StoreMemberMulDimDailyIncomeDetailController(Resource):
         查询门店多维度每日收入趋势
         新会员: {普通会员, VIP会员} 老会员:{普通会员, VIP会员}
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_mul_dim_daily_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_mul_dim_daily_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/MemberMulDimMonthlyIncomeDetail')
@@ -430,8 +408,7 @@ class MemberMulDimMonthlyIncomeDetailController(Resource):
         查询多维度每月收入趋势
         新会员: {普通会员, VIP会员} 老会员:{普通会员, VIP会员}
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_mul_dim_monthly_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_mul_dim_monthly_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberMulDimMonthlyIncomeDetail')
@@ -447,8 +424,7 @@ class StoreMemberMulDimMonthlyIncomeDetailController(Resource):
         查询门店多维度每月收入趋势
         新会员: {普通会员, VIP会员} 老会员:{普通会员, VIP会员}
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_mul_dim_monthly_income_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_mul_dim_monthly_income_detail_data(ns_2.payload)
 
 
 @ns_2.route('/MemberRegisterProportionReport')
@@ -464,8 +440,7 @@ class MemberRegisterProportionReportController(Resource):
         查询登记率
         登记率：新会员单 / 新会员单 + 非会员单
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_register_proportion_report_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_register_proportion_report_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberRegisterProportionReport')
@@ -481,8 +456,7 @@ class StoreMemberRegisterProportionReportController(Resource):
         查询门店登记率
         登记率：新会员单 / 新会员单 + 非会员单
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_register_proportion_report_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_register_proportion_report_data(ns_2.payload)
 
 
 @ns_2.route('/MemberDailyRegisterProportionDetail')
@@ -498,8 +472,7 @@ class MemberDailyRegisterProportionDetailController(Resource):
         查询每日登记率
         登记率：新会员单 / 新会员单 + 非会员单
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_daily_register_proportion_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_daily_register_proportion_detail_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberDailyRegisterProportionDetail')
@@ -515,8 +488,7 @@ class StoreMemberDailyRegisterProportionDetailController(Resource):
         查询门店每日登记率
         登记率：新会员单 / 新会员单 + 非会员单
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_daily_register_proportion_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_daily_register_proportion_detail_data(ns_2.payload)
 
 
 @ns_2.route('/MemberMonthlyRegisterProportionDetail')
@@ -532,8 +504,7 @@ class MemberMonthlyRegisterProportionDetailController(Resource):
         查询每月登记率
         登记率：新会员单 / 新会员单 + 非会员单
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_member_monthly_register_proportion_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_member_monthly_register_proportion_detail_data(ns_2.payload)
 
 
 @ns_2.route('/StoreMemberMonthlyRegisterProportionDetail')
@@ -549,5 +520,4 @@ class StoreMemberMonthlyRegisterProportionDetailController(Resource):
         查询门店每月登记率
         登记率：新会员单 / 新会员单 + 非会员单
         """
-        return IncomeAnalyseServiceImpl() \
-            .get_store_member_monthly_register_proportion_detail_data(ns_2.payload)
+        return IncomeAnalyseServiceImpl.get_store_member_monthly_register_proportion_detail_data(ns_2.payload)

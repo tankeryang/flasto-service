@@ -1,9 +1,7 @@
 import datetime
-import os
-from io import BytesIO
-
 import pandas as pd
-from flask import make_response, send_from_directory, send_file
+from io import BytesIO
+from flask import send_file
 
 from query_service.query_api.crm.service.member_coupon_order_service import MemberCouponOrderService
 from query_service.query_biz.crm import const
@@ -13,15 +11,15 @@ from query_service.query_biz.crm.utils.formator.member_coupon_order import (
     coupon_denomination_sum_formator,
 )
 
-
 # resources
 import query_service.resources.crm.query_sql as query_sql
 import query_service.resources.crm.dtypes as dtypes
 
 
 class MemberCouponOrderServiceImpl(MemberCouponOrderService):
-
-    def get_member_coupon_order_data(self, dto):
+    
+    @classmethod
+    def get_member_coupon_order_data(cls, dto):
         """
         查询会员-券-订单关联数据
         :param dto:
@@ -39,8 +37,8 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
 
         return resp_dict
 
-
-    def export_member_coupon_order_data_xlsx(self, dto):
+    @classmethod
+    def export_member_coupon_order_data_xlsx(cls, dto):
         """
         导出会员-券-订单关联数据
         :param dto:
@@ -72,8 +70,8 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         
         return send_file(output, attachment_filename=filename, as_attachment=True)
 
-
-    def get_coupon_denomination_sum(self, dto):
+    @classmethod
+    def get_coupon_denomination_sum(cls, dto):
         """
         查询订单使用现金券总面额
         :param dto:

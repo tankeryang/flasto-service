@@ -7,7 +7,8 @@ from query_service.query_biz.crm.utils.formator.grouping import member_grouping_
 
 class MemberGroupingServiceImpl(MemberGroupingService):
     
-    def get_member_grouping_list(self, dto):
+    @classmethod
+    def get_member_grouping_list(cls, dto):
         """
         查询会员分组列表
         :param dto:

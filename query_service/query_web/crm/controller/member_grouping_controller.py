@@ -21,4 +21,4 @@ class MemberGroupingController(Resource):
         """
         根据分组参数查询会员列表
         """
-        return MemberGroupingServiceImpl().get_member_grouping_list(ns_5.payload)
+        return MemberGroupingServiceImpl.get_member_grouping_list(ns_5.payload)

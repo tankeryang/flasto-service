@@ -11,7 +11,8 @@ import query_service.resources.crm.dtypes as dtypes
 
 class IncomeAnalyseServiceImpl(IncomeAnalyseService):
     
-    def get_total_income_report_data(self, dto):
+    @classmethod
+    def get_total_income_report_data(cls, dto):
         """
         查询整体收入分析
         :param dto: restplus.Api.payload
@@ -29,8 +30,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_total_income_report_data(self, dto):
+
+    @classmethod
+    def get_store_total_income_report_data(cls, dto):
         """
         查询门店整体收入分析
         :param dto: restplus.Api.payload
@@ -48,8 +50,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_total_daily_income_detail_data(self, dto):
+
+    @classmethod
+    def get_total_daily_income_detail_data(cls, dto):
         """
         查询整体每日收入趋势
         :param dto: restplus.Api.payload
@@ -67,8 +70,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_total_daily_income_detail_data(self, dto):
+
+    @classmethod
+    def get_store_total_daily_income_detail_data(cls, dto):
         """
         查询门店整体每日收入取数
         :param dto: restplus.Api.payload
@@ -86,8 +90,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_total_monthly_income_detail_data(self, dto):
+
+    @classmethod
+    def get_total_monthly_income_detail_data(cls, dto):
         """
         查询整体每月收入趋势
         :param dto: restplus.Api.payload
@@ -105,8 +110,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_total_monthly_income_detail_data(self, dto):
+
+    @classmethod
+    def get_store_total_monthly_income_detail_data(cls, dto):
         """
         查询门店整体每月收入趋势
         :param dto: restplus.Api.payload
@@ -124,8 +130,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_now_before_income_report_data(self, dto):
+
+    @classmethod
+    def get_member_now_before_income_report_data(cls, dto):
         """
         查询会员，当月，当年，往年收入分析
         :param dto: restplus.Api.payload
@@ -142,8 +149,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_now_before_income_report_data(self, dto):
+
+    @classmethod
+    def get_store_member_now_before_income_report_data(cls, dto):
         """
         查询门店会员，当月，当年，往年收入分析
         :param dto: restplus.Api.payload
@@ -160,8 +168,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_new_old_income_report_data(self, dto):
+
+    @classmethod
+    def get_member_new_old_income_report_data(cls, dto):
         """
         查询新老会员收入分析
         :param dto: restplus.Api.payload
@@ -179,8 +188,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_new_old_income_report_data(self, dto):
+
+    @classmethod
+    def get_store_member_new_old_income_report_data(cls, dto):
         """
         查询门店新老会员收入分析
         :param dto: restplus.Api.payload
@@ -198,8 +208,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_new_old_daily_income_detail_data(self, dto):
+
+    @classmethod
+    def get_member_new_old_daily_income_detail_data(cls, dto):
         """
         查询新老会员每日收入趋势
         :param dto: restplus.Api.payload
@@ -217,8 +228,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_new_old_daily_income_detail_data(self, dto):
+
+    @classmethod
+    def get_store_member_new_old_daily_income_detail_data(cls, dto):
         """
         查询门店新老会员每日收入趋势
         :param dto: restplus.Api.payload
@@ -236,8 +248,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_new_old_monthly_income_detail_data(self, dto):
+
+    @classmethod
+    def get_member_new_old_monthly_income_detail_data(cls, dto):
         """
         查询新老会员每月收入趋势
         :param dto: restplus.Api.payload
@@ -255,8 +268,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_new_old_monthly_income_detail_data(self, dto):
+
+    @classmethod
+    def get_store_member_new_old_monthly_income_detail_data(cls, dto):
         """
         查询门店新老会员每月收入趋势
         :param dto: restplus.Api.payload
@@ -274,8 +288,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_level_income_report_data(self, dto):
+
+    @classmethod
+    def get_member_level_income_report_data(cls, dto):
         """
         查询会员等级收入分析
         :param dto: restplus.Api.payload
@@ -293,8 +308,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_level_income_report_data(self, dto):
+
+    @classmethod
+    def get_store_member_level_income_report_data(cls, dto):
         """
         查询门店会员等级收入分析
         :param dto: restplus.Api.payload
@@ -312,8 +328,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_level_daily_income_detail_data(self, dto):
+
+    @classmethod
+    def get_member_level_daily_income_detail_data(cls, dto):
         """
         查询会员等级每日收入趋势
         :param dto: restplus.Api.payload
@@ -331,8 +348,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_level_daily_income_detail_data(self, dto):
+
+    @classmethod
+    def get_store_member_level_daily_income_detail_data(cls, dto):
         """
         查询门店会员等级每日收入趋势
         :param dto: restplus.Api.payload
@@ -350,8 +368,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_level_monthly_income_detail_data(self, dto):
+
+    @classmethod
+    def get_member_level_monthly_income_detail_data(cls, dto):
         """
         查询会员等级每月收入趋势
         :param dto: restplus.Api.payload
@@ -369,8 +388,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_level_monthly_income_detail_data(self, dto):
+
+    @classmethod
+    def get_store_member_level_monthly_income_detail_data(cls, dto):
         """
         查询门店会员等级每月收入趋势
         :param dto: restplus.Api.payload
@@ -388,8 +408,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_mul_dim_income_report_data(self, dto):
+
+    @classmethod
+    def get_member_mul_dim_income_report_data(cls, dto):
         """
         查询多维度收入分析
         :param dto: restplus.Api.payload
@@ -407,8 +428,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_mul_dim_income_report_data(self, dto):
+
+    @classmethod
+    def get_store_member_mul_dim_income_report_data(cls, dto):
         """
         查询门店多维度收入分析
         :param dto: restplus.Api.payload
@@ -426,8 +448,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_mul_dim_daily_income_detail_data(self, dto):
+
+    @classmethod
+    def get_member_mul_dim_daily_income_detail_data(cls, dto):
         """
         查询多维度每日收入趋势
         :param dto: restplus.Api.payload
@@ -445,8 +468,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_mul_dim_daily_income_detail_data(self, dto):
+
+    @classmethod
+    def get_store_member_mul_dim_daily_income_detail_data(cls, dto):
         """
         查询门店多维度每日收入趋势
         :param dto: restplus.Api.payload
@@ -464,8 +488,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_mul_dim_monthly_income_detail_data(self, dto):
+
+    @classmethod
+    def get_member_mul_dim_monthly_income_detail_data(cls, dto):
         """
         查询多维度每月收入趋势
         :param dto: restplus.Api.payload
@@ -483,8 +508,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_mul_dim_monthly_income_detail_data(self, dto):
+
+    @classmethod
+    def get_store_member_mul_dim_monthly_income_detail_data(cls, dto):
         """
         查询门店多维度每月收入趋势
         :param dto: restplus.Api.payload
@@ -502,8 +528,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_register_proportion_report_data(self, dto):
+
+    @classmethod
+    def get_member_register_proportion_report_data(cls, dto):
         """
         查询登记率
         :param dto: restplus.Api.payload
@@ -521,8 +548,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_register_proportion_report_data(self, dto):
+
+    @classmethod
+    def get_store_member_register_proportion_report_data(cls, dto):
         """
         查询门店登记率
         :param dto: restplus.Api.payload
@@ -540,8 +568,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_daily_register_proportion_detail_data(self, dto):
+
+    @classmethod
+    def get_member_daily_register_proportion_detail_data(cls, dto):
         """
         查询每日登记率
         :param dto: restplus.Api.payload
@@ -559,8 +588,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_daily_register_proportion_detail_data(self, dto):
+
+    @classmethod
+    def get_store_member_daily_register_proportion_detail_data(cls, dto):
         """
         查询门店每日登记率
         :param dto: restplus.Api.payload
@@ -578,8 +608,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_member_monthly_register_proportion_detail_data(self, dto):
+
+    @classmethod
+    def get_member_monthly_register_proportion_detail_data(cls, dto):
         """
         查询每月登记率
         :param dto: restplus.Api.payload
@@ -597,8 +628,9 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
         
         return resp_dict
-    
-    def get_store_member_monthly_register_proportion_detail_data(self, dto):
+
+    @classmethod
+    def get_store_member_monthly_register_proportion_detail_data(cls, dto):
         """
         查询门店每月登记率
         :param dto: restplus.Api.payload

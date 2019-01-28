@@ -21,7 +21,7 @@ class MemberCouponOrderController(Resource):
         """
         查询会员-券-订单关联数据
         """
-        return MemberCouponOrderServiceImpl().get_member_coupon_order_data(ns_6.payload)
+        return MemberCouponOrderServiceImpl.get_member_coupon_order_data(ns_6.payload)
 
 
 @ns_6.route('/MemberCouponOrder/xlsx')
@@ -35,7 +35,7 @@ class MemberCouponOrderXlsxController(Resource):
         """
         导出会员-券-订单关联数据
         """
-        return MemberCouponOrderServiceImpl().export_member_coupon_order_data_xlsx(ns_6.payload)
+        return MemberCouponOrderServiceImpl.export_member_coupon_order_data_xlsx(ns_6.payload)
 
 
 @ns_6.route('/CouponDenominationSum')
@@ -50,4 +50,4 @@ class CouponDenominationSumController(Resource):
         """
         查询订单使用消费券总面额
         """
-        return MemberCouponOrderServiceImpl().get_coupon_denomination_sum(ns_6.payload)
+        return MemberCouponOrderServiceImpl.get_coupon_denomination_sum(ns_6.payload)

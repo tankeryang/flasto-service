@@ -22,8 +22,7 @@ class RecruitAmountReportController(Resource):
         查询招募会员详情
         招募会员，有消费会员，未消费会员
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_recruit_amount_report_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_recruit_amount_report_data(ns_4.payload)
 
 
 @ns_4.route('/StoreRecruitAmountReport')
@@ -39,8 +38,7 @@ class StoreRecruitAmountReportController(Resource):
         查询门店招募会员详情
         招募会员，有消费会员，未消费会员
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_store_recruit_amount_report_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_store_recruit_amount_report_data(ns_4.payload)
 
 
 @ns_4.route('/RecruitAmountDailyDetail')
@@ -56,8 +54,7 @@ class RecruitAmountDailyDetailController(Resource):
         查询每日招募会员详情
         招募会员，有消费会员，未消费会员
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_recruit_amount_daily_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_recruit_amount_daily_detail_data(ns_4.payload)
 
 
 @ns_4.route('/StoreRecruitAmountDailyDetail')
@@ -73,8 +70,7 @@ class StoreRecruitAmountDailyDetailController(Resource):
         查询门店每日招募会员详情
         招募会员，有消费会员，未消费会员
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_store_recruit_amount_daily_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_store_recruit_amount_daily_detail_data(ns_4.payload)
 
 
 @ns_4.route('/RecruitAmountMonthlyDetail')
@@ -90,8 +86,7 @@ class RecruitAmountMonthlyDetailController(Resource):
         查询每月招募会员详情
         招募会员，有消费会员，未消费会员
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_recruit_amount_monthly_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_recruit_amount_monthly_detail_data(ns_4.payload)
 
 
 @ns_4.route('/StoreRecruitAmountMonthlyDetail')
@@ -107,8 +102,7 @@ class StoreRecruitAmountMonthlyDetailController(Resource):
         查询门店每月招募会员详情
         招募会员，有消费会员，未消费会员
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_store_recruit_amount_monthly_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_store_recruit_amount_monthly_detail_data(ns_4.payload)
 
 
 @ns_4.route('/RecruitConsumedAmountDailyDetail')
@@ -124,8 +118,7 @@ class RecruitConsumedAmountDailyDetailController(Resource):
         查询有消费会员每日详情
         普通会员，VIP会员，升级会员
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_recruit_consumed_amount_daily_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_recruit_consumed_amount_daily_detail_data(ns_4.payload)
 
 
 @ns_4.route('/RecruitConsumedAmountMonthlyDetail')
@@ -141,8 +134,7 @@ class RecruitConsumedAmountMonthlyDetailController(Resource):
         查询有消费会员每月详情
         普通会员，VIP会员，升级会员
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_recruit_consumed_amount_monthly_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_recruit_consumed_amount_monthly_detail_data(ns_4.payload)
 
 
 @ns_4.route('/StoreRecruitConsumedAmountDailyDetail')
@@ -158,8 +150,7 @@ class StoreRecruitConsumedAmountDailyDetailController(Resource):
         查询门店有消费会员每日详情
         普通会员，VIP会员，升级会员
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_store_recruit_consumed_amount_daily_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_store_recruit_consumed_amount_daily_detail_data(ns_4.payload)
 
 
 @ns_4.route('/StoreRecruitConsumedAmountMonthlyDetail')
@@ -175,8 +166,7 @@ class StoreRecruitConsumedAmountMonthlyDetailController(Resource):
         查询门店有消费会员每月详情
         普通会员，VIP会员，升级会员
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_store_recruit_consumed_amount_monthly_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_store_recruit_consumed_amount_monthly_detail_data(ns_4.payload)
 
 
 @ns_4.route('/RecruitUnconsumedAmountDailyDetail')
@@ -192,8 +182,7 @@ class RecruitUnconsumedAmountDailyDetailController(Resource):
         查询未消费会员每日详情
         官网注册，门店注册
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_recruit_unconsumed_amount_daily_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_recruit_unconsumed_amount_daily_detail_data(ns_4.payload)
 
 
 @ns_4.route('/RecruitUnconsumedAmountMonthlyDetail')
@@ -209,8 +198,7 @@ class RecruitUnconsumedAmountMonthlyDetailController(Resource):
         查询未消费会员每月详情
         官网注册，门店注册
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_recruit_unconsumed_amount_monthly_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_recruit_unconsumed_amount_monthly_detail_data(ns_4.payload)
 
 
 @ns_4.route('/StoreRecruitUnconsumedAmountDailyDetail')
@@ -226,8 +214,7 @@ class StoreRecruitUnconsumedAmountDailyDetailController(Resource):
         查询门店未消费会员每日详情
         官网注册，门店注册
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_store_recruit_unconsumed_amount_daily_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_store_recruit_unconsumed_amount_daily_detail_data(ns_4.payload)
 
 
 @ns_4.route('/StoreRecruitUnconsumedAmountMonthlyDetail')
@@ -243,5 +230,4 @@ class StoreRecruitUnconsumedAmountMonthlyDetailController(Resource):
         查询门店未消费会员每月详情
         官网注册，门店注册
         """
-        return RecruitAnalyseServiceImpl() \
-            .get_store_recruit_unconsumed_amount_monthly_detail_data(ns_4.payload)
+        return RecruitAnalyseServiceImpl.get_store_recruit_unconsumed_amount_monthly_detail_data(ns_4.payload)

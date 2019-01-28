@@ -22,8 +22,7 @@ class MemberAmountReportController(Resource):
         查询会员计数详情
         当前全部会员，有消费会员，未消费会员
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberAmountReport')
@@ -39,8 +38,7 @@ class StoreMemberAmountReportController(Resource):
         查询门店会员计数详情
         当前全部会员，有消费会员，未消费会员
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/MemberNewOldAmountReport')
@@ -56,8 +54,7 @@ class MemberNewOldAmountReportController(Resource):
         查询新老会员数
         新会员数/占比，老会员数/占比
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_new_old_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_new_old_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberNewOldAmountReport')
@@ -73,8 +70,7 @@ class StoreMemberNewOldAmountReportController(Resource):
         查询门店新老会员数
         新会员数/占比，老会员数/占比
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_new_old_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_new_old_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/MemberLevelAmountReport')
@@ -90,8 +86,7 @@ class MemberLevelAmountReportController(Resource):
         查询会员等级数
         普通会员数/占比，VIP会员数/占比
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_level_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_level_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberLevelAmountReport')
@@ -107,8 +102,7 @@ class StoreMemberLevelAmountReportController(Resource):
         查询门店会员等级数
         普通会员数/占比，VIP会员数/占比
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_level_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_level_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/MemberRemainAmountReport')
@@ -124,8 +118,7 @@ class MemberRemainAmountReportController(Resource):
         查询会员留存数
         留存会员数/占比，流失会员数/占比
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_remain_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_remain_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberRemainAmountReport')
@@ -141,8 +134,7 @@ class StoreMemberRemainAmountReportController(Resource):
         查询门店留存会员数
         留存会员数/占比，流失会员数/占比
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_remain_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_remain_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/MemberActiveAmountReport')
@@ -158,8 +150,7 @@ class MemberActiveAmountReportController(Resource):
         查询活跃会员数
         活跃会员数/占比，沉默会员数/占比，睡眠会员数/占比，预流失会员数/占比
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_active_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_active_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberActiveAmountReport')
@@ -175,8 +166,7 @@ class StoreMemberActiveAmountReportController(Resource):
         查询门店活跃会员数
         活跃会员数/占比，沉默会员数/占比，睡眠会员数/占比，预流失会员数/占比
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_active_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_active_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/MemberFrequencyAmountReport')
@@ -192,8 +182,7 @@ class MemberFrequencyAmountReportController(Resource):
         查询累计消费频次会员数
         1, 2, 3, >=4
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_frequency_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_frequency_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberFrequencyAmountReport')
@@ -209,8 +198,7 @@ class StoreMemberFrequencyAmountReportController(Resource):
         查询门店累计消费频次会员数
         1, 2, 3, >=4
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_frequency_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_frequency_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/MemberRecencyAmountReport')
@@ -226,8 +214,7 @@ class MemberRecencyAmountReportController(Resource):
         查询最近一次消费次会员数
         <3, 3-5, 6-8, >9
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_recency_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_recency_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberRecencyAmountReport')
@@ -243,8 +230,7 @@ class StoreMemberRecencyAmountReportController(Resource):
         查询门店最近一次消费次会员数
         <3, 3-5, 6-8, >9
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_recency_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_recency_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/MemberMonetaryAmountReport')
@@ -260,8 +246,7 @@ class MemberMonetaryAmountReportController(Resource):
         查询累计消费金额次会员数
         <1500, 1500-2799, 3800-5000, >5000
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_monetary_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_monetary_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberMonetaryAmountReport')
@@ -277,8 +262,7 @@ class StoreMemberMonetaryAmountReportController(Resource):
         查询门店累计消费金额次会员数
         <1500, 1500-2799, 3800-5000, >5000
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_monetary_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_monetary_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/MemberTimeAmountReport')
@@ -294,8 +278,7 @@ class MemberTimeAmountReportController(Resource):
         查询入会时长会员数
         <1, 1-3, 3-5, >5
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_time_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_time_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberTimeAmountReport')
@@ -311,8 +294,7 @@ class StoreMemberTimeAmountReportController(Resource):
         查询门店入会时长会员数
         <1, 1-3, 3-5, >5
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_time_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_time_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/MemberDiscountAmountReport')
@@ -328,8 +310,7 @@ class MemberDiscountAmountReportController(Resource):
         查询折扣率会员数
         <50, 50-69, 70-89, >=90
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_discount_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_discount_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberDiscountAmountReport')
@@ -345,8 +326,7 @@ class StoreMemberDiscountAmountReportController(Resource):
         查询门店折扣率会员数
         <50, 50-69, 70-89, >=90
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_discount_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_discount_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/MemberSipoAmountReport')
@@ -362,8 +342,7 @@ class MemberSipoAmountReportController(Resource):
         查询客单价会员数
         <1400, 1400-1799, 1800-2199, >=2200
         """
-        return AssetAnalyseServiceImpl() \
-            .get_member_sipo_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_member_sipo_amount_report_data(ns_3.payload)
 
 
 @ns_3.route('/StoreMemberSipoAmountReport')
@@ -379,5 +358,4 @@ class StoreMemberSipoAmountReportController(Resource):
         查询门店客单价会员数
         <1400, 1400-1799, 1800-2199, >=2200
         """
-        return AssetAnalyseServiceImpl() \
-            .get_store_member_sipo_amount_report_data(ns_3.payload)
+        return AssetAnalyseServiceImpl.get_store_member_sipo_amount_report_data(ns_3.payload)
