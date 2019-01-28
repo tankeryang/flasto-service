@@ -5,11 +5,12 @@ services:
     build:
       context: ../
       dockerfile: Dockerfile
-    image: flasto-service:1.0.1
+    image: 'flasto-service:1.1.0
     container_name: flasto-service
     ports:
       - "5678:5678"
     volumes:
       - ../query_service/log:/opt/flasto-service/query_service/log
+      - ../query_service/tmp:/opt/flasto-service/query_service/tmp
       - /etc/timezone:/etc/timezone
       - /etc/localtime:/etc/localtime

@@ -3,7 +3,7 @@ version: '3'
 services:
   flasto-service:
     container_name: flasto-service
-    image: flasto-service:1.0.1
+    image: 'flasto-service:1.1.0
     deploy:
       restart_policy:
         condition: any
