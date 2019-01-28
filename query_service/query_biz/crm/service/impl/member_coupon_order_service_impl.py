@@ -1,4 +1,6 @@
 import datetime
+import os
+
 import pandas as pd
 from io import BytesIO
 from flask import send_file, make_response, send_from_directory
@@ -53,18 +55,17 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         df_result.columns = const.MemberCouponOrder.DF_RESULT_COLUMNS
         
         now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
-        path = const.ExportFilePath.PATH
+        dir_path = const.ExportFilePath.PATH
         filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.xlsx'
-
+        
         # output = BytesIO()
         
-        # writer = pd.ExcelWriter(output, engine='xlsxwriter')
-        df_result.to_excel(path=path + filename, index=False, encoding='utf_8_sig', engine='xlsxwriter')
-        # writer.close()
+        with pd.ExcelWriter(dir_path + filename, engine='xlsxwriter') as writer:
+            df_result.to_excel(writer, index=False, encoding='utf_8_sig', engine='xlsxwriter')
         
         # output.seek(0)
         
-        response = make_response(send_from_directory(path, filename, as_attachment=True))
+        response = make_response(send_from_directory(dir_path, filename, as_attachment=True))
         response.headers['Content-Type'] = 'application/octet-stream'
         response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
         
