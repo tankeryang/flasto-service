@@ -11,6 +11,6 @@ services:
       - "5678:5678"
     volumes:
       - /var/log/flasto-service:/opt/flasto-service/query_service/log
-      - /tmp/flasto-service:/opt/flasto-service/query_service/tmp
+      - /var/www/excel/crm:/opt/flasto-service/query_service/tmp
       - /etc/timezone:/etc/timezone
       - /etc/localtime:/etc/localtime

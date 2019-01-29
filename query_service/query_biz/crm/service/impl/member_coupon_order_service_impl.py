@@ -40,7 +40,7 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         return resp_dict
 
     @classmethod
-    def export_member_coupon_order_data_xlsx(cls, dto):
+    def export_member_coupon_order_data_csv(cls, dto):
         """
         导出会员-券-订单关联数据
         :param dto:
@@ -51,26 +51,30 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
 
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtype=dtypes.member_coupon_order.EXPORT)
+        df_result = pd.read_sql_query(sql=sql, con=con)  # .astype(dtype=dtypes.member_coupon_order.EXPORT)
         df_result.columns = const.MemberCouponOrder.DF_RESULT_COLUMNS
         
         now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
         dir_path = const.ExportFilePath.PATH
-        filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.xlsx'
+        filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv'
+        file_url = const.ExportFilePath.FileServerUrlPrefix + filename
         
         # output = BytesIO()
         
-        with pd.ExcelWriter(dir_path + filename, engine='xlsxwriter') as writer:
-            df_result.to_excel(writer, index=False, encoding='utf_8_sig', engine='xlsxwriter')
+        # with pd.ExcelWriter(dir_path + filename, engine='xlsxwriter') as writer:
+        #     df_result.to_excel(writer, index=False, encoding='utf_8_sig', engine='xlsxwriter')
         
         # output.seek(0)
         
-        response = make_response(send_from_directory(dir_path, filename, as_attachment=True))
-        response.headers['Content-Type'] = 'application/octet-stream'
-        response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+        df_result.to_csv(dir_path + filename, encoding='utf_8_sig')
+        resp_dict = dict(success=True, data=file_url, message="success")
+        
+        # response = make_response(send_from_directory(dir_path, filename, as_attachment=True))
+        # response.headers['Content-Type'] = 'application/octet-stream'
+        # response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
         
         # return send_file(output, attachment_filename=filename, as_attachment=True)
-        return response
+        return resp_dict
 
     @classmethod
     def get_coupon_denomination_sum(cls, dto):
