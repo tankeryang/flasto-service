@@ -19,7 +19,7 @@ def job():
 
 
 if __name__ == '__main__':
-    app = create_app('development')
+    app = create_app('preproduction')
     
     scheduler = BackgroundScheduler()
     scheduler.add_job(job, trigger='cron', hour='0', minute='0', second='0')
