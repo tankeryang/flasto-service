@@ -20,7 +20,7 @@ errorlog = '%s/log/%s.error.log' % (current_dir_path, project_name)
 proc_name = 'query_service'
 
 # server socket
-bind = '0.0.0.0:5678'
+bind = '0.0.0.0:18802'
 
 # worker process
 workers = multiprocessing.cpu_count() * 2 + 1
