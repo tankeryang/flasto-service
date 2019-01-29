@@ -51,7 +51,7 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
 
-        df_result = pd.read_sql_query(sql=sql, con=con)  # .astype(dtype=dtypes.member_coupon_order.EXPORT)
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtype=dtypes.member_coupon_order.EXPORT)
         df_result.columns = const.MemberCouponOrder.DF_RESULT_COLUMNS
         
         now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
@@ -66,7 +66,7 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         
         # output.seek(0)
         
-        df_result.to_csv(dir_path + filename, encoding='utf_8_sig')
+        df_result.to_csv(dir_path + filename, index=False, encoding='utf_8_sig')
         resp_dict = dict(success=True, data=file_url, message="success")
         
         # response = make_response(send_from_directory(dir_path, filename, as_attachment=True))
