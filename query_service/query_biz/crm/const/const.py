@@ -24,6 +24,7 @@ class QueryType:
 class ExportFilePath:
     """文件导出路径"""
     PATH = '/opt/flasto-service/query_service/tmp/'
+    FileServerUrlPrefix = 'http://10.4.21.175/crm/'
 
 
 # CRM CIC ==============================================================================================================

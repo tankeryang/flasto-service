@@ -50,3 +50,10 @@ coupon_denomination_sum_list_po = ns_6.model('CouponDenominationSumListModel', {
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+
+member_coupon_order_export_po = ns_6.model('MemberCouponOrderExportModel', {
+    'data': fields.String(readonly=True, description="文件下载url"),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
