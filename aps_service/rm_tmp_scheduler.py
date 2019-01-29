@@ -1,10 +1,9 @@
 import os
 import shutil
 from apscheduler.schedulers.background import BackgroundScheduler
-from query_service.query_biz.crm.const import const
 
 
-PATH = const.ExportFilePath.PATH
+PATH = '/opt/flasto-service/query_service/tmp/'
 
 
 def job():
