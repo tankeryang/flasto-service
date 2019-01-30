@@ -6,7 +6,7 @@ from test.test_apis import api
 ns = Namespace("users", description="Users CURD api.")
 
 user_model = ns.model('UserModel', {
-    'user_id': fields.String(readOnly=True, description='The user unique identifier'),
+    'user_id': fields.String(readonly=True, description='The user unique identifier'),
     'username': fields.String(required=True, description='The user nickname'),
 })
 user_list_model = ns.model('UserListModel', {
