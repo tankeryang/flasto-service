@@ -8,6 +8,6 @@ services:
       - "18802:18802"
     volumes:
       - /var/log/flasto-service-dev:/opt/flasto-service/query_service/log
-      - /var/www/excel/crm:/opt/flasto-service/query_service/tmp
+      - /var/www/excel/crm-test:/opt/flasto-service/query_service/tmp
       - /etc/timezone:/etc/timezone
       - /etc/localtime:/etc/localtime
