@@ -1,6 +1,6 @@
 MEMBER_INFO = """
     SELECT DISTINCT member_no FROM ads_crm.member_grouping_info_detail mgid
-    WHERE mgid.flag = 1 AND brand_code = '{brand_code}'
+    WHERE 1 = 1 AND brand_code = '{brand_code}'
     {condition_sql}
 """
 

@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  flasto-service:
-    container_name: flasto-service
-    image: flasto-service:1.1.0
+  flasto-service-dev:
+    container_name: flasto-service-dev
+    image: flasto-service-dev:1.1.0
     deploy:
       restart_policy:
         condition: any
@@ -11,6 +11,6 @@ services:
         max_attempts: 3
         window: 120s
     ports:
-      - "5678:5678"
+      - "18802:18802"
     volumes:
       - ..:/opt/flasto-service

@@ -24,6 +24,15 @@ class MemberCouponOrderService:
         """
         pass
     
+    @abstractmethod
+    def export_member_coupon_order_data_xlsx(self, dto):
+        """
+        导出会员-券-订单关联数据
+        :param dto: member_coupon_order
+        :return:
+        """
+        pass
+    
     
     @abstractmethod
     def get_coupon_denomination_sum(self, dto):

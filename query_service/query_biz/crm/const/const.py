@@ -24,7 +24,7 @@ class QueryType:
 class ExportFilePath:
     """文件导出路径"""
     PATH = '/opt/flasto-service/query_service/tmp/'
-    FileServerUrlPrefix = 'http://10.4.21.175/crm/'
+    FileServerUrlPrefix = 'http://10.4.21.175/crm-test/'
 
 
 # CRM CIC ==============================================================================================================
@@ -44,16 +44,22 @@ class ComparedType:
     """比较常量"""
     D = {
         'n': {
-            'lt': 'AND {column} < {condition} ',
-            'gt': 'AND {column} > {condition} ',
-            'eq': 'AND {column} = {condition} ',
-            'bt': 'AND {column} > {condition_1} AND {column} < {condition_2} '
+            'lt': 'AND {column} < {condition}\n',
+            'gt': 'AND {column} > {condition}\n',
+            'eq': 'AND {column} = {condition}\n',
+            'bt': 'AND {column} > {condition_1} AND {column} < {condition_2}\n'
         },
         's': {
-            'lt': "AND {column} < '{condition}' ",
-            'gt': "AND {column} > '{condition}' ",
-            'eq': "AND {column} = '{condition}' ",
-            'bt': "AND {column} > '{condition_1}' AND {column} < '{condition_2}' "
+            'lt': "AND {column} < '{condition}'\n",
+            'gt': "AND {column} > '{condition}'\n",
+            'eq': "AND {column} = '{condition}'\n",
+            'bt': "AND {column} > '{condition_1}' AND {column} < '{condition_2}'\n"
+        },
+        'd': {
+            'lt': "AND {column} < DATE('{condition}')\n",
+            'gt': "AND {column} > DATE('{condition}')\n",
+            'eq': "AND {column} = DATE('{condition}')\n",
+            'bt': "AND {column} > DATE('{condition_1}') AND {column} < DATE('{condition_2}')\n"
         }
     }
     N = "AND {column} IN ({condition})"
@@ -69,22 +75,22 @@ class MemberGroupingParamType:
         'member_status': 'n',
         'member_register_date': 's',
         'member_manage_store': 's',
-        'member_register_store': 's',
+        'member_register_store': 'd',
         'member_reg_source': 's',
         'member_is_batch_mobile': 'n',
         'member_is_batch_weixin': 'n',
         'member_is_batch_taobao': 'n',
         'member_grade_id': 'n',
-        'member_grade_expiration_date': 's',
+        'member_grade_expiration': 'd',
         'member_score': 'n',
         'member_will_score': 'n',
-        'lst_consumption_date': 's',
+        'lst_consumption_date': 'd',
         'lst_consumption_gap': 'n',
         'lst_consumption_store': 's',
         'lst_consumption_item_quantity': 'n',
         'lst_consumption_amount': 'n',
         'lst_consumption_amount_include_coupon': 'n',
-        'fst_consumption_date': 's',
+        'fst_consumption_date': 'd',
         'fst_consumption_gap': 'n',
         'fst_consumption_store': 's',
         'fst_consumption_item_quantity': 'n',

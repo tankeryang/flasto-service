@@ -77,6 +77,39 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         return resp_dict
 
     @classmethod
+    def export_member_coupon_order_data_xlsx(cls, dto):
+        """
+        导出会员-券-订单关联数据
+        :param dto:
+        :return:
+        """
+        sql = member_coupon_order_formator(query_sql.member_coupon_order.EXPORT, dto)
+    
+        presto_engine = get_presto_engine()
+        con = presto_engine.connect()
+    
+        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtype=dtypes.member_coupon_order.EXPORT)
+        df_result.columns = const.MemberCouponOrder.DF_RESULT_COLUMNS
+    
+        now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
+        dir_path = const.ExportFilePath.PATH
+        filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.xlsx'
+        file_url = const.ExportFilePath.FileServerUrlPrefix + filename
+    
+        # output = BytesIO()
+    
+        writer = pd.ExcelWriter(dir_path + filename, engine='xlsxwriter')
+        df_result.to_excel(writer, index=False, encoding='utf_8_sig')
+        writer.save()
+    
+        # output.seek(0)
+    
+        # df_result.to_csv(dir_path + filename, index=False, encoding='utf_8_sig')
+        resp_dict = dict(success=True, data=file_url, message="success")
+
+        return resp_dict
+
+    @classmethod
     def get_coupon_denomination_sum(cls, dto):
         """
         查询订单使用现金券总面额

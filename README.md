@@ -8,12 +8,13 @@
 
 ### git & virtualenv
 
-```shell
+```bash
 > $ git clone http://gitlab.fp.bd14.com/bigdata/flasto-service.git
 > $ cd flasto-service
+> $ # <path-to-python3-interpreter> 为你的 python3 解释器路径, 如: /usr/local/bin/python3.6, 建议 python3.6+ 版本
 > $ virtualenv -p <path-to-python3-interpreter> --no-site-packages venv
 > $ source venv/bin/activate
-(venv) > $ pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir -r requirements.txt
+(venv) > $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir -r requirements.txt
 ```
 
 ## Development
@@ -21,17 +22,19 @@
 如果你要在本地对其进行开发，遵循以下步骤:
 
 * 创建并启动虚拟环境，安装依赖
-    ```shell
+    ```bash
     > $ cd flasto-service
+    > $ # <path-to-python3-interpreter> 为你的 python3 解释器路径, 如: /usr/local/bin/python3.6, 建议 python3.6+ 版本
     > $ virtualenv -p <path-to-python3-interpreter> --no-site-packages venv
     > $ source venv/bin/activate
-    (venv) > $ pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir -r requirements.txt
+    (venv) > $ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir -r requirements.txt
     ```
     
 * 目录结构
     ```
     flasto-service
     ├── docker_deploy: docker-compose 文件
+    ├── aps_service: 定时器任务, 用于清空 tmp 下生成的导出文件
     ├── query_service: 查询服务
     │   ├── query_api: 查询接口定义
     │   ├── query_biz: 查询接口实现
@@ -94,4 +97,4 @@
 
 * __query service__
 
-    访问 `http://<host ip>:5678/flasto/api` 查看 API 文档
+    访问 `http://<host>:5678/flasto/api` 查看 API 文档
