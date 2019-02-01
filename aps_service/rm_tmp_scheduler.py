@@ -17,7 +17,7 @@ def job():
         print('mkdir success')
 
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
     scheduler = BlockingScheduler()
     scheduler.add_job(job, trigger='cron', hour='0', minute='0', second='0')
     # scheduler.add_job(job, trigger='interval', seconds=2)
