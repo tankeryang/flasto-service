@@ -10,8 +10,8 @@ class Config:
     basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
     LOG_PATH = os.path.join(basedir, 'log')
-    LOG_PATH_ERROR = os.path.join(LOG_PATH, 'error.log')
-    LOG_PATH_INFO = os.path.join(LOG_PATH, 'info.log')
+    LOG_PATH_ERROR = os.path.join(LOG_PATH, 'error')
+    LOG_PATH_INFO = os.path.join(LOG_PATH, 'info')
     LOG_FORMAT = '%(asctime)s %(levelname) 8s: [%(filename)s - %(funcName)s:%(lineno)d] [%(processName)s:%(process)d %(threadName)s] - %(message)s'
     DATE_FORMAT = '[%Y-%m-%d %H:%M:%S]'
     
@@ -41,21 +41,23 @@ class ProductionConfig(Config):
     @classmethod
     def init_app(cls, app):
         import logging
-        from logging.handlers import RotatingFileHandler
+        from logging.handlers import TimedRotatingFileHandler
         
         Config.init_app(app)
         
         formatter = logging.Formatter(cls.LOG_FORMAT, cls.DATE_FORMAT)
     
         # set info handler
-        info_handler = RotatingFileHandler(filename=cls.LOG_PATH_INFO)
+        info_handler = TimedRotatingFileHandler(filename=cls.LOG_PATH_INFO, when='D', interval=1, backupCount=30, encoding='utf8')
         info_handler.setFormatter(formatter)
         info_handler.setLevel(logging.INFO)
+        info_handler.suffix = '_%Y-%m-%d.log'
     
         # set error handler
-        error_handler = RotatingFileHandler(filename=cls.LOG_PATH_ERROR)
+        error_handler = TimedRotatingFileHandler(filename=cls.LOG_PATH_ERROR, when='D', interval=1, backupCount=30, encoding='utf8')
         error_handler.setFormatter(formatter)
         error_handler.setLevel(logging.ERROR)
+        error_handler.suffix = '_%Y-%m-%d.log'
         
         # add handler
         app.logger.addHandler(info_handler)
