@@ -8,7 +8,7 @@ services:
     image: flasto-service-dev:1.1.0
     container_name: flasto-service-dev
     ports:
-      - "5678:18802"
+      - "18802:18802"
     volumes:
       - /var/log/flasto-service-dev:/opt/flasto-service/query_service/log
       - /var/www/excel/crm:/opt/flasto-service/query_service/tmp
