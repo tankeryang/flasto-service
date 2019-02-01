@@ -1,4 +1,6 @@
 import pandas as pd
+from flask import current_app
+from pyhive.exc import DatabaseError
 
 from query_service.query_api.crm.service import IncomeAnalyseService
 from query_service.query_biz.crm.utils import get_presto_engine
@@ -21,15 +23,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.total.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.ALL)
-        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_total_income_report_data(cls, dto):
@@ -41,15 +48,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.total.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.ALL)
-        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_total_daily_income_detail_data(cls, dto):
@@ -61,15 +73,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.total.zone.DAILY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.DAILY)
-        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.DAILY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_total_daily_income_detail_data(cls, dto):
@@ -81,15 +98,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.total.store.DAILY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.DAILY)
-        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.DAILY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_total_monthly_income_detail_data(cls, dto):
@@ -101,15 +123,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.total.zone.MONTHLY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.MONTHLY)
-        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.MONTHLY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_total_monthly_income_detail_data(cls, dto):
@@ -121,15 +148,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.total.store.MONTHLY, dto)
         if sql is None:
             return dict(sucess=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.MONTHLY)
-        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.total.MONTHLY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_now_before_income_report_data(cls, dto):
@@ -141,14 +173,19 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.now_before.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.now_before.ALL)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.now_before.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_now_before_income_report_data(cls, dto):
@@ -160,14 +197,19 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.now_before.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.now_before.ALL)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.now_before.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_new_old_income_report_data(cls, dto):
@@ -179,15 +221,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.new_old.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.ALL)
-        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_new_old_income_report_data(cls, dto):
@@ -199,15 +246,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.new_old.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.ALL)
-        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_new_old_daily_income_detail_data(cls, dto):
@@ -219,15 +271,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.new_old.zone.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.DAILY)
-        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.DAILY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_new_old_daily_income_detail_data(cls, dto):
@@ -239,15 +296,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.new_old.store.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.DAILY)
-        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.DAILY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_new_old_monthly_income_detail_data(cls, dto):
@@ -259,15 +321,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.new_old.zone.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.MONTHLY)
-        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.MONTHLY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_new_old_monthly_income_detail_data(cls, dto):
@@ -279,15 +346,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.new_old.store.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.MONTHLY)
-        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.new_old.MONTHLY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_level_income_report_data(cls, dto):
@@ -299,15 +371,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.level.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.ALL)
-        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_level_income_report_data(cls, dto):
@@ -319,15 +396,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.level.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.ALL)
-        df_result.sort_values(by=['brand', 'member_type'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_level_daily_income_detail_data(cls, dto):
@@ -339,15 +421,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.level.zone.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.DAILY)
-        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.DAILY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_level_daily_income_detail_data(cls, dto):
@@ -359,15 +446,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.level.store.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.DAILY)
-        df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.DAILY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'date'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_level_monthly_income_detail_data(cls, dto):
@@ -379,15 +471,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.level.zone.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.MONTHLY)
-        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.MONTHLY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_level_monthly_income_detail_data(cls, dto):
@@ -399,15 +496,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.level.store.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.MONTHLY)
-        df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.level.MONTHLY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_type', 'year_month'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_mul_dim_income_report_data(cls, dto):
@@ -419,15 +521,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.mul_dim.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.ALL)
-        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_mul_dim_income_report_data(cls, dto):
@@ -439,15 +546,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.mul_dim.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.ALL)
-        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_mul_dim_daily_income_detail_data(cls, dto):
@@ -459,15 +571,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.mul_dim.zone.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.DAILY)
-        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'date'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.DAILY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'date'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_mul_dim_daily_income_detail_data(cls, dto):
@@ -479,15 +596,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.mul_dim.store.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.DAILY)
-        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'date'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.DAILY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'date'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_mul_dim_monthly_income_detail_data(cls, dto):
@@ -499,15 +621,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.mul_dim.zone.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.MONTHLY)
-        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'year_month'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.MONTHLY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'year_month'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_mul_dim_monthly_income_detail_data(cls, dto):
@@ -519,15 +646,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.mul_dim.store.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.MONTHLY)
-        df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'year_month'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.mul_dim.MONTHLY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'member_newold_type', 'member_level_type', 'year_month'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_register_proportion_report_data(cls, dto):
@@ -539,15 +671,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.register_proportion.zone.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.ALL)
-        df_result.sort_values(by=['brand', 'zone'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'zone'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_register_proportion_report_data(cls, dto):
@@ -559,15 +696,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.register_proportion.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.ALL)
-        df_result.sort_values(by=['brand', 'zone'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.ALL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'zone'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_daily_register_proportion_detail_data(cls, dto):
@@ -579,15 +721,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.register_proportion.zone.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.DAILY)
-        df_result.sort_values(by=['brand', 'zone', 'date'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.DAILY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'zone', 'date'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_daily_register_proportion_detail_data(cls, dto):
@@ -599,15 +746,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.register_proportion.store.DAILY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.DAILY)
-        df_result.sort_values(by=['brand', 'zone', 'date'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.DAILY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'zone', 'date'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_monthly_register_proportion_detail_data(cls, dto):
@@ -619,15 +771,20 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.register_proportion.zone.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.MONTHLY)
-        df_result.sort_values(by=['brand', 'zone', 'year_month'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.MONTHLY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'zone', 'year_month'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_monthly_register_proportion_detail_data(cls, dto):
@@ -639,12 +796,17 @@ class IncomeAnalyseServiceImpl(IncomeAnalyseService):
         sql = income_analyse_formator(query_sql.income.member.register_proportion.store.MONTHLY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.MONTHLY)
-        df_result.sort_values(by=['brand', 'zone', 'year_month'], inplace=True)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.income.member.register_proportion.MONTHLY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.sort_values(by=['brand', 'zone', 'year_month'], inplace=True)
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict

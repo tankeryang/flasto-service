@@ -1,4 +1,6 @@
 import pandas as pd
+from flask import current_app
+from pyhive.exc import DatabaseError
 
 from query_service.query_api.crm.service import AssetAnalyseService
 from query_service.query_biz.crm.utils import get_presto_engine
@@ -22,13 +24,18 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         if sql is None:
             return dict(success=False, message="参数错误")
         
+        current_app.logger.info(sql)
+        
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.STATIC)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.STATIC)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
     
     @classmethod
     def get_store_member_amount_report_data(cls, dto):
@@ -40,14 +47,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.store.ALL, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.STATIC)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.STATIC)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
     
     @classmethod
     def get_member_new_old_amount_report_data(cls, dto):
@@ -60,13 +72,18 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         if sql is None:
             return dict(success=False, message="参数错误")
         
+        current_app.logger.info("Execute SQL: " + sql)
+        
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.NEW_OLD)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.NEW_OLD)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_new_old_amount_report_data(cls, dto):
@@ -79,13 +96,18 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         if sql is None:
             return dict(success=False, message="参数错误")
         
+        current_app.logger.info("Execute SQL: " + sql)
+        
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.NEW_OLD)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.NEW_OLD)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_level_amount_report_data(cls, dto):
@@ -98,13 +120,18 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         if sql is None:
             return dict(success=False, message="参数错误")
         
+        current_app.logger.info("Execute SQL: " + sql)
+        
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.LEVEL)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.LEVEL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_level_amount_report_data(cls, dto):
@@ -117,13 +144,18 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         if sql is None:
             return dict(success=False, message="参数错误")
         
+        current_app.logger.info("Execute SQL: " + sql)
+        
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.LEVEL)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.LEVEL)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_remain_amount_report_data(cls, dto):
@@ -136,13 +168,18 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         if sql is None:
             return dict(success=False, message="参数错误")
         
+        current_app.logger.info("Execute SQL: " + sql)
+        
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.REMAIN)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.REMAIN)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_remain_amount_report_data(cls, dto):
@@ -155,13 +192,18 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         if sql is None:
             return dict(success=False, message="参数错误")
         
+        current_app.logger.info("Execute SQL: " + sql)
+        
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.REMAIN)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.REMAIN)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_active_amount_report_data(cls, dto):
@@ -174,13 +216,18 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         if sql is None:
             return dict(success=False, message="参数错误")
         
+        current_app.logger.info("Execute SQL: " + sql)
+        
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.ACTIVE)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.ACTIVE)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_active_amount_report_data(cls, dto):
@@ -192,14 +239,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.store.ACTIVE, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.ACTIVE)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.ACTIVE)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_frequency_amount_report_data(cls, dto):
@@ -211,14 +263,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.zone.FREQUENCY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.FREQUENCY)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.FREQUENCY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_frequency_amount_report_data(cls, dto):
@@ -230,14 +287,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.store.FREQUENCY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.FREQUENCY)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.FREQUENCY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_recency_amount_report_data(cls, dto):
@@ -249,14 +311,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.zone.RECENCY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.RECENCY)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.RECENCY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_recency_amount_report_data(cls, dto):
@@ -268,14 +335,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.store.RECENCY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.RECENCY)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.RECENCY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_monetary_amount_report_data(cls, dto):
@@ -287,14 +359,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.zone.MONETARY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.MONETARY)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.MONETARY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_monetary_amount_report_data(cls, dto):
@@ -306,14 +383,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.store.MONETARY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.MONETARY)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.MONETARY)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_time_amount_report_data(cls, dto):
@@ -325,14 +407,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.zone.TIME, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.TIME)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.TIME)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_time_amount_report_data(cls, dto):
@@ -344,14 +431,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.store.TIME, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.TIME)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.TIME)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_discount_amount_report_data(cls, dto):
@@ -363,14 +455,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.zone.DISCOUNT, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.DISCOUNT)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.DISCOUNT)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_discount_amount_report_data(cls, dto):
@@ -382,14 +479,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.store.DISCOUNT, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.DISCOUNT)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.DISCOUNT)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_member_sipo_amount_report_data(cls, dto):
@@ -401,14 +503,19 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.zone.SI_PO, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.SI_PO)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.SI_PO)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def get_store_member_sipo_amount_report_data(cls, dto):
@@ -420,11 +527,16 @@ class AssetAnalyseServiceImpl(AssetAnalyseService):
         sql = asset_analyse_formator(query_sql.asset.member.store.SI_PO, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
+
+        current_app.logger.info("Execute SQL: " + sql)
         
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
         
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.SI_PO)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-        
-        return resp_dict
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.asset.member.SI_PO)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict

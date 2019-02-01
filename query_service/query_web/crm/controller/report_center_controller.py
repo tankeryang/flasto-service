@@ -1,3 +1,4 @@
+from flask import current_app
 from flask_restplus import Resource, Namespace
 
 ns_1 = Namespace('CRM 报表中心', path='/crm/report', description='日报月报api')
@@ -22,4 +23,5 @@ class CrmDailyReportController(Resource):
         日报查询
         全国，大区，城市，门店
         """
+        current_app.logger.info("Param: " + str(ns_1.payload))
         return ReportCenterServiceImpl.get_daily_report_data(ns_1.payload)

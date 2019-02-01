@@ -1,3 +1,4 @@
+from flask import current_app
 from flask_restplus import Resource, Namespace
 
 ns_4 = Namespace('CRM 招募会员', path='/crm/recruit', description='招募会员api')
@@ -22,6 +23,7 @@ class RecruitAmountReportController(Resource):
         查询招募会员详情
         招募会员，有消费会员，未消费会员
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_recruit_amount_report_data(ns_4.payload)
 
 
@@ -38,6 +40,7 @@ class StoreRecruitAmountReportController(Resource):
         查询门店招募会员详情
         招募会员，有消费会员，未消费会员
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_store_recruit_amount_report_data(ns_4.payload)
 
 
@@ -54,6 +57,7 @@ class RecruitAmountDailyDetailController(Resource):
         查询每日招募会员详情
         招募会员，有消费会员，未消费会员
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_recruit_amount_daily_detail_data(ns_4.payload)
 
 
@@ -70,6 +74,7 @@ class StoreRecruitAmountDailyDetailController(Resource):
         查询门店每日招募会员详情
         招募会员，有消费会员，未消费会员
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_store_recruit_amount_daily_detail_data(ns_4.payload)
 
 
@@ -86,6 +91,7 @@ class RecruitAmountMonthlyDetailController(Resource):
         查询每月招募会员详情
         招募会员，有消费会员，未消费会员
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_recruit_amount_monthly_detail_data(ns_4.payload)
 
 
@@ -102,6 +108,7 @@ class StoreRecruitAmountMonthlyDetailController(Resource):
         查询门店每月招募会员详情
         招募会员，有消费会员，未消费会员
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_store_recruit_amount_monthly_detail_data(ns_4.payload)
 
 
@@ -118,6 +125,7 @@ class RecruitConsumedAmountDailyDetailController(Resource):
         查询有消费会员每日详情
         普通会员，VIP会员，升级会员
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_recruit_consumed_amount_daily_detail_data(ns_4.payload)
 
 
@@ -134,6 +142,7 @@ class RecruitConsumedAmountMonthlyDetailController(Resource):
         查询有消费会员每月详情
         普通会员，VIP会员，升级会员
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_recruit_consumed_amount_monthly_detail_data(ns_4.payload)
 
 
@@ -150,6 +159,7 @@ class StoreRecruitConsumedAmountDailyDetailController(Resource):
         查询门店有消费会员每日详情
         普通会员，VIP会员，升级会员
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_store_recruit_consumed_amount_daily_detail_data(ns_4.payload)
 
 
@@ -166,6 +176,7 @@ class StoreRecruitConsumedAmountMonthlyDetailController(Resource):
         查询门店有消费会员每月详情
         普通会员，VIP会员，升级会员
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_store_recruit_consumed_amount_monthly_detail_data(ns_4.payload)
 
 
@@ -182,6 +193,7 @@ class RecruitUnconsumedAmountDailyDetailController(Resource):
         查询未消费会员每日详情
         官网注册，门店注册
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_recruit_unconsumed_amount_daily_detail_data(ns_4.payload)
 
 
@@ -198,6 +210,7 @@ class RecruitUnconsumedAmountMonthlyDetailController(Resource):
         查询未消费会员每月详情
         官网注册，门店注册
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_recruit_unconsumed_amount_monthly_detail_data(ns_4.payload)
 
 
@@ -214,6 +227,7 @@ class StoreRecruitUnconsumedAmountDailyDetailController(Resource):
         查询门店未消费会员每日详情
         官网注册，门店注册
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_store_recruit_unconsumed_amount_daily_detail_data(ns_4.payload)
 
 
@@ -230,4 +244,5 @@ class StoreRecruitUnconsumedAmountMonthlyDetailController(Resource):
         查询门店未消费会员每月详情
         官网注册，门店注册
         """
+        current_app.logger.info("Param: " + str(ns_4.payload))
         return RecruitAnalyseServiceImpl.get_store_recruit_unconsumed_amount_monthly_detail_data(ns_4.payload)

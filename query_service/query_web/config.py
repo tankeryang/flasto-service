@@ -1,8 +1,19 @@
+import os
+
+
 class Config:
-    SECRET_KEY = 'caonima'
+    SECRET_KEY = 'Trendy_Crm123'
     FLASK_ADMIN = 'Flasto'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_TEARDOWN = True
+
+    basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+
+    LOG_PATH = os.path.join(basedir, 'log')
+    LOG_PATH_ERROR = os.path.join(LOG_PATH, 'error.log')
+    LOG_PATH_INFO = os.path.join(LOG_PATH, 'info.log')
+    LOG_FORMAT = '%(asctime)s %(levelname) 8s: [%(filename)s - %(funcName)s:%(lineno)d] [%(processName)s:%(process)d %(threadName)s] - %(message)s'
+    DATE_FORMAT = '[%Y-%m-%d %H:%M:%S]'
     
     @staticmethod
     def init_app(app):
@@ -24,7 +35,33 @@ class PreProductionConfig(Config):
 
 
 class ProductionConfig(Config):
+
     PRESTO_SERVER_URI = "presto://api@10.4.21.169:9090/hive/cdm_crm"
+    
+    @classmethod
+    def init_app(cls, app):
+        import logging
+        from logging.handlers import RotatingFileHandler
+        
+        Config.init_app(app)
+        
+        formatter = logging.Formatter(cls.LOG_FORMAT, cls.DATE_FORMAT)
+    
+        # set info handler
+        info_handler = RotatingFileHandler(filename=cls.LOG_PATH_INFO)
+        info_handler.setFormatter(formatter)
+        info_handler.setLevel(logging.INFO)
+    
+        # set error handler
+        error_handler = RotatingFileHandler(filename=cls.LOG_PATH_ERROR)
+        error_handler.setFormatter(formatter)
+        error_handler.setLevel(logging.ERROR)
+        
+        # add handler
+        app.logger.addHandler(info_handler)
+        app.logger.addHandler(error_handler)
+        app.logger.setLevel(logging.DEBUG)
+        
 
 
 config = {
