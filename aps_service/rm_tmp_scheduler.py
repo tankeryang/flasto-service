@@ -3,6 +3,7 @@ import shutil
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
+# PATH = '/Users/yang/workspace/PycharmProjects/FP-project/flasto-service/query_service/tmp/'
 PATH = '/opt/flasto-service/query_service/tmp/'
 
 
@@ -19,6 +20,7 @@ def job():
 if __name__ == '__main__':
     scheduler = BackgroundScheduler()
     scheduler.add_job(job, trigger='cron', hour='0', minute='0', second='0')
+    # scheduler.add_job(job, trigger='interval', seconds=2)
     
     scheduler.start()
     

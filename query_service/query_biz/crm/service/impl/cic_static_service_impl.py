@@ -1,4 +1,6 @@
 import pandas as pd
+from flask import current_app
+from pyhive.exc import DatabaseError
 
 from query_service.query_api.crm.service import CicStaticService
 from query_service.query_biz.crm.utils import get_presto_engine
@@ -21,11 +23,16 @@ class CicStaticServiceImpl(CicStaticService):
         sql = cic_static_formator(query_sql.cic_static.MAIN_PAGE, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
-    
+        
+        current_app.logger.info("Execute SQL: " + sql)
+        
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
-    
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.cic_static.MAIN_PAGE)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-    
-        return resp_dict
+        
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.cic_static.MAIN_PAGE)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict

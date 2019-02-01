@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
-# app.wsgi_app = ProxyFix(app.wsgi_app)
+# web_app.wsgi_app = ProxyFix(web_app.wsgi_app)
 api = Api(app, version='1.0', title='Test Export Excel API',
     description='export excel',
 )

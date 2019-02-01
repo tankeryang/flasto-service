@@ -1,3 +1,4 @@
+from flask import current_app
 from flask_restplus import Resource, Namespace
 
 ns_0 = Namespace('CRM cic首页静态展示', path='/crm/cic', description='cic 首页静态数据 api')
@@ -22,4 +23,5 @@ class CicStaticMainPageDetailController(Resource):
         查询cic首页静态展示数据
         昨日新增(招募)会员，日环比，周环比，月环比
         """
+        current_app.logger.info("Param: " + str(ns_0.payload))
         return CicStaticServiceImpl.get_cic_static_detail_data(ns_0.payload)

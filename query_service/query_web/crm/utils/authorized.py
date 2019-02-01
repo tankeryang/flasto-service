@@ -1,7 +1,5 @@
 from functools import wraps
-from flask import request
-
-from ..const import Const
+from flask import request, current_app
 
 
 def authorized(func):
@@ -11,7 +9,7 @@ def authorized(func):
         if 'X-API-KEY' in request.headers:
             token = request.headers['X-API-KEY']
             
-            if token == Const.X_API_KEY:
+            if token == current_app.config['SECRET_KEY']:
                 return func(*args, **kwargs)
             else:
                 return dict(message="Token wrong!", success=False), 401

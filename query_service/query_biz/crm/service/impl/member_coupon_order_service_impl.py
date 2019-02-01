@@ -1,9 +1,7 @@
 import datetime
-import os
-
 import pandas as pd
-from io import BytesIO
-from flask import send_file, make_response, send_from_directory
+from flask import current_app
+from pyhive.exc import DatabaseError
 
 from query_service.query_api.crm.service.member_coupon_order_service import MemberCouponOrderService
 from query_service.query_biz.crm import const
@@ -30,14 +28,19 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         sql = member_coupon_order_formator(query_sql.member_coupon_order.QUERY, dto)
         if sql is None:
             return dict(success=False, message="参数错误")
-
+        
+        current_app.logger.info("Execute SQL: " + sql)
+        
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
-
-        df_result = pd.read_sql_query(sql=sql, con=con)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-
-        return resp_dict
+        
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict
 
     @classmethod
     def export_member_coupon_order_data_csv(cls, dto):
@@ -48,33 +51,39 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         """
         sql = member_coupon_order_formator(query_sql.member_coupon_order.EXPORT, dto)
 
+        current_app.logger.info("Execute SQL: " + sql)
+
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
-
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtype=dtypes.member_coupon_order.EXPORT)
-        df_result.columns = const.MemberCouponOrder.DF_RESULT_COLUMNS
         
-        now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
-        dir_path = const.ExportFilePath.PATH
-        filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv'
-        file_url = const.ExportFilePath.FileServerUrlPrefix + filename
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtype=dtypes.member_coupon_order.EXPORT)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.columns = const.MemberCouponOrder.DF_RESULT_COLUMNS
         
-        # output = BytesIO()
+            now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
+            dir_path = const.ExportFilePath.PATH
+            filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.csv'
+            file_url = const.ExportFilePath.FileServerUrlPrefix + filename
         
-        # with pd.ExcelWriter(dir_path + filename, engine='xlsxwriter') as writer:
-        #     df_result.to_excel(writer, index=False, encoding='utf_8_sig', engine='xlsxwriter')
+            # output = BytesIO()
+            
+            # with pd.ExcelWriter(dir_path + filename, engine='xlsxwriter') as writer:
+            #     df_result.to_excel(writer, index=False, encoding='utf_8_sig', engine='xlsxwriter')
+            
+            # output.seek(0)
         
-        # output.seek(0)
+            df_result.to_csv(dir_path + filename, index=False, encoding='utf_8_sig')
+            resp_dict = dict(success=True, data=file_url, message="success")
         
-        df_result.to_csv(dir_path + filename, index=False, encoding='utf_8_sig')
-        resp_dict = dict(success=True, data=file_url, message="success")
-        
-        # response = make_response(send_from_directory(dir_path, filename, as_attachment=True))
-        # response.headers['Content-Type'] = 'application/octet-stream'
-        # response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
-        
-        # return send_file(output, attachment_filename=filename, as_attachment=True)
-        return resp_dict
+            # response = make_response(send_from_directory(dir_path, filename, as_attachment=True))
+            # response.headers['Content-Type'] = 'application/octet-stream'
+            # response.headers['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+            
+            # return send_file(output, attachment_filename=filename, as_attachment=True)
+            return resp_dict
 
     @classmethod
     def export_member_coupon_order_data_xlsx(cls, dto):
@@ -84,30 +93,36 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         :return:
         """
         sql = member_coupon_order_formator(query_sql.member_coupon_order.EXPORT, dto)
+
+        current_app.logger.info("Execute SQL: " + sql)
     
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
+        
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtype=dtypes.member_coupon_order.EXPORT)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df_result.columns = const.MemberCouponOrder.DF_RESULT_COLUMNS
+            
+            now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
+            dir_path = const.ExportFilePath.PATH
+            filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.xlsx'
+            file_url = const.ExportFilePath.FileServerUrlPrefix + filename
+        
+            # output = BytesIO()
+        
+            writer = pd.ExcelWriter(dir_path + filename, engine='xlsxwriter')
+            df_result.to_excel(writer, index=False, encoding='utf_8_sig')
+            writer.save()
+        
+            # output.seek(0)
+        
+            # df_result.to_csv(dir_path + filename, index=False, encoding='utf_8_sig')
+            resp_dict = dict(success=True, data=file_url, message="success")
     
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtype=dtypes.member_coupon_order.EXPORT)
-        df_result.columns = const.MemberCouponOrder.DF_RESULT_COLUMNS
-    
-        now = datetime.datetime.now().strftime('%Y%m%d_%T:%f')
-        dir_path = const.ExportFilePath.PATH
-        filename = const.MemberCouponOrder.CSV_FILE_NAME + now + '.xlsx'
-        file_url = const.ExportFilePath.FileServerUrlPrefix + filename
-    
-        # output = BytesIO()
-    
-        writer = pd.ExcelWriter(dir_path + filename, engine='xlsxwriter')
-        df_result.to_excel(writer, index=False, encoding='utf_8_sig')
-        writer.save()
-    
-        # output.seek(0)
-    
-        # df_result.to_csv(dir_path + filename, index=False, encoding='utf_8_sig')
-        resp_dict = dict(success=True, data=file_url, message="success")
-
-        return resp_dict
+            return resp_dict
 
     @classmethod
     def get_coupon_denomination_sum(cls, dto):
@@ -120,10 +135,15 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
         if sql is None:
             return dict(success=False, message="参数错误")
 
+        current_app.logger.info("Execute SQL: " + sql)
+
         presto_engine = get_presto_engine()
         con = presto_engine.connect()
-
-        df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.member_coupon_order.COUPON_DENOMINATION_SUM)
-        resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
-
-        return resp_dict
+        
+        try:
+            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.member_coupon_order.COUPON_DENOMINATION_SUM)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            resp_dict = dict(success=True, data=df_result.to_dict(orient='records'), message="success")
+            return resp_dict

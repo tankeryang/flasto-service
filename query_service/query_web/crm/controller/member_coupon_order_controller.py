@@ -1,3 +1,4 @@
+from flask import current_app
 from flask_restplus import Resource, Namespace
 
 ns_6 = Namespace('CRM 会员-券-订单关联查询', path='/crm/member_coupon_order', description="会员-券-订单关联查询api")
@@ -21,6 +22,7 @@ class MemberCouponOrderController(Resource):
         """
         查询会员-券-订单关联数据
         """
+        current_app.logger.info("Param: " + str(ns_6.payload))
         return MemberCouponOrderServiceImpl.get_member_coupon_order_data(ns_6.payload)
 
 
@@ -36,6 +38,7 @@ class MemberCouponOrderCsvController(Resource):
         """
         导出会员-券-订单关联数据
         """
+        current_app.logger.info("Param: " + str(ns_6.payload))
         return MemberCouponOrderServiceImpl.export_member_coupon_order_data_csv(ns_6.payload)
 
 
@@ -51,6 +54,7 @@ class MemberCouponOrderXlsxController(Resource):
         """
         导出会员-券-订单关联数据
         """
+        current_app.logger.info("Param: " + str(ns_6.payload))
         return MemberCouponOrderServiceImpl.export_member_coupon_order_data_xlsx(ns_6.payload)
 
 
@@ -66,4 +70,5 @@ class CouponDenominationSumController(Resource):
         """
         查询订单使用消费券总面额
         """
+        current_app.logger.info("Param: " + str(ns_6.payload))
         return MemberCouponOrderServiceImpl.get_coupon_denomination_sum(ns_6.payload)
