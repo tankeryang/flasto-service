@@ -50,6 +50,30 @@ def member_grouping_formator(payload):
                 condition_sql += sql_builder(column, payload[model][column])
             sql_list.append(MEMBER_INFO.format(brand_code=brand_code, condition_sql=condition_sql))
         
+        if model == 'grade_info_model':
+            condition_sql = ''
+            for column in payload[model].keys():
+                condition_sql += sql_builder(column, payload[model][column])
+            sql_list.append(MEMBER_INFO.format(brand_code=brand_code, condition_sql=condition_sql))
+        
+        if model == 'score_info_model':
+            condition_sql = ''
+            for column in payload[model].keys():
+                condition_sql += sql_builder(column, payload[model][column])
+            sql_list.append(MEMBER_INFO.format(brand_code=brand_code, condition_sql=condition_sql))
+        
+        if model == 'lst_consumption_model':
+            condition_sql = ''
+            for column in payload[model].keys():
+                condition_sql += sql_builder(column, payload[model][column])
+            sql_list.append(MEMBER_INFO.format(brand_code=brand_code, condition_sql=condition_sql))
+
+        if model == 'fst_consumption_model':
+            condition_sql = ''
+            for column in payload[model].keys():
+                condition_sql += sql_builder(column, payload[model][column])
+            sql_list.append(MEMBER_INFO.format(brand_code=brand_code, condition_sql=condition_sql))
+        
         if model == 'coupon_info_model':
             condition_sql = ''
             if 'coupon_amount' in payload[model].keys():
