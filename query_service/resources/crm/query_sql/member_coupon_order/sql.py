@@ -1,5 +1,5 @@
 QUERY = """
-    SELECT
+    SELECT DISTINCT
         -- 券批次类型
         CASE coupon_category
             WHEN 'Cash' THEN '现金券'
@@ -90,7 +90,7 @@ QUERY = """
 """
 
 EXPORT = """
-    SELECT
+    SELECT DISTINCT
         -- 券批次类型
         CASE coupon_category
             WHEN 'Cash' THEN '现金券'
@@ -181,7 +181,7 @@ EXPORT = """
 """
 
 COUPON_DEMONINATION_SUM = """
-    SELECT
+    SELECT DISTINCT
         outer_order_no,
         order_fact_amount_include_coupon
     FROM cdm_crm.order_coupon_info_detail
