@@ -68,7 +68,7 @@ class CouponDenominationSumController(Resource):
     @ns_6.marshal_with(po.coupon_denomination_sum_list_po)
     def post(self):
         """
-        查询订单使用消费券总面额
+        查询订单扣券金额
         """
         current_app.logger.info("Param: " + str(ns_6.payload))
         return MemberCouponOrderServiceImpl.get_coupon_denomination_sum(ns_6.payload)

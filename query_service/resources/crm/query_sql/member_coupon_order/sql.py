@@ -183,7 +183,7 @@ EXPORT = """
 COUPON_DEMONINATION_SUM = """
     SELECT
         outer_order_no,
-        coupon_denomination_sum
+        order_fact_amount_include_coupon
     FROM cdm_crm.order_coupon_info_detail
     WHERE outer_order_no IN ({outer_order_no})
 """

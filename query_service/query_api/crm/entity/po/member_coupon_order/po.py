@@ -42,7 +42,7 @@ member_coupon_order_list_po = ns_6.model('MemberCouponOrderListModel', {
 
 coupon_denomination_sum_po = ns_6.model('CouponDenominationSumModel', {
     'outer_order_no': fields.String(readonly=True, description="订单号"),
-    'coupon_denomination_sum': fields.Float(readonly=True, description="订单使用现金券总面额")
+    'order_fact_amount_include_coupon': fields.Float(readonly=True, description="订单扣券金额")
 })
 
 coupon_denomination_sum_list_po = ns_6.model('CouponDenominationSumListModel', {

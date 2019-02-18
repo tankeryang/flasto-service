@@ -127,7 +127,7 @@ class MemberCouponOrderServiceImpl(MemberCouponOrderService):
     @classmethod
     def get_coupon_denomination_sum(cls, dto):
         """
-        查询订单使用现金券总面额
+        查询扣券金额
         :param dto:
         :return:
         """
