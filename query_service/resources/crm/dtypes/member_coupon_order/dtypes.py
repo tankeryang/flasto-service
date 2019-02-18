@@ -31,5 +31,5 @@ EXPORT = {
 
 COUPON_DENOMINATION_SUM = {
     'outer_order_no': str,
-    'coupon_denomination_sum': float
+    'order_fact_amount_include_coupon': float
 }
