@@ -91,7 +91,7 @@ def member_grouping_formator(payload):
         if model == 'cml_consumption_model':
             condition_sql = ''
 
-            cml_consumption_date = payload[model].pop('cml_consumption_date')
+            cml_consumption_date = payload[model].pop('cml_consumption_date')['bt']
             start_date = cml_consumption_date[0]
             end_date = cml_consumption_date[1]
             

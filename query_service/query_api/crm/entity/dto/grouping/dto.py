@@ -224,6 +224,10 @@ coupon_info_model = ns_5.model('CouponInfoModel', {
 })
 
 # 累计消费 ==============================================================================================================
+cml_consumption_date = ns_5.model('CumulativeConsumptionDateModel', {
+    'bt': fields.List(fields.Date(description='介于'), example=['2018-01-01', '2018-06-01'])
+})
+
 cml_consumption_times = ns_5.model('CumulativeConsumptionTimesConditionModel', {
     'lt': fields.Integer(description="小于", example=2, min=0),
     'gt': fields.Integer(description="大于", example=2, min=0),
@@ -253,9 +257,9 @@ cml_consumption_months = ns_5.model('CumulativeConsumptionMonthsConditionModel',
 })
 
 cml_consumption_amount = ns_5.model('CumulativeConsumptionAmountConditionModel', {
-    'lt': fields.Integer(description="小于", example=2, min=0),
-    'gt': fields.Integer(description="大于", example=2, min=0),
-    'eq': fields.Integer(description="等于", example=2, min=0),
+    'lt': fields.Float(description="小于", example=2, min=0),
+    'gt': fields.Float(description="大于", example=2, min=0),
+    'eq': fields.Float(description="等于", example=2, min=0),
     'bt': fields.List(fields.Integer(description="介于", min=0), example=[0, 5]),
 })
 
@@ -316,7 +320,7 @@ cml_avg_sales_amount_per_item = ns_5.model('CumulativeAverageSalesAmountPerItemC
 })
 
 cml_consumption_model = ns_5.model('CumulativeConsumptionModel', {
-    'cml_consumption_date': fields.List(fields.Date(description="累计消费日期"), example=['2018-11-01', '2018-11-30'], required=True),
+    'cml_consumption_date': fields.Nested(cml_consumption_date, description="累计消费计算日期", required=True),
     'cml_consumption_store': fields.List(fields.String(description="累计消费门店"), example=['1101', '1102']),
     'cml_consumption_times': fields.Nested(cml_consumption_times, description="累计消费次数"),
     'cml_consumption_item_quantity': fields.Nested(cml_consumption_item_quantity, description="累计消费件数"),
