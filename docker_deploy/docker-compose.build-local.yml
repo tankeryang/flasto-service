@@ -1,14 +1,14 @@
 version: '3'
 
 services:
-  flasto-service:
+  flasto-service-dev:
     build:
       context: ../
       dockerfile: Dockerfile
-    image: flasto-service:1.1.0
-    container_name: flasto-service
+    image: flasto-service-dev:1.1.0
+    container_name: flasto-service-dev
     ports:
-      - "5678:18802"
+      - "18802:18802"
     volumes:
       - ../query_service/log:/opt/flasto-service/query_service/log
       - ../query_service/tmp:/opt/flasto-service/query_service/tmp
