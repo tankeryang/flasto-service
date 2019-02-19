@@ -214,10 +214,10 @@ coupon_info_model = ns_5.model('CouponInfoModel', {
     'coupon_amount': fields.Nested(coupon_amount, description="券数量"),
     'coupon_template_no': fields.String(description="券批次号", example='czkzcd000909'),
     'coupon_status': fields.List(fields.String(description="券状态"), example=['7', '-2', '0']),
-    'coupon_category': fields.String(description="券类别(现金券/折扣券)", example='Cash'),
+    'coupon_category': fields.List(fields.String(description="券类别(现金券/折扣券)"), example=['Cash']),
     'coupon_discount': fields.Nested(coupon_discount, description="券折扣"),
     'coupon_denomination': fields.Nested(coupon_denomination, description="券面额"),
-    'coupon_type_detail': fields.String(description="券类型描述", example='Other'),
+    'coupon_type_detail': fields.List(fields.String(description="券类型描述"), example=['Other']),
     'coupon_batch_date': fields.Nested(coupon_batch_date, description="券绑定日期"),
     'coupon_start_date': fields.Nested(coupon_start_date, description="券开始日期"),
     'coupon_end_date': fields.Nested(coupon_end_date, description="券截止日期")

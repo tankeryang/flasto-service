@@ -86,7 +86,7 @@ def member_grouping_formator(payload):
             else:
                 for column in payload[model].keys():
                     condition_sql += sql_builder(column, payload[model][column])
-                sql_list.append(COUPON_INFO.format(condition_sql=condition_sql))
+                sql_list.append(COUPON_INFO.format(brand_code=brand_code, condition_sql=condition_sql))
         
         if model == 'cml_consumption_model':
             condition_sql = ''
