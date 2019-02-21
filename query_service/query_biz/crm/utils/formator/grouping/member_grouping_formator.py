@@ -98,7 +98,7 @@ def member_grouping_formator(payload):
             
             if 'cml_consumption_store' in payload[model].keys():
                 condition_sql_cml_consumption_store = "AND cml_consumption_store IN ({cml_consumption_stores})".format(
-                    cml_consumption_stores=payload[model].pop('cml_consumption_store').strip('[').strip(']'))
+                    cml_consumption_stores=str(payload[model].pop('cml_consumption_store')).strip('[').strip(']'))
             for column in payload[model].keys():
                 condition_sql += sql_builder(column, payload[model][column])
             sql_list.append(CML_CONSUMPTION_INFO.format(
