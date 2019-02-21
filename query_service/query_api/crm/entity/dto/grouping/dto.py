@@ -260,7 +260,7 @@ cml_consumption_amount = ns_5.model('CumulativeConsumptionAmountConditionModel',
     'lt': fields.Float(description="小于", example=2, min=0),
     'gt': fields.Float(description="大于", example=2, min=0),
     'eq': fields.Float(description="等于", example=2, min=0),
-    'bt': fields.List(fields.Integer(description="介于", min=0), example=[0, 5]),
+    'bt': fields.List(fields.Float(description="介于", min=0), example=[0, 5]),
 })
 
 cml_consumption_amount_include_coupon = ns_5.model('CumulativeConsumptionAmountIncludeCoupon', {
