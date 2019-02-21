@@ -5,6 +5,7 @@ daily_report_po = ns_1.model('CrmDailyReportModel', {
     'sales_area': fields.String(readonly=True, description="区域"),
     'city': fields.String(readonly=True, description="城市"),
     'store_code': fields.String(readonly=True, description="门店"),
+    'company_name': fields.String(readonly=True, description="上级公司名"),
     'member_type': fields.String(readonly=True, description="会员类型"),
     'sales_amount': fields.Float(readonly=True, description="销售金额"),
     'sales_amount_proportion': fields.Float(readonly=True, description="销售金额占比"),
