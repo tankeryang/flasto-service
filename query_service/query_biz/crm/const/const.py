@@ -73,7 +73,7 @@ class MemberGroupingParamType:
         'member_gender': 's',
         'member_age': 'n',
         'member_status': 'n',
-        'member_register_date': 's',
+        'member_register_date': 'd',
         'member_manage_store': 's',
         'member_register_store': 'd',
         'member_reg_source': 's',
