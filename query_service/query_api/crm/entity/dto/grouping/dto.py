@@ -26,8 +26,8 @@ member_register_date = ns_5.model('RegisterDateConditionModel', {
 
 member_info_model = ns_5.model('MemberInfoModel', {
     'member_birthday': fields.Nested(member_birthday, description="会员生日"),
-    'member_birthday_month': fields.List(fields.String(description="会员生日月份"), exmple=['07', '08']),
-    'member_gender': fields.String(description="会员性别", example='男'),
+    'member_birthday_month': fields.List(fields.String(description="会员生日月份"), example=['07', '08']),
+    'member_gender': fields.List(fields.String(description="会员性别", enum=['男', '女', '其他']), example=['男']),
     'member_age': fields.Nested(member_age, description="会员年龄"),
     'member_status': fields.List(fields.String(description="会员状态", enum=['正常', '作废', '异常卡']), example=['正常']),
     'member_register_date': fields.Nested(member_register_date, description="会员注册日期"),

@@ -11,7 +11,7 @@ DAILY = """
         cast(sum(coid.order_amount) AS DECIMAL(18, 4))                     AS ra,
         cast(sum(coid.order_type_num) AS DECIMAL(18, 4))                   AS oa,
         cast(sum(coid.order_item_quantity) AS DECIMAL(18, 4))              AS siq,
-        cast(count(distinct coid.member_no) AS DECIMAL(18, 4))             AS ma
+        cast(count(distinct coid.member_no) AS INTEGER)                    AS ma
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')

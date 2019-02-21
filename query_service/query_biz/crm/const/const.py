@@ -81,7 +81,7 @@ class MemberGroupingParamType:
         'member_is_batch_weixin': 'n',
         'member_is_batch_taobao': 'n',
         'member_grade_id': 'n',
-        'member_grade_expiration': 'd',
+        'member_grade_expiration_date': 'd',
         'member_score': 'n',
         'member_will_score': 'n',
         'lst_consumption_date': 'd',
