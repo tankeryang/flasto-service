@@ -47,19 +47,19 @@ class ComparedType:
             'lt': 'AND {column} < {condition}\n',
             'gt': 'AND {column} > {condition}\n',
             'eq': 'AND {column} = {condition}\n',
-            'bt': 'AND {column} > {condition_1} AND {column} < {condition_2}\n'
+            'bt': 'AND {column} >= {condition_1} AND {column} <= {condition_2}\n'
         },
         's': {
             'lt': "AND {column} < '{condition}'\n",
             'gt': "AND {column} > '{condition}'\n",
             'eq': "AND {column} = '{condition}'\n",
-            'bt': "AND {column} > '{condition_1}' AND {column} < '{condition_2}'\n"
+            'bt': "AND {column} >= '{condition_1}' AND {column} <= '{condition_2}'\n"
         },
         'd': {
             'lt': "AND {column} < DATE('{condition}')\n",
             'gt': "AND {column} > DATE('{condition}')\n",
             'eq': "AND {column} = DATE('{condition}')\n",
-            'bt': "AND {column} > DATE('{condition_1}') AND {column} < DATE('{condition_2}')\n"
+            'bt': "AND {column} >= DATE('{condition_1}') AND {column} <= DATE('{condition_2}')\n"
         }
     }
     N = "AND {column} IN ({condition})"
