@@ -4,20 +4,19 @@ DAILY = """
     WITH cmail AS (
         SELECT DISTINCT {zone_index}, dr_member_type
         FROM cdm_crm.member_analyse_index_label
-        WHERE dr_member_type IN ('新会员', '普通会员', 'VIP会员')
-        AND brand_code = '2'
+        WHERE brand_code = '{brand_code}'
     ), sm AS (
         SELECT coid.{zone}, coid.dr_member_type,
         cast(sum(coid.order_fact_amount_include_coupon) AS DECIMAL(18, 4)) AS sa,
         cast(sum(coid.order_amount) AS DECIMAL(18, 4))                     AS ra,
         cast(sum(coid.order_type_num) AS DECIMAL(18, 4))                   AS oa,
         cast(sum(coid.order_item_quantity) AS DECIMAL(18, 4))              AS siq,
-        cast(count(distinct coid.member_no) AS DECIMAL(18, 4))             AS ma
+        cast(count(distinct coid.member_no) AS INTEGER)                    AS ma
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
-        AND coid.brand_code = '2'
-        AND coid.channel_type = '自营'
+        AND coid.brand_code = '{brand_code}'
+        AND coid.channel_type = '{channel_type}'
         GROUP BY coid.{zone}, coid.dr_member_type
     ), sm_tt AS (
         SELECT coid.{zone},
@@ -25,8 +24,8 @@ DAILY = """
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
-        AND coid.brand_code = '2'
-        AND coid.channel_type = '自营'
+        AND coid.brand_code = '{brand_code}'
+        AND coid.channel_type = '{channel_type}'
         GROUP BY coid.{zone}
     ), sm_mb_tt AS (
         SELECT coid.{zone},
@@ -35,8 +34,8 @@ DAILY = """
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
         AND coid.dr_member_type != '非会员'
-        AND coid.brand_code = '2'
-        AND coid.channel_type = '自营'
+        AND coid.brand_code = '{brand_code}'
+        AND coid.channel_type = '{channel_type}'
         GROUP BY coid.{zone}
     ), lyst AS (
         SELECT coid.{zone}, coid.dr_member_type,
@@ -44,8 +43,8 @@ DAILY = """
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date(date('{end_date}') - interval '1' year)
         AND date(coid.order_deal_time) >= date(date('{start_date}') - interval '1' year)
-        AND coid.brand_code = '2'
-        AND coid.channel_type = '自营'
+        AND coid.brand_code = '{brand_code}'
+        AND coid.channel_type = '{channel_type}'
         GROUP BY coid.{zone}, coid.dr_member_type
     ), lmr AS (
         SELECT coid.{zone}, coid.dr_member_type,
@@ -54,8 +53,8 @@ DAILY = """
         WHERE coid.dr_member_type IN ('普通会员', 'VIP会员')
         AND date(coid.order_deal_time) <= date(date('{start_date}') - interval '1' day)
         AND date(coid.order_deal_time) >= date(date('{start_date}') - interval '12' month)
-        AND coid.brand_code = '2'
-        AND coid.channel_type = '自营'
+        AND coid.brand_code = '{brand_code}'
+        AND coid.channel_type = '{channel_type}'
         GROUP BY coid.{zone}, coid.dr_member_type
     ), new_vip AS (
         SELECT coid.{zone}, coid.dr_member_type,
@@ -66,8 +65,8 @@ DAILY = """
         AND coid.last_grade_change_time IS NOT NULL
         AND date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
-        AND coid.brand_code = '2'
-        AND coid.channel_type = '自营'
+        AND coid.brand_code = '{brand_code}'
+        AND coid.channel_type = '{channel_type}'
         GROUP BY coid.{zone}, coid.dr_member_type
     ), new_normal AS (
         SELECT coid.{zone}, coid.dr_member_type,
@@ -77,8 +76,8 @@ DAILY = """
         AND coid.last_grade_change_time IS NULL
         AND date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
-        AND coid.brand_code = '2'
-        AND coid.channel_type = '自营'
+        AND coid.brand_code = '{brand_code}'
+        AND coid.channel_type = '{channel_type}'
         GROUP BY coid.{zone}, coid.dr_member_type
     ), ugm AS (
         SELECT coid.{zone}, coid.dr_member_type,
@@ -88,8 +87,8 @@ DAILY = """
         AND date(coid.last_grade_change_time) = date(coid.order_deal_time)
         AND date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
-        AND coid.brand_code = '2'
-        AND coid.channel_type = '自营'
+        AND coid.brand_code = '{brand_code}'
+        AND coid.channel_type = '{channel_type}'
         GROUP BY coid.{zone}, coid.dr_member_type
     ), stm AS (
         SELECT coid.{zone},
@@ -97,8 +96,8 @@ DAILY = """
         FROM cdm_crm.order_info_detail coid
         WHERE date(coid.order_deal_time) <= date('{end_date}')
         AND date(coid.order_deal_time) >= date('{start_date}')
-        AND coid.brand_code = '2'
-        AND coid.channel_type = '自营'
+        AND coid.brand_code = '{brand_code}'
+        AND coid.channel_type = '{channel_type}'
         GROUP BY coid.{zone}
     )
     SELECT DISTINCT
@@ -112,12 +111,16 @@ DAILY = """
             WHEN '西北' THEN 6
         ELSE NULL END AS sales_area_num,
         {cmail_city} AS city,
+        {cmail_company_name} AS company_name,
         {cmail_store_code} AS store_code,
         cmail.dr_member_type AS member_type,
         CASE cmail.dr_member_type
             WHEN '新会员' THEN 1
             WHEN '普通会员' THEN 2
+            WHEN '银卡会员' THEN 3
             WHEN 'VIP会员' THEN 3
+            WHEN '金卡会员' THEN 4
+            WHEN '黑卡会员' THEN 5
         ELSE NULL END AS member_type_num,
         cast(COALESCE(sm.sa, 0) AS DECIMAL(18, 2)) AS sales_amount,
         cast(COALESCE(TRY(sm.sa / sm_tt.sa), 0) AS DECIMAL(18, 4)) AS sales_amount_proportion,

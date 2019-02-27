@@ -26,10 +26,10 @@ member_register_date = ns_5.model('RegisterDateConditionModel', {
 
 member_info_model = ns_5.model('MemberInfoModel', {
     'member_birthday': fields.Nested(member_birthday, description="会员生日"),
-    'member_birthday_month': fields.String(description="会员生日月份", exmple='08'),
-    'member_gender': fields.String(description="会员性别", example='男'),
+    'member_birthday_month': fields.List(fields.String(description="会员生日月份"), example=['07', '08']),
+    'member_gender': fields.List(fields.String(description="会员性别", enum=['男', '女', '其他']), example=['男']),
     'member_age': fields.Nested(member_age, description="会员年龄"),
-    'member_status': fields.String(description="会员状态", example='正常', enum=['正常', '作废', '异常卡']),
+    'member_status': fields.List(fields.String(description="会员状态", enum=['正常', '作废', '异常卡']), example=['正常']),
     'member_register_date': fields.Nested(member_register_date, description="会员注册日期"),
     'member_manage_store': fields.List(fields.String(description="会员管理门店"), example=['1101', '1102']),
     'member_register_store': fields.List(fields.String(description="会员管理门店"), example=['1101', '1102']),
@@ -212,12 +212,12 @@ coupon_end_date = ns_5.model('CouponEndDateConditionModel', {
 
 coupon_info_model = ns_5.model('CouponInfoModel', {
     'coupon_amount': fields.Nested(coupon_amount, description="券数量"),
-    'coupon_template_no': fields.String(description="券批次号", example='czkzcd000909'),
+    'coupon_template_no': fields.List(fields.String(description="券批次号"), example=['czkzcd000909']),
     'coupon_status': fields.List(fields.String(description="券状态"), example=['7', '-2', '0']),
-    'coupon_category': fields.String(description="券类别(现金券/折扣券)", example='Cash'),
+    'coupon_category': fields.List(fields.String(description="券类别(现金券/折扣券)"), example=['Cash']),
     'coupon_discount': fields.Nested(coupon_discount, description="券折扣"),
     'coupon_denomination': fields.Nested(coupon_denomination, description="券面额"),
-    'coupon_type_detail': fields.String(description="券类型描述", example='Other'),
+    'coupon_type_detail': fields.List(fields.String(description="券类型描述"), example=['Other']),
     'coupon_batch_date': fields.Nested(coupon_batch_date, description="券绑定日期"),
     'coupon_start_date': fields.Nested(coupon_start_date, description="券开始日期"),
     'coupon_end_date': fields.Nested(coupon_end_date, description="券截止日期")
@@ -260,7 +260,7 @@ cml_consumption_amount = ns_5.model('CumulativeConsumptionAmountConditionModel',
     'lt': fields.Float(description="小于", example=2, min=0),
     'gt': fields.Float(description="大于", example=2, min=0),
     'eq': fields.Float(description="等于", example=2, min=0),
-    'bt': fields.List(fields.Integer(description="介于", min=0), example=[0, 5]),
+    'bt': fields.List(fields.Float(description="介于", min=0), example=[0, 5]),
 })
 
 cml_consumption_amount_include_coupon = ns_5.model('CumulativeConsumptionAmountIncludeCoupon', {

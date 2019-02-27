@@ -86,23 +86,24 @@ def member_grouping_formator(payload):
             else:
                 for column in payload[model].keys():
                     condition_sql += sql_builder(column, payload[model][column])
-                sql_list.append(COUPON_INFO.format(condition_sql=condition_sql))
+                sql_list.append(COUPON_INFO.format(brand_code=brand_code, condition_sql=condition_sql))
         
         if model == 'cml_consumption_model':
             condition_sql = ''
+            condition_sql_cml_consumption_store = ''
 
             cml_consumption_date = payload[model].pop('cml_consumption_date')['bt']
             start_date = cml_consumption_date[0]
             end_date = cml_consumption_date[1]
             
             if 'cml_consumption_store' in payload[model].keys():
-                condition_sql += "AND contains(cml_consumption_store, '{cml_consumption_store}')".format(
-                    cml_consumption_store=payload[model].pop('cml_consumption_store')
-                )
+                condition_sql_cml_consumption_store = "AND cml_consumption_store IN ({cml_consumption_stores})".format(
+                    cml_consumption_stores=str(payload[model].pop('cml_consumption_store')).strip('[').strip(']'))
             for column in payload[model].keys():
                 condition_sql += sql_builder(column, payload[model][column])
             sql_list.append(CML_CONSUMPTION_INFO.format(
-                brand_code=brand_code, start_date=start_date, end_date=end_date, condition_sql=condition_sql
+                brand_code=brand_code, start_date=start_date, end_date=end_date,
+                condition_sql_cml_consumption_store=condition_sql_cml_consumption_store, condition_sql=condition_sql
             ))
     
     return sql_list

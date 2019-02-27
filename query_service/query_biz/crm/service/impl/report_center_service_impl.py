@@ -30,7 +30,7 @@ class ReportCenterServiceImpl(ReportCenterService):
         con = presto_engine.connect()
         
         try:
-            df_result = pd.read_sql_query(sql=sql, con=con).astype(dtypes.report_center.DAILY)
+            df_result = pd.read_sql_query(sql=sql, con=con)
         except (DatabaseError, TypeError) as e:
             current_app.logger.exception(e)
         else:
