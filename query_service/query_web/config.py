@@ -51,13 +51,13 @@ class ProductionConfig(Config):
         info_handler = TimedRotatingFileHandler(filename=cls.LOG_PATH_INFO, when='midnight', interval=1, backupCount=30, encoding='utf8')
         info_handler.setFormatter(formatter)
         info_handler.setLevel(logging.INFO)
-        info_handler.suffix = '_%Y-%m-%d.log'
+        info_handler.suffix = '%Y-%m-%d.log'
     
         # set error handler
         error_handler = TimedRotatingFileHandler(filename=cls.LOG_PATH_ERROR, when='midnight', interval=1, backupCount=30, encoding='utf8')
         error_handler.setFormatter(formatter)
         error_handler.setLevel(logging.ERROR)
-        error_handler.suffix = '_%Y-%m-%d.log'
+        error_handler.suffix = '%Y-%m-%d.log'
         
         # add handler
         app.logger.addHandler(info_handler)
