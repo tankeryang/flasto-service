@@ -5,7 +5,7 @@ services:
     container_name: flasto-service-dev
     image: flasto-service-dev:1.1.0
     ports:
-      - "18802:18802"
+      - "18802:5678"
     volumes:
       - ../query_service/log:/opt/flasto-service/query_service/log
       - ../query_service/tmp:/opt/flasto-service/query_service/tmp

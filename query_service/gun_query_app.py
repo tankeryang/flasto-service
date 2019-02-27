@@ -20,7 +20,7 @@ chdir = current_dir_path
 proc_name = 'query_service'
 
 # server socket
-bind = '0.0.0.0:18802'
+bind = '0.0.0.0:5678'
 
 # worker process
 workers = multiprocessing.cpu_count() * 2 + 1

@@ -11,6 +11,6 @@ services:
         max_attempts: 3
         window: 120s
     ports:
-      - "18802:18802"
+      - "18802:5678"
     volumes:
       - ..:/opt/flasto-service
