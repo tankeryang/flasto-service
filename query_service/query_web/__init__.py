@@ -1,10 +1,12 @@
 from flask import Flask, Blueprint
 from flask_restplus import Api
 from jsonschema import FormatChecker
+
 from query_service.query_web.config import config
 
 
 flasto = Blueprint('flasto', __name__, url_prefix='/flasto/api')
+
 api = Api(
     flasto,
     version='1.1.0',
@@ -51,5 +53,8 @@ def create_app(config_name):
     
     from query_service.query_web import flasto
     app.register_blueprint(flasto)
+
+    from query_service.query_web.libs import cache
+    cache.init_app(app)
     
     return app
