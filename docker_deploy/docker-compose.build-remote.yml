@@ -14,3 +14,5 @@ services:
       - /var/www/excel/crm-test:/opt/flasto-service/query_service/tmp
       - /etc/timezone:/etc/timezone
       - /etc/localtime:/etc/localtime
+    networks:
+      - emr_gw_redis
