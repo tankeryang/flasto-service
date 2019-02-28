@@ -15,7 +15,7 @@ import query_service.resources.crm.dtypes as dtypes
 class CicStaticServiceImpl(CicStaticService):
     
     @classmethod
-    @cache.memoize(timeout=86400)
+    @cache.memoize(timeout=7200)
     def get_cic_static_detail_data(cls, dto):
         """
         查询cic首页静态数据详情
