@@ -35,6 +35,12 @@ class TestConfig(Config):
 class PreProdConfig(Config):
     PRESTO_SERVER_URI = "presto://api@emr-header-1:9090/hive/cdm_crm"
     FILE_SERVER_URL_PREFIX = 'http://10.4.21.175/crm-test/'
+    
+    # cache
+    CACHE_TYPE = 'redis'
+    CACHE_REDIS_HOST = 'redis'
+    CACHE_REDIS_PORT = 6379
+    CACHE_REDIS_DB = 2
 
     @classmethod
     def init_app(cls, app):
@@ -74,10 +80,11 @@ class PreProdConfig(Config):
 class ProdConfig(Config):
     PRESTO_SERVER_URI = "presto://api@emr-header-1:9090/hive/cdm_crm"
     FILE_SERVER_URL_PREFIX = 'http://10.4.21.175/crm/'
+    
     # cache
     CACHE_TYPE = 'redis'
-    CACHE_REDIS_HOST = '127.0.0.1'
-    CACHE_REDIS_PORT = 18879
+    CACHE_REDIS_HOST = 'redis'
+    CACHE_REDIS_PORT = 6379
     CACHE_REDIS_DB = 2
     
     @classmethod
