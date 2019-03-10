@@ -23,9 +23,14 @@ def rm_redis_keys():
     删除 redis 缓存
     :return:
     """
-    r = redis.Redis(host='redis', db=2)
-    keys = r.keys()
-    r.delete(*keys)
+    r2 = redis.Redis(host='redis', db=2)
+    r4 = redis.Redis(host='redis', db=4)
+    
+    keys2 = r2.keys()
+    r2.delete(*keys2)
+    
+    keys4 = r4.keys()
+    r4.delete(*keys4)
 
 
 if __name__ == '__main__':

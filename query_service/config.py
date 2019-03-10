@@ -85,7 +85,7 @@ class ProdConfig(Config):
     CACHE_TYPE = 'redis'
     CACHE_REDIS_HOST = 'redis'
     CACHE_REDIS_PORT = 6379
-    CACHE_REDIS_DB = 2
+    CACHE_REDIS_DB = 4
     
     @classmethod
     def init_app(cls, app):
