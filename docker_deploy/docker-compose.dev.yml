@@ -16,11 +16,8 @@ services:
       - /etc/localtime:/etc/localtime
     extra_hosts:
       - "emr-header-1:10.4.21.169"
-    external_links:
-      - redis:redis
-    networks:
-      - emr_gw_service
 
 networks:
-  emr_gw_service:
-    external: true
+  default:
+    external:
+      name: emr_gw_redis

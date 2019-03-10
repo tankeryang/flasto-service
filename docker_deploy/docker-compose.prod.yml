@@ -14,11 +14,8 @@ services:
       - /var/www/excel/crm:/opt/flasto-service/query_service/tmp
       - /etc/timezone:/etc/timezone
       - /etc/localtime:/etc/localtime
-    external_links:
-      - redis:redis
-    networks:
-      - emr_gw_service
 
 networks:
-  emr_gw_service:
-    external: true
+  default:
+    external:
+      name: emr_gw_redis
