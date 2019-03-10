@@ -1,9 +1,9 @@
+**/.idea/
 **/log/
-venv/
+**/venv/
 **/__pycache__/
-.idea/
-nohup.out
 **/nohup.out
 **/*.xlsx
+**/*.csv
 **/.DS_Store
 **/tmp/
