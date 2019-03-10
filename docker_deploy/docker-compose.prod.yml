@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  flasto-service:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: flasto-service:1.2.0
+    container_name: flasto-service
+    ports:
+      - "5678:5678"
+    volumes:
+      - /var/log/flasto-service:/opt/flasto-service/query_service/log
+      - /var/www/excel/crm:/opt/flasto-service/query_service/tmp
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
+
+networks:
+  default:
+    external:
+      name: emr_gw_service
