@@ -354,3 +354,13 @@ class MemberGroupingCountQOValidator(Schema):
     fst_consumption_model = fields.Nested(FstConsumptionModel, description="首次消费相关参数")
     coupon_info_model = fields.Nested(CouponInfoModel, description="券相关参数")
     cml_consumption_model = fields.Nested(CmlConsumptionModel, description="累计消费相关参数")
+
+class MemberGroupingCsvQOValidator(Schema):
+    brand_code = fields.String(description="品牌编号", required=True)
+    member_info_model = fields.Nested(MemberInfoModel, description="会员基础信息相关参数")
+    grade_info_model = fields.Nested(GradeInfoModel, description="等级信息相关参数")
+    score_info_model = fields.Nested(ScoreInfoModel, description="积分相关信息参数")
+    lst_consumption_model = fields.Nested(LstConsumptionModel, description="最近消费相关参数")
+    fst_consumption_model = fields.Nested(FstConsumptionModel, description="首次消费相关参数")
+    coupon_info_model = fields.Nested(CouponInfoModel, description="券相关参数")
+    cml_consumption_model = fields.Nested(CmlConsumptionModel, description="累计消费相关参数")

@@ -79,3 +79,18 @@ class ParamType:
         'cml_avg_sales_item_per_order': 'n',
         'cml_avg_sales_amount_per_item': 'n'
     }
+
+
+class CSV:
+    """导出csv参数"""
+    COLUMNS = [
+        '会员编号',
+        '姓名',
+        '微信ID',
+        '手机号',
+        '等级名称',
+        '首次购买时间',
+        '注册来源'
+    ]
+    
+    FILE_NAME = 'member_grouping_detail_'

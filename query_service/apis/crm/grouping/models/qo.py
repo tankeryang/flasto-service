@@ -359,3 +359,13 @@ member_grouping_count_qo = ns.model('MemberGroupingCountQO', {
     'coupon_info_model': fields.Nested(coupon_info_model, description="券相关参数"),
     'cml_consumption_model': fields.Nested(cml_consumption_model, description="累计消费相关参数"),
 })
+member_grouping_csv_qo = ns.model('MemberGroupingCsvQO', {
+    'brand_code': fields.String(description="品牌编号", required=True),
+    'member_info_model': fields.Nested(member_info_model, description="会员基础信息相关参数"),
+    'grade_info_model': fields.Nested(grade_info_model, description="等级信息相关参数"),
+    'score_info_model': fields.Nested(score_info_model, description="积分相关信息参数"),
+    'lst_consumption_model': fields.Nested(lst_consumption_model, description="最近消费相关参数"),
+    'fst_consumption_model': fields.Nested(fst_consumption_model, description="首次消费相关参数"),
+    'coupon_info_model': fields.Nested(coupon_info_model, description="券相关参数"),
+    'cml_consumption_model': fields.Nested(cml_consumption_model, description="累计消费相关参数"),
+})

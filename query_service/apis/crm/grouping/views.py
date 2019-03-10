@@ -5,7 +5,11 @@ ns = Namespace('CRM 会员分组', path='/crm/grouping', description='会员分�
 
 from .models import qo, ro
 from .service import GroupingService
-from .utils.validator import MemberGroupingDetailQOValidator, MemberGroupingCountQOValidator
+from .utils.validator import (
+    MemberGroupingDetailQOValidator,
+    MemberGroupingCountQOValidator,
+    MemberGroupingCsvQOValidator,
+)
 
 from query_service.apis.utils.decorator import authorized
 
@@ -56,3 +60,27 @@ class MemberGroupingCountView(Resource):
         else:
             current_app.logger.info("Param: " + str(res))
             return GroupingService.get_member_grouping_count(res)
+
+
+@ns.route('/MemberGroupingCsv')
+class MemberGroupingCsvView(Resource):
+    
+    @ns.doc(security='key')
+    @ns.expect(qo.member_grouping_csv_qo)
+    @ns.marshal_with(ro.member_grouping_csv_ro)
+    @ns.response(401, "Token authorized error")
+    @ns.response(404, "Not Found")
+    @authorized
+    def post(self):
+        """
+        查询分组会员总数
+        :return:
+        """
+        res, err = MemberGroupingCsvQOValidator().load(ns.payload)
+        
+        if err:
+            current_app.logger.error("Err" + str(err))
+            return dict(success=False, message=err)
+        else:
+            current_app.logger.info("Param: " + str(res))
+            return GroupingService.get_member_grouping_detail_csv(res)

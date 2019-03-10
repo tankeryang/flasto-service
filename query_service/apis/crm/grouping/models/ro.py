@@ -9,6 +9,13 @@ member_grouping_count_ro = ns.model('MemberGroupingCountRO', {
 })
 
 
+member_grouping_csv_ro = ns.model('MemberGroupingCsvRO', {
+    'data': fields.String(readonly=True, description="生成csv url"),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
+
+
 member_grouping_detail_ro = ns.model('MemberGroupingDetailRO', {
     'member_no': fields.String(readonly=True, description='会员编号'),
     'member_name': fields.String(readonly=True, description='会员姓名'),
