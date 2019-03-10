@@ -33,22 +33,22 @@
 * 目录结构
     ```
     flasto-service
-    ├── docker_deploy: docker-compose 文件
-    ├── aps_service: 定时器任务, 用于清空 tmp 下生成的导出文件
+    ├── docker_deploy: docker部署脚本
+    ├── schedule_service: 定时器任务, 用于清空tmp下生成的导出文件和redis缓存
     ├── query_service: 查询服务
-    │   ├── query_api: 查询接口定义
-    │   ├── query_biz: 查询接口实现
-    │   ├── query_web: web服务实现
-    │   │   └── config.py: web app 配置
+    │   ├── apis: api 服务
     │   ├── resource: 资源文件
-    │   ├── gun_query_app.py: gunicorn 配置
-    │   └── query_app.py: web app 启动脚本
+    │   ├── __init__.py: flask app 初始化
+    │   ├── gun_config.py: gunicorn 配置
+    │   ├── config.py: app 配置
+    │   ├── exts.py: flask 插件
+    │   └── app.py: app 启动脚本
     └── test: 测试脚本
     ```
 
 ## Start Up
 
-### local
+### local with gunicorn
 
 * __start up__
 
@@ -68,33 +68,32 @@
 
 ### docker
 
-* __build & run on local__
-    ```shell
-    > $ docker-compose -f docker_deploy/docker-compose.build-local.yml up -d
-    ```
+#### build base image and network
 
-* __build & run on remote(prod) server__
-    ```shell
-    > $ docker-compose -f docker_deploy/docker-compose.build-remote.yml up -d
-    ```
+```bash
+> $ sh build-base.sh
+```
 
-* __run & develop on local (already build)__
-    ```shell
+#### run redis container
+
+```bash
+> $ sh start-redis.sh
+``` 
+
+#### docker compose up
+
+* __dev__
+    ```bash
     > $ docker-compose -f docker_deploy/docker-compose.dev.yml up -d
     ```
 
-* __run on local (already build)__
-    ```shell
-    > $ docker-compose -f docker_deploy/docker-compose.local.yml up -d
-    ```
-
-* __run on remote(prod) server__
-    ```shell
-    > $ docker-compose -f docker_deploy/docker-compose.yml up -d
+* __prod__
+    ```bash
+    > $ docker-compose -f docker_deploy/docker-compose.prod.yml up -d
     ```
 
 ## Usage
 
 * __query service__
 
-    访问 `http://<host>:5678/flasto/api` 查看 API 文档
+    访问 `http://<host>:<port>/flasto/api` 查看 API 文档

@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  flasto-service:
+    build:
+      context: ..
+      dockerfile: ../Dockerfile
+    image: flasto-service:1.2.0
+    container_name: flasto-service
+    ports:
+      - "18808:5678"
+    volumes:
+      - /var/log/flasto-service:/opt/flasto-service/query_service/log
+      - /var/www/excel/crm:/opt/flasto-service/query_service/tmp
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
+    external_links:
+      - redis:redis
+    network_mode: bridge
+    networks:
+      emr_gw_service
+
+networks:
+  emr_gw_service:
+    external: true
+    name: emr_gw_service

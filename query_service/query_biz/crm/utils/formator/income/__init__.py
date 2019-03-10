@@ -1,1 +1,0 @@
-from .income_analyse_formator import income_analyse_formator

@@ -1,9 +1,0 @@
-from .dtypes import (
-    STATIC,
-    DAILY,
-    MONTHLY,
-    CONSUMED_DAILY,
-    CONSUMED_MONTHLY,
-    UNCONSUMED_DAILY,
-    UNCONSUMED_MONTHLY,
-)
