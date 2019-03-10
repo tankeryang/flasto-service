@@ -18,11 +18,9 @@ services:
       - "emr-header-1:10.4.21.169"
     external_links:
       - redis:redis
-    network_mode: bridge
     networks:
-      emr_gw_service
+      - emr_gw_service
 
 networks:
   emr_gw_service:
     external: true
-    name: emr_gw_service
