@@ -20,4 +20,4 @@ services:
 networks:
   default:
     external:
-      name: emr_gw_redis
+      name: emr_gw_service
