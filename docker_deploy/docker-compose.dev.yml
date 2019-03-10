@@ -4,7 +4,7 @@ services:
   flasto-service-dev:
     build:
       context: ..
-      dockerfile: ../Dockerfile
+      dockerfile: Dockerfile
     image: flasto-service-dev:1.2.0
     container_name: flasto-service-dev
     ports:
