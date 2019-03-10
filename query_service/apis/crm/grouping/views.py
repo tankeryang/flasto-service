@@ -73,7 +73,7 @@ class MemberGroupingCsvView(Resource):
     @authorized
     def post(self):
         """
-        查询分组会员总数
+        导出分组会员详情csv
         :return:
         """
         res, err = MemberGroupingCsvQOValidator().load(ns.payload)
