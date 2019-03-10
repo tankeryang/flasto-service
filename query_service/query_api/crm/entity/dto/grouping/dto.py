@@ -11,8 +11,8 @@ member_birthday = ns_5.model('BirthdayConditionModel', {
 })
 
 member_age = ns_5.model('AgeConditionModel', {
-    'lt': fields.Integer(description="大于", example=26, min=0),
-    'gt': fields.Integer(description="小于", example=26, min=0),
+    'lt': fields.Integer(description="小于", example=26, min=0),
+    'gt': fields.Integer(description="大于", example=26, min=0),
     'eq': fields.Integer(description="等于", example=26, min=0),
     'bt': fields.List(fields.Integer(description="介于", min=0), example=[10, 26])
 })
