@@ -71,13 +71,13 @@
 #### build base image and network
 
 ```bash
-> $ sh build-base.sh
+> $ sh docker_deploy/build-base.sh
 ```
 
 #### run redis container
 
 ```bash
-> $ sh start-redis.sh
+> $ sh docker_deploy/start-redis.sh
 ``` 
 
 #### docker compose up
