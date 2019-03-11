@@ -342,7 +342,8 @@ class MemberGroupingDetailQOValidator(Schema):
     fst_consumption_model = fields.Nested(FstConsumptionModel, description="首次消费相关参数")
     coupon_info_model = fields.Nested(CouponInfoModel, description="券相关参数")
     cml_consumption_model = fields.Nested(CmlConsumptionModel, description="累计消费相关参数")
-    page = MinMaxInteger(description="页码", min=1, required=True)
+    page_num = MinMaxInteger(description="页码", min=1, required=True)
+    page_size = MinMaxInteger(description="一页大小", min=1, required=True)
 
 
 class MemberGroupingCountQOValidator(Schema):
