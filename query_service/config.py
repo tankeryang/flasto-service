@@ -24,7 +24,49 @@ class Config:
 
 class DevConfig(Config):
     DEBUG = True
-    PRESTO_SERVER_URI = "presto://dev@10.10.22.5:10300/dev_hive/cdm_crm"
+    PRESTO_SERVER_URI = "presto://api@emr-header-1:9090/hive/cdm_crm"
+    TMP_PATH = '/Users/yang/workspace/PycharmProjects/Fp-project/flasto-service/query_service/tmp/'
+    FILE_SERVER_URL_PREFIX = 'http://10.4.21.175/crm-test/'
+
+    # cache
+    CACHE_TYPE = 'redis'
+    CACHE_REDIS_HOST = 'localhost'
+    CACHE_REDIS_PORT = 18879
+    CACHE_REDIS_DB = 2
+
+    @classmethod
+    def init_app(cls, app):
+        import logging
+        from logging.handlers import TimedRotatingFileHandler
+    
+        Config.init_app(app)
+        formatter = logging.Formatter(cls.LOG_FORMAT, cls.DATE_FORMAT)
+        # set info handler
+        info_handler = TimedRotatingFileHandler(
+            filename=cls.LOG_PATH_INFO,
+            when='midnight',
+            interval=1,
+            backupCount=30,
+            encoding='utf8'
+        )
+        info_handler.setFormatter(formatter)
+        info_handler.setLevel(logging.INFO)
+        info_handler.suffix = '%Y-%m-%d.log'
+        # set error handler
+        error_handler = TimedRotatingFileHandler(
+            filename=cls.LOG_PATH_ERROR,
+            when='midnight',
+            interval=1,
+            backupCount=30,
+            encoding='utf8'
+        )
+        error_handler.setFormatter(formatter)
+        error_handler.setLevel(logging.ERROR)
+        error_handler.suffix = '%Y-%m-%d.log'
+        # add handler
+        app.logger.addHandler(info_handler)
+        app.logger.addHandler(error_handler)
+        app.logger.setLevel(logging.DEBUG)
 
 
 class TestConfig(Config):

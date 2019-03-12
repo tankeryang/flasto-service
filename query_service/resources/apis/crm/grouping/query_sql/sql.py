@@ -74,7 +74,7 @@ MEMBER_GROUPING_DETAIL = """
             mid.member_wechat_id,
             mid.member_mobile,
             mid.member_grade_name,
-            mid.member_first_order_time,
+            mid.member_last_order_time_ty,
             mid.member_reg_source,
             row_number() OVER (
                 PARTITION BY mid.brand_code
@@ -90,7 +90,7 @@ MEMBER_GROUPING_DETAIL = """
         member_wechat_id,
         member_mobile,
         member_grade_name,
-        member_first_order_time,
+        member_last_order_time_ty,
         member_reg_source
     FROM tmp
     WHERE id BETWEEN {start} AND {end}
@@ -107,7 +107,7 @@ MEMBER_GROUPING_COUNT = """
             mid.member_wechat_id,
             mid.member_mobile,
             mid.member_grade_name,
-            mid.member_first_order_time,
+            mid.member_last_order_time_ty,
             mid.member_reg_source
         FROM cdm_crm.member_info_detail mid
         {join_sql}
@@ -127,7 +127,7 @@ MEMBER_GROUPING_DETAIL_CSV = """
         mid.member_wechat_id,
         mid.member_mobile,
         mid.member_grade_name,
-        mid.member_first_order_time,
+        mid.member_last_order_time_ty,
         mid.member_reg_source
     FROM cdm_crm.member_info_detail mid
     {join_sql}

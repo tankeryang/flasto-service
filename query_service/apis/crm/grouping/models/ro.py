@@ -22,7 +22,7 @@ member_grouping_detail_ro = ns.model('MemberGroupingDetailRO', {
     'member_wechat_id': fields.String(readonly=True, description='会员微信名'),
     'member_mobile': fields.String(readonly=True, description='会员手机号'),
     'member_grade_name': fields.String(readonly=True, description='会员等级名'),
-    'member_first_order_time': fields.String(readonly=True, description='会员首次购买时间'),
+    'member_first_order_time': fields.String(readonly=True, description='会员最近购买时间'),
     'member_reg_source': fields.String(readonly=True, description='会员注册渠道')
 })
 member_grouping_detail_list_ro = ns.model('MemberGroupingDetailListRO', {

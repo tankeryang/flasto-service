@@ -46,7 +46,8 @@ def mapper(payload):
     join_sql = ''  # 查询会员明细的关联sql
     
     brand_code = payload.pop('brand_code')
-    page = payload['page']
+    page_num = payload['page_num']
+    page_size = payload['page_size']
     
     for model in payload.keys():
         if model == 'member_info_model':
@@ -119,8 +120,8 @@ def mapper(payload):
     with_sql = ', '.join(sql_list)
     for nick_name in sql_nick_name_list:
         join_sql += 'INNER JOIN {nick_name} ON mid.member_no = {nick_name}.member_no\n'.format(nick_name=nick_name)
-    end = page * 10
-    start = end - 9
+    end = page_num * page_size
+    start = end - page_size + 1
     
     sql = MEMBER_GROUPING_DETAIL.format(
         brand_code=brand_code,
