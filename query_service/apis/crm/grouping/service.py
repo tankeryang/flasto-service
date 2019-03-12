@@ -53,6 +53,7 @@ class GroupingService:
             return dict(success=True, data=df['total'], message="success")
     
     @classmethod
+    @cache.memoize(timeout=86400)
     def get_member_grouping_detail_csv(cls, qo):
         """
         导出分组会员详情
