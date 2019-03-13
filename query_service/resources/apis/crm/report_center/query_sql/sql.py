@@ -5,6 +5,7 @@ DAILY = """
         SELECT DISTINCT {zone_index}, dr_member_type
         FROM cdm_crm.member_analyse_index_label
         WHERE brand_code = '{brand_code}'
+        AND channel_type = '{channel_type}'
     ), sm AS (
         SELECT coid.{zone}, coid.dr_member_type,
         cast(sum(coid.order_fact_amount_include_coupon) AS DECIMAL(18, 4)) AS sa,
