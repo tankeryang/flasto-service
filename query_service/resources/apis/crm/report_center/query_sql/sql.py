@@ -120,6 +120,7 @@ DAILY = """
             WHEN '普通会员' THEN 2
             WHEN '银卡会员' THEN 3
             WHEN 'VIP会员' THEN 3
+            WHEN 'SVIP会员' THEN 4
             WHEN '金卡会员' THEN 4
             WHEN '黑卡会员' THEN 5
         ELSE NULL END AS member_type_num,
