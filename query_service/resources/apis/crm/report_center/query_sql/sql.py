@@ -131,7 +131,7 @@ DAILY = """
             AND coid.brand_code = '{brand_code}'
             AND coid.channel_type = '{channel_type}'
             AND coid.order_type_num = 1
-            AND coid.dr_member_type IN ('新会员', '普通会员', VIP会员)
+            AND coid.dr_member_type IN ('新会员', '普通会员', 'VIP会员', '银卡会员')
             AND coid.member_force_upgrade_type = '升级'
         GROUP BY coid.{zone}, coid.dr_member_type
     ), stm AS (
