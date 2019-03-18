@@ -1,7 +1,7 @@
 from query_service import create_app
 
 
-app = create_app('dev')
+app = create_app('preprod')
 
 
 if __name__ == '__main__':
