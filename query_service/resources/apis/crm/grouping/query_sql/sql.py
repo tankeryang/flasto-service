@@ -63,7 +63,7 @@ CML_CONSUMPTION_INFO = """
     )
 """
 
-# 查询分组详情分页= ======================================================================================================
+# 查询分组详情分页 =======================================================================================================
 MEMBER_GROUPING_DETAIL = """
     WITH tmp AS (
         WITH {with_sql}
@@ -122,13 +122,32 @@ MEMBER_GROUPING_COUNT = """
 MEMBER_GROUPING_DETAIL_CSV = """
     WITH {with_sql}
     SELECT DISTINCT
+        mid.store_code,
+        mid.member_manage_clerk,
+        mid.member_ec_status,
         mid.member_no,
-        mid.member_name,
-        mid.member_wechat_id,
+        mid.member_card,
         mid.member_mobile,
+        mid.member_name,
         mid.member_grade_name,
+        mid.member_grade_expiration,
+        mid.member_score,
+        mid.member_will_score,
+        mid.member_wechat_id,
+        mid.member_birthday,
+        mid.member_register_time,
         mid.member_last_order_time_ty,
         mid.member_reg_source
+    FROM cdm_crm.member_info_detail mid
+    {join_sql}
+    WHERE mid.brand_code = '{brand_code}'
+"""
+
+# 查询分组会员编号列表 ====================================================================================================
+MEMBER_GROUPING_NO_LIST = """
+    WITH {with_sql}
+    SELECT DISTINCT
+        mid.member_no
     FROM cdm_crm.member_info_detail mid
     {join_sql}
     WHERE mid.brand_code = '{brand_code}'

@@ -5,7 +5,7 @@ from flask import current_app
 from pyhive.exc import DatabaseError
 
 from .const import CSV
-from .utils.mapper import mapper, count_mapper, csv_mapper
+from .utils.mapper import mapper, count_mapper, csv_mapper, no_list_mapper
 from query_service.apis.utils.db import engine
 from query_service.exts import cache
 
@@ -80,3 +80,23 @@ class GroupingService:
             df.to_csv(dir_path + filename, index=False, encoding='utf_8_sig')
             
             return dict(success=True, data=file_url, message="success")
+    
+    @classmethod
+    @cache.memoize(timeout=86400)
+    def get_member_grouping_no_list(cls, qo):
+        """
+        查询分组会员编号列表
+        :param qo:
+        :return:
+        """
+        sql = no_list_mapper(qo)
+        current_app.logger.info("Execute SQL: " + sql)
+        con = engine().connect()
+
+        try:
+            df = pd.read_sql_query(sql=sql, con=con)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+            return dict(success=False, message="Internal Server Error")
+        else:
+            return dict(success=True, data=df.to_dict(orient='records'), message="success")

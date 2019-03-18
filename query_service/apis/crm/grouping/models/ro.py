@@ -30,3 +30,9 @@ member_grouping_detail_list_ro = ns.model('MemberGroupingDetailListRO', {
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+member_grouping_no_list_ro = ns.model('MemberGroupingNoListRO', {
+    'data': fields.List(fields.String(readonly=True, description="会员编号"), readonly=True, description="会员编号列表"),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})

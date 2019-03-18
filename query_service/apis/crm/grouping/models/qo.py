@@ -350,17 +350,7 @@ member_grouping_detail_qo = ns.model('MemberGroupingDetailQO', {
     'page_num': fields.Integer(description='页码', min=1, example=1, required=True),
     'page_size': fields.Integer(description='一页大小', min=1, example=10, required=True)
 })
-member_grouping_count_qo = ns.model('MemberGroupingCountQO', {
-    'brand_code': fields.String(description="品牌编号", required=True),
-    'member_info_model': fields.Nested(member_info_model, description="会员基础信息相关参数"),
-    'grade_info_model': fields.Nested(grade_info_model, description="等级信息相关参数"),
-    'score_info_model': fields.Nested(score_info_model, description="积分相关信息参数"),
-    'lst_consumption_model': fields.Nested(lst_consumption_model, description="最近消费相关参数"),
-    'fst_consumption_model': fields.Nested(fst_consumption_model, description="首次消费相关参数"),
-    'coupon_info_model': fields.Nested(coupon_info_model, description="券相关参数"),
-    'cml_consumption_model': fields.Nested(cml_consumption_model, description="累计消费相关参数"),
-})
-member_grouping_csv_qo = ns.model('MemberGroupingCsvQO', {
+member_grouping_common_qo = ns.model('MemberGroupingCountQO', {
     'brand_code': fields.String(description="品牌编号", required=True),
     'member_info_model': fields.Nested(member_info_model, description="会员基础信息相关参数"),
     'grade_info_model': fields.Nested(grade_info_model, description="等级信息相关参数"),

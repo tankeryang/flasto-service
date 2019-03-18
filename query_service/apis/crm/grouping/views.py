@@ -7,8 +7,7 @@ from .models import qo, ro
 from .service import GroupingService
 from .utils.validator import (
     MemberGroupingDetailQOValidator,
-    MemberGroupingCountQOValidator,
-    MemberGroupingCsvQOValidator,
+    MemberGroupingCommonQOValidator,
 )
 
 from query_service.apis.utils.decorator import authorized
@@ -42,7 +41,7 @@ class MemberGroupingDetailView(Resource):
 class MemberGroupingCountView(Resource):
     
     @ns.doc(security='key')
-    @ns.expect(qo.member_grouping_count_qo)
+    @ns.expect(qo.member_grouping_common_qo)
     @ns.marshal_with(ro.member_grouping_count_ro)
     @ns.response(401, "Token authorized error")
     @ns.response(404, "Not Found")
@@ -52,7 +51,7 @@ class MemberGroupingCountView(Resource):
         查询分组会员总数
         :return:
         """
-        res, err = MemberGroupingCountQOValidator().load(ns.payload)
+        res, err = MemberGroupingCommonQOValidator().load(ns.payload)
         
         if err:
             current_app.logger.error("Err" + str(err))
@@ -66,7 +65,7 @@ class MemberGroupingCountView(Resource):
 class MemberGroupingCsvView(Resource):
     
     @ns.doc(security='key')
-    @ns.expect(qo.member_grouping_csv_qo)
+    @ns.expect(qo.member_grouping_common_qo)
     @ns.marshal_with(ro.member_grouping_csv_ro)
     @ns.response(401, "Token authorized error")
     @ns.response(404, "Not Found")
@@ -76,7 +75,7 @@ class MemberGroupingCsvView(Resource):
         导出分组会员详情csv
         :return:
         """
-        res, err = MemberGroupingCsvQOValidator().load(ns.payload)
+        res, err = MemberGroupingCommonQOValidator().load(ns.payload)
         
         if err:
             current_app.logger.error("Err" + str(err))
@@ -84,3 +83,27 @@ class MemberGroupingCsvView(Resource):
         else:
             current_app.logger.info("Param: " + str(res))
             return GroupingService.get_member_grouping_detail_csv(res)
+
+
+@ns.route('/MemberGroupingNoList')
+class MemberGroupingNoListView(Resource):
+    
+    @ns.doc(security='key')
+    @ns.expect(qo.member_grouping_common_qo)
+    @ns.marshal_with(ro.member_grouping_no_list_ro)
+    @ns.response(401, "Token authorized error")
+    @ns.response(404, "Not Found")
+    @authorized
+    def post(self):
+        """
+        查询分组会员编号列表
+        :return:
+        """
+        res, err = MemberGroupingCommonQOValidator().load(ns.payload)
+    
+        if err:
+            current_app.logger.error("Err" + str(err))
+            return dict(success=False, message=err)
+        else:
+            current_app.logger.info("Param: " + str(res))
+            return GroupingService.get_member_grouping_no_list(res)
