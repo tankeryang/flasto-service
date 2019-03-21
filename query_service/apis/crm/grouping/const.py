@@ -84,6 +84,9 @@ class ParamType:
 class CSV:
     """导出csv参数"""
     COLUMNS = [
+        '经营方式',
+        '区域',
+        '城市',
         '管理门店',
         '管理导购',
         '会员状态',

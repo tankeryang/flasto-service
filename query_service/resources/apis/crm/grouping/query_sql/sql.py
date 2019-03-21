@@ -122,6 +122,9 @@ MEMBER_GROUPING_COUNT = """
 MEMBER_GROUPING_DETAIL_CSV = """
     WITH {with_sql}
     SELECT DISTINCT
+        mid.channel_type,
+        mid.sales_area,
+        mid.city,
         mid.store_code,
         mid.member_manage_clerk,
         mid.member_ec_status,
