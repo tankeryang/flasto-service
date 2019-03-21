@@ -99,4 +99,4 @@ class GroupingService:
             current_app.logger.exception(e)
             return dict(success=False, message="Internal Server Error")
         else:
-            return dict(success=True, data=df.to_dict(orient='records'), message="success")
+            return dict(success=True, data=df['member_no'].tolist(), message="success")
