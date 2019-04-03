@@ -129,6 +129,7 @@ MEMBER_GROUPING_DETAIL_CSV = """
         mid.member_manage_clerk,
         mid.member_ec_status,
         mid.member_no,
+        mid.member_code,
         mid.member_card,
         mid.member_mobile,
         mid.member_name,
