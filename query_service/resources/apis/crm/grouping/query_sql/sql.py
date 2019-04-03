@@ -129,9 +129,11 @@ MEMBER_GROUPING_DETAIL_CSV = """
         mid.member_manage_clerk,
         mid.member_ec_status,
         mid.member_no,
+        mid.member_code,
         mid.member_card,
         mid.member_mobile,
         mid.member_name,
+        mid.member_gender,
         mid.member_grade_name,
         mid.member_grade_expiration,
         mid.member_score,
@@ -140,6 +142,7 @@ MEMBER_GROUPING_DETAIL_CSV = """
         mid.member_birthday,
         mid.member_register_time,
         mid.member_last_order_time_ty,
+        mid.member_last_feedback_time,
         mid.member_reg_source
     FROM cdm_crm.member_info_detail mid
     {join_sql}
