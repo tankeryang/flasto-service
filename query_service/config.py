@@ -26,7 +26,7 @@ class DevConfig(Config):
     DEBUG = True
     PRESTO_SERVER_URI = "presto://api@emr-header-1:9090/hive/cdm_crm"
     TMP_PATH = '/Users/yang/workspace/PycharmProjects/Fp-project/flasto-service/query_service/tmp/'
-    FILE_SERVER_URL_PREFIX = 'http://10.4.21.175/crm-test/'
+    FILE_SERVER_URL_PREFIX = 'http://ftp.emr.trendygroup-it.com/crm-test/'
 
     # cache
     CACHE_TYPE = 'redis'
@@ -76,7 +76,7 @@ class TestConfig(Config):
 
 class PreProdConfig(Config):
     PRESTO_SERVER_URI = "presto://api@emr-header-1:9090/hive/cdm_crm"
-    FILE_SERVER_URL_PREFIX = 'http://10.4.21.175/crm-test/'
+    FILE_SERVER_URL_PREFIX = 'http://ftp.emr.trendygroup-it.com/crm-test/'
     
     # cache
     CACHE_TYPE = 'redis'
@@ -121,7 +121,7 @@ class PreProdConfig(Config):
 
 class ProdConfig(Config):
     PRESTO_SERVER_URI = "presto://api@emr-header-1:9090/hive/cdm_crm"
-    FILE_SERVER_URL_PREFIX = 'http://10.4.21.175/crm/'
+    FILE_SERVER_URL_PREFIX = 'http://ftp.emr.trendygroup-it.com/crm/'
     
     # cache
     CACHE_TYPE = 'redis'
