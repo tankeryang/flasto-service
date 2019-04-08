@@ -5,7 +5,7 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
-    image: flasto-service-dev:1.2.0
+    image: flasto-service-dev:1.2.1
     container_name: flasto-service-dev
     ports:
       - "18802:5678"
