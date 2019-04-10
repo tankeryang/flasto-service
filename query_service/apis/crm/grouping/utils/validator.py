@@ -32,6 +32,7 @@ class MemberInfoModel(Schema):
     member_status = fields.List(EnumString(description="会员状态", enum=['正常', '作废', '异常卡']))
     member_register_date = fields.Nested(MemberRegisterDate, description="会员注册日期")
     member_manage_store = fields.List(fields.String(description="会员管理门店"))
+    member_manage_store_operation_status = fields.List(fields.String(description="会员管理门店状态"))
     member_register_store = fields.List(fields.String(description="会员注册门店"))
     member_reg_source = fields.List(fields.String(description="注册渠道"))
     member_is_batch_mobile = MinMaxInteger(description="是否绑定手机(1:是/0:否)", min=0, max=1)

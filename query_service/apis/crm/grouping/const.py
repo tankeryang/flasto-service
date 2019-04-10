@@ -33,6 +33,7 @@ class ParamType:
         'member_status': 'n',
         'member_register_date': 'd',
         'member_manage_store': 's',
+        'member_manage_store_operation_status': 's',
         'member_register_store': 'd',
         'member_reg_source': 's',
         'member_is_batch_mobile': 'n',
