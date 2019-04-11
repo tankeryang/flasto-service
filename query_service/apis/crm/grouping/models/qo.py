@@ -351,7 +351,7 @@ member_grouping_detail_qo = ns.model('MemberGroupingDetailQO', {
     'page_num': fields.Integer(description='页码', min=1, example=1, required=True),
     'page_size': fields.Integer(description='一页大小', min=1, example=10, required=True)
 })
-member_grouping_common_qo = ns.model('MemberGroupingCountQO', {
+member_grouping_common_qo = ns.model('MemberGroupingCommonQO', {
     'brand_code': fields.String(description="品牌编号", required=True),
     'member_info_model': fields.Nested(member_info_model, description="会员基础信息相关参数"),
     'grade_info_model': fields.Nested(grade_info_model, description="等级信息相关参数"),
