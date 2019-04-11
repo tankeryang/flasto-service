@@ -32,6 +32,7 @@ member_info_model = ns.model('MemberInfoModel', {
     'member_status': fields.List(fields.String(description="会员状态(已含 ec_status)", enum=['正常', '作废', '异常卡', '未激活']), example=['正常']),
     'member_register_date': fields.Nested(member_register_date, description="会员注册日期"),
     'member_manage_store': fields.List(fields.String(description="会员管理门店"), example=['1101', '1102']),
+    'member_manage_store_operation_status': fields.List(fields.String(description="会员管理门店状态"), example=['营业', '关店']),
     'member_register_store': fields.List(fields.String(description="会员管理门店"), example=['1101', '1102']),
     'member_reg_source': fields.List(fields.String(description="注册渠道"), example=['weixin']),
     'member_is_batch_mobile': fields.Integer(description="是否绑定手机(1:是/0:否)", example=1, min=0, max=1),
@@ -350,7 +351,7 @@ member_grouping_detail_qo = ns.model('MemberGroupingDetailQO', {
     'page_num': fields.Integer(description='页码', min=1, example=1, required=True),
     'page_size': fields.Integer(description='一页大小', min=1, example=10, required=True)
 })
-member_grouping_common_qo = ns.model('MemberGroupingCountQO', {
+member_grouping_common_qo = ns.model('MemberGroupingCommonQO', {
     'brand_code': fields.String(description="品牌编号", required=True),
     'member_info_model': fields.Nested(member_info_model, description="会员基础信息相关参数"),
     'grade_info_model': fields.Nested(grade_info_model, description="等级信息相关参数"),
