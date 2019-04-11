@@ -29,7 +29,7 @@ member_info_model = ns.model('MemberInfoModel', {
     'member_birthday_month': fields.List(fields.String(description="会员生日月份"), example=['07', '08']),
     'member_gender': fields.List(fields.String(description="会员性别", enum=['男', '女', '其他']), example=['男']),
     'member_age': fields.Nested(member_age, description="会员年龄"),
-    'member_status': fields.List(fields.String(description="会员状态(已含 ec_status)"), example=['正常']),
+    'member_status': fields.List(fields.String(description="会员状态(已含 ec_status)", enum=['正常', '作废', '异常卡', '未激活']), example=['正常']),
     'member_register_date': fields.Nested(member_register_date, description="会员注册日期"),
     'member_manage_store': fields.List(fields.String(description="会员管理门店"), example=['1101', '1102']),
     'member_manage_store_operation_status': fields.List(fields.String(description="会员管理门店状态"), example=['营业', '关店']),

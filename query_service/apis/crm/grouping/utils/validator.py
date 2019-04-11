@@ -29,7 +29,7 @@ class MemberInfoModel(Schema):
     member_birthday_month = fields.List(fields.String(description="会员生日月份"))
     member_gender = fields.List(EnumString(description="会员性别", enum=['男', '女', '其他']))
     member_age = fields.Nested(MemberAge, description="会员年龄")
-    member_status = fields.List(EnumString(description="会员状态", enum=['正常', '作废', '异常卡']))
+    member_status = fields.List(EnumString(description="会员状态", enum=['正常', '作废', '异常卡', '未激活']))
     member_register_date = fields.Nested(MemberRegisterDate, description="会员注册日期")
     member_manage_store = fields.List(fields.String(description="会员管理门店"))
     member_manage_store_operation_status = fields.List(fields.String(description="会员管理门店状态"))
