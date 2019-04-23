@@ -24,7 +24,7 @@ class ComparedType:
 
 
 class ParamType:
-    """会员分组参数常量标识 (n:数字/s:字符)"""
+    """会员分组参数常量标识 (n:数字/s:字符/d:日期)"""
     D = {
         'member_birthday': 's',
         'member_birthday_month': 'n',
@@ -36,6 +36,7 @@ class ParamType:
         'member_manage_store_operation_status': 's',
         'member_register_store': 'd',
         'member_reg_source': 's',
+        'member_last_feedback_date': 'd',
         'member_is_batch_mobile': 'n',
         'member_is_batch_weixin': 'n',
         'member_is_batch_taobao': 'n',
