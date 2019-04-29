@@ -4,7 +4,28 @@ MONTHLY_SALES = """
         brand_name,
         channel_type,
         mr_member_type AS member_type,
-        kpi,
+        CASE kpi
+            WHEN 'order_fact_amount_with_coupon' THEN '消费金额'
+            WHEN 'member_quantity' THEN '会员人数'
+            WHEN 'order_quantity' THEN '单数'
+            WHEN 'order_item_quantity' THEN '件数'
+            WHEN 'order_amount' THEN '吊牌价'
+            WHEN 'apt' THEN 'APT'
+            WHEN 'upt' THEN 'UPT'
+            WHEN 'apu' THEN '件单价'
+            WHEN 'order_discount' THEN '折扣'
+        ELSE NULL END AS kpi,
+        CASE kpi
+            WHEN 'order_fact_amount_with_coupon' THEN 1
+            WHEN 'member_quantity' THEN 2
+            WHEN 'order_quantity' THEN 3
+            WHEN 'order_item_quantity' THEN 4
+            WHEN 'order_amount' THEN 5
+            WHEN 'apt' THEN 6
+            WHEN 'upt' THEN 7
+            WHEN 'apu' THEN 8
+            WHEN 'order_discount' THEN 9
+        ELSE NULL END AS kpi_num,
         mtd,
         mtd_tg,
         mtd_tg_rc,
