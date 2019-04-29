@@ -5,7 +5,7 @@ from flask_restplus import Api
 api_bp = Blueprint('flasto-api', 'flasto-api', url_prefix='/api')
 api = Api(
     api_bp,
-    version='1.2.1',
+    version='1.2.2',
     prefix='/v1',
     title="Presto Query Api",
     description="Presto 查询服务 - by Flask, Flask-RESTPlus",
