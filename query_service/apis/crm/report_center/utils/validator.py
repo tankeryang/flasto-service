@@ -11,3 +11,11 @@ class DailyReportQOValidator(Schema):
     store_codes = fields.List(fields.String(description="门店编码"))
     start_date = StringDate(description="开始日期(yyyy-mm-dd)", required=True)
     end_date = StringDate(description="结束日期(yyyy-mm-dd)", required=True)
+
+
+class MonthlyReportSalesQOValidator(Schema):
+    brand_code = fields.String(description="品牌编码", required=True)
+    channel_type = fields.String(description="渠道", required=True)
+    member_type = fields.String(description="会员类型", required=True)
+    kpi = fields.String(description="kpi", required=True)
+    report_time = fields.String(description="报告时间", required=True)

@@ -1,7 +1,6 @@
-def mapper(sql, payload):
+def dr_mapper(sql, payload):
     """
-    payload 参数校验
-    sql 参数填充
+    日报 sql mapper
     :param sql: sql字符串
     :param payload: restplus.Api.payload 传入参数
     :return: 填充后的sql字符串
@@ -64,4 +63,26 @@ def mapper(sql, payload):
         cmail_store_code=cmail_store_code,
         zone_index=zone_index, zone=zone, zones=zones,
         start_date=start_date, end_date=end_date
+    )
+
+
+def mr_sales_mapper(sql, payload):
+    """
+    月报 sql mapper
+    :param sql:
+    :param payload:
+    :return:
+    """
+    brand_codes = str(payload['brand_code']).strip('[').strip(']')
+    channel_types = str(payload['channel_type']).strip('[').strip(']')
+    mr_member_types = str(payload['member_type']).strip('[').strip(']')
+    kpis = str(payload['kpi']).strip('[').strip(']')
+    year_month = payload['report_time']
+
+    return sql.format(
+        brand_codes=brand_codes,
+        channel_types=channel_types,
+        mr_member_types=mr_member_types,
+        kpis=kpis,
+        year_month=year_month
     )

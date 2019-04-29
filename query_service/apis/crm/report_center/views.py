@@ -5,7 +5,7 @@ ns = Namespace('CRM 报表中心', path='/crm/report', description='日报月报
 
 from .models import qo, ro
 from .service import ReportCenterService
-from .utils.validator import DailyReportQOValidator
+from .utils.validator import DailyReportQOValidator, MonthlyReportSalesQOValidator
 
 from query_service.apis.utils.decorator import authorized
 
@@ -32,3 +32,26 @@ class CrmDailyReportView(Resource):
         else:
             current_app.logger.info("Param: " + str(res))
             return ReportCenterService.get_daily_report_data(res)
+
+
+@ns.route('/MonthlyReport/Sales')
+class CrmMonthlyReportSalesView(Resource):
+
+    @ns.doc(security='key')
+    @ns.expect(qo.monthly_report_sales_qo)
+    @ns.marshal_with(ro.monthly_report_sales_ro_list)
+    @ns.response(401, "Token authorized error")
+    @ns.response(404, "Not Found")
+    @authorized
+    def post(self):
+        """
+        月报-业绩查询
+        """
+        res, err = MonthlyReportSalesQOValidator().load(ns.payload)
+
+        if err:
+            current_app.logger.error("Err: " + str(err))
+            return dict(success=False, message=err)
+        else:
+            current_app.logger.info("Param: " + str(res))
+            return ReportCenterService.get_monthly_report_sales_data(res)
