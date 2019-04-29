@@ -24,10 +24,9 @@ MONTHLY_SALES = """
         ytd_ly_cp,
         year_month AS report_time
     FROM ads_crm.monthly_report_sales
-    WHERE
-        brand_code IN ({brand_codes})
-        channel_type IN ({channel_types})
-        mr_member_type IN ({mr_member_types})
-        kpi IN ({kpis})
-        year_month = '{year_month}'
+    WHERE brand_code IN ({brand_codes})
+        AND channel_type IN ({channel_types})
+        AND mr_member_type IN ({mr_member_types})
+        ANd kpi IN ({kpis})
+        AND year_month = '{year_month}'
 """
