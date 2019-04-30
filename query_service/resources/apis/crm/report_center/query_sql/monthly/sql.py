@@ -51,3 +51,42 @@ MONTHLY_SALES = """
         ANd kpi IN ({kpis})
         AND year_month = '{year_month}'
 """
+
+MONTHLY_ASSET = """
+    WITH i AS (
+        SELECT
+            brand_code,
+            brand_name,
+            member_manage_channel_type                                 AS channel_type,
+            member_no,
+            CAST(SUM(order_fact_amount_with_coupon) AS DECIMAL(38, 2)) AS consumed_amount
+        FROM dws_crm.order_info
+        WHERE is_member = 1 AND order_deal_year_month <= '2019-03'
+        GROUP BY brand_code, brand_name, member_manage_channel_type, member_no
+    ), j AS (
+        SELECT
+            mi.brand_code,
+            mi.brand_name,
+            mi.channel_type,
+            mi.member_no,
+            CASE
+                WHEN mi.member_first_order_time IS NULL OR i.consumed_amount <= 0 THEN -1
+                WHEN i.consumed_amount > 0 THEN 1
+            ELSE NULL END AS is_consumed
+        FROM dwd_crm.member_info mi
+        LEFT JOIN i ON mi.brand_code = i.brand_code
+            AND mi.brand_name = i.brand_name
+            AND mi.channel_type = i.channel_type
+            AND mi.member_no = i.member_no
+    ), k AS (
+        SELECT
+            brand_code,
+            brand_name,
+            channel_type,
+            CAST(SUM(IF(is_consumed = 1, is_consumed, 0)) AS INTEGER)    AS consumed_member_quantity,
+            CAST(SUM(IF(is_consumed = -1, - is_consumed, 0)) AS INTEGER) AS unconsumed_member_quantity,
+            COUNT(member_no)                                             AS member_quantity
+        FROM j
+        GROUP BY brand_code, brand_name, channel_type
+    )
+"""
