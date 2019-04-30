@@ -121,7 +121,7 @@ MEMBER_GROUPING_COUNT = """
 # 导出分组详情 ===========================================================================================================
 MEMBER_GROUPING_DETAIL_CSV = """
     WITH {with_sql}
-    SELECT DISTINCT
+    SELECT
         mid.channel_type,
         mid.sales_area,
         mid.city,
