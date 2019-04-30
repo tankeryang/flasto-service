@@ -143,6 +143,7 @@ MEMBER_GROUPING_DETAIL_CSV = """
         mid.member_register_time,
         mid.member_last_order_time_ty,
         mid.member_last_feedback_time,
+        mid.member_last_grade_change_time,
         mid.member_reg_source
     FROM cdm_crm.member_info_detail mid
     {join_sql}
