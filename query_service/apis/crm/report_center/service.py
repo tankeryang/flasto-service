@@ -2,6 +2,7 @@ import pandas as pd
 from flask import current_app
 from pyhive.exc import DatabaseError
 
+from query_service import cache
 from .utils.mapper import dr_mapper, mr_sales_mapper, mr_asset_mapper
 from query_service.apis.utils.db import engine
 from query_service.resources.apis.crm.report_center import query_sql
@@ -29,6 +30,7 @@ class ReportCenterService:
             return dict(success=True, data=df.to_dict(orient='records'), message="success")
 
     @classmethod
+    @cache.memoize(timeout=86400)
     def get_monthly_report_sales_data(cls, qo):
         """
         月报-业绩 查询
@@ -48,6 +50,7 @@ class ReportCenterService:
             return dict(success=True, data=df.to_dict(orient='records'), message="success")
 
     @classmethod
+    @cache.memoize(timeout=86400)
     def get_monthly_report_asset_data(cls, qo):
         """
         月报-会员资产 查询
