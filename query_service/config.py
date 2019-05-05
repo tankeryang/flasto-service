@@ -1,16 +1,18 @@
 import os
+import datetime
 
 
 class Config:
     basedir = os.path.abspath(os.path.dirname(__file__))
+    today = datetime.date.today().strftime('%Y-%m-%d')
     # Flask
     SECRET_KEY = 'Trendy_Crm123'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_TEARDOWN = True
     # log
     LOG_PATH = os.path.join(basedir, 'log')
-    LOG_PATH_INFO = os.path.join(LOG_PATH, 'info')
-    LOG_PATH_ERROR = os.path.join(LOG_PATH, 'error')
+    LOG_PATH_INFO = os.path.join(LOG_PATH, 'info-from_' + today)
+    LOG_PATH_ERROR = os.path.join(LOG_PATH, 'error-from_' + today)
     LOG_FORMAT = '%(asctime)s %(levelname) 8s: [%(pathname)s - %(funcName)s:%(lineno)d] [%(processName)s:%(process)d ' \
                  '%(threadName)s] - %(message)s '
     DATE_FORMAT = '[%Y-%m-%d %H:%M:%S]'
@@ -51,7 +53,7 @@ class DevConfig(Config):
         )
         info_handler.setFormatter(formatter)
         info_handler.setLevel(logging.INFO)
-        info_handler.suffix = '%Y-%m-%d.log'
+        info_handler.suffix = 'to_%Y-%m-%d.log'
         # set error handler
         error_handler = TimedRotatingFileHandler(
             filename=cls.LOG_PATH_ERROR,
@@ -62,7 +64,7 @@ class DevConfig(Config):
         )
         error_handler.setFormatter(formatter)
         error_handler.setLevel(logging.ERROR)
-        error_handler.suffix = '%Y-%m-%d.log'
+        error_handler.suffix = 'to_%Y-%m-%d.log'
         # add handler
         app.logger.addHandler(info_handler)
         app.logger.addHandler(error_handler)
@@ -101,7 +103,7 @@ class PreProdConfig(Config):
         )
         info_handler.setFormatter(formatter)
         info_handler.setLevel(logging.INFO)
-        info_handler.suffix = '%Y-%m-%d.log'
+        info_handler.suffix = 'to_%Y-%m-%d.log'
         # set error handler
         error_handler = TimedRotatingFileHandler(
             filename=cls.LOG_PATH_ERROR,
@@ -112,7 +114,7 @@ class PreProdConfig(Config):
         )
         error_handler.setFormatter(formatter)
         error_handler.setLevel(logging.ERROR)
-        error_handler.suffix = '%Y-%m-%d.log'
+        error_handler.suffix = 'to_%Y-%m-%d.log'
         # add handler
         app.logger.addHandler(info_handler)
         app.logger.addHandler(error_handler)
@@ -145,7 +147,7 @@ class ProdConfig(Config):
         )
         info_handler.setFormatter(formatter)
         info_handler.setLevel(logging.INFO)
-        info_handler.suffix = '%Y-%m-%d.log'
+        info_handler.suffix = 'to_%Y-%m-%d.log'
         # set error handler
         error_handler = TimedRotatingFileHandler(
             filename=cls.LOG_PATH_ERROR,
@@ -156,7 +158,7 @@ class ProdConfig(Config):
         )
         error_handler.setFormatter(formatter)
         error_handler.setLevel(logging.ERROR)
-        error_handler.suffix = '%Y-%m-%d.log'
+        error_handler.suffix = 'to_%Y-%m-%d.log'
         # add handler
         app.logger.addHandler(info_handler)
         app.logger.addHandler(error_handler)
