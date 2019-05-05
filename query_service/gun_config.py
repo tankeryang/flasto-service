@@ -26,3 +26,5 @@ bind = '0.0.0.0:5678'
 workers = multiprocessing.cpu_count() * 2 + 1
 worker_class = 'gunicorn.workers.ggevent.GeventWorker'
 threads = multiprocessing.cpu_count() * 2
+
+timeout = 70
