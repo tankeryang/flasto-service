@@ -1,1 +1,1 @@
-from .sql import MONTHLY_SALES
+from .sql import MONTHLY_SALES, MONTHLY_ASSET

@@ -19,7 +19,9 @@ monthly_report_sales_qo = ns.model('CrmMonthlyReportSalesQO', {
     'member_type': fields.List(fields.String(
         description="会员类别",
         enum=[
-            '整体会员', '普通会员', 'VIP', '新会员', '新会员-普通会员', '新会员-VIP', '老会员', '老会员-普通会员', '老会员-VIP'
+            '整体会员', '普通会员', 'VIP',
+            '新会员', '新会员-普通会员', '新会员-VIP',
+            '老会员', '老会员-普通会员', '老会员-VIP'
         ]), example=['新会员-VIP', '老会员-VIP'], required=True),
     'kpi': fields.List(fields.String(
         description="kpi",
@@ -34,5 +36,19 @@ monthly_report_sales_qo = ns.model('CrmMonthlyReportSalesQO', {
             'apu',
             'order_discount'
         ]), example=['order_fact_amount_with_coupon', 'apt'], required=True),
+    'report_time': fields.String(description="报告时间(格式为: yyyy-mm)", required=True)
+})
+
+monthly_report_asset_qo = ns.model('CrmMonthlyReportAssetQO', {
+    'brand_code': fields.List(fields.String(description="品牌编号"), example=['2', '3', '6'], required=True),
+    'channel_type': fields.List(fields.String(description="渠道"), example=['自营', '特许', '官网'], required=True),
+    'member_type': fields.List(fields.String(
+        description="会员类别",
+        enum=[
+            '整体会员',
+            '官网注册会员', '官网会员',
+            '特许注册会员', '特许会员',
+            '自营注册会员', '自营会员'
+        ]), example=['整体会员', '自营会员', '自营注册会员'], required=True),
     'report_time': fields.String(description="报告时间(格式为: yyyy-mm)", required=True)
 })
