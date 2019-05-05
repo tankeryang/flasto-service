@@ -2,10 +2,10 @@ import pandas as pd
 from flask import current_app
 from pyhive.exc import DatabaseError
 
-from query_service import cache
 from .utils.mapper import dr_mapper, mr_sales_mapper, mr_asset_mapper
 from query_service.apis.utils.db import engine
 from query_service.resources.apis.crm.report_center import query_sql
+from query_service.exts import cache
 
 
 class ReportCenterService:
