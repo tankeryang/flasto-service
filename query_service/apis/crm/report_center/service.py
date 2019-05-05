@@ -2,7 +2,7 @@ import pandas as pd
 from flask import current_app
 from pyhive.exc import DatabaseError
 
-from .utils.mapper import dr_mapper, mr_sales_mapper
+from .utils.mapper import dr_mapper, mr_sales_mapper, mr_asset_mapper
 from query_service.apis.utils.db import engine
 from query_service.resources.apis.crm.report_center import query_sql
 
@@ -54,7 +54,7 @@ class ReportCenterService:
         :param qo:
         :return:
         """
-        sql = mr_sales_mapper(query_sql.monthly.MONTHLY_ASSET, qo)
+        sql = mr_asset_mapper(query_sql.monthly.MONTHLY_ASSET, qo)
         current_app.logger.info("Execute SQL: " + sql)
         con = engine().connect()
 
