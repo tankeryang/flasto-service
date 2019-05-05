@@ -72,7 +72,7 @@ class CrmMonthlyReportAssetView(Resource):
     @authorized
     def post(self):
         """
-        月报-业绩查询
+        月报-会员资产查询
         """
         res, err = MonthlyReportAssetQOValidator().load(ns.payload)
 
