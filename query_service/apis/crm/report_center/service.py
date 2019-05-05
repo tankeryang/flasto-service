@@ -31,7 +31,7 @@ class ReportCenterService:
     @classmethod
     def get_monthly_report_sales_data(cls, qo):
         """
-        月报查询
+        月报-业绩 查询
         :param qo:
         :return:
         """
@@ -45,4 +45,23 @@ class ReportCenterService:
             current_app.logger.exception(e)
         else:
             df.sort_values(by=['brand_code', 'channel_type', 'member_type', 'kpi_num'], inplace=True)
+            return dict(success=True, data=df.to_dict(orient='records'), message="success")
+
+    @classmethod
+    def get_monthly_report_asset_data(cls, qo):
+        """
+        月报-会员资产 查询
+        :param qo:
+        :return:
+        """
+        sql = mr_sales_mapper(query_sql.monthly.MONTHLY_ASSET, qo)
+        current_app.logger.info("Execute SQL: " + sql)
+        con = engine().connect()
+
+        try:
+            df = pd.read_sql_query(sql=sql, con=con)
+        except (DatabaseError, TypeError) as e:
+            current_app.logger.exception(e)
+        else:
+            df.sort_values(by=['brand_code', 'channel_type', 'member_type'], inplace=True)
             return dict(success=True, data=df.to_dict(orient='records'), message="success")

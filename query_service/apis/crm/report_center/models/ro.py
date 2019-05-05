@@ -65,3 +65,18 @@ monthly_report_sales_ro_list = ns.model('CrmMonthlyReportSalesListRO', {
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+monthly_report_asset_ro = ns.model('CrmMonthlyAssetRO', {
+    'brand_code': fields.String(readonly=True, description="品牌编码"),
+    'brand_name': fields.String(readonly=True, description="品牌名称"),
+    'channel_type': fields.String(readonly=True, description="渠道"),
+    'member_type': fields.String(readonly=True, description="会员类型"),
+    'member_quantity': fields.Integer(readonly=True, description='会员人数'),
+    'year': fields.Integer(readonly=True, description='报告年份'),
+    'month': fields.Integer(readonly=True, description='报告月份')
+})
+monthly_report_asset_ro_list = ns.model('CrmMonthlyReportAssetListRO', {
+    'data': fields.List(fields.Nested(monthly_report_asset_ro)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})

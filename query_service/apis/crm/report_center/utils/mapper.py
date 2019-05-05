@@ -68,7 +68,7 @@ def dr_mapper(sql, payload):
 
 def mr_sales_mapper(sql, payload):
     """
-    月报 sql mapper
+    月报 业绩 sql mapper
     :param sql:
     :param payload:
     :return:
@@ -84,5 +84,25 @@ def mr_sales_mapper(sql, payload):
         channel_types=channel_types,
         mr_member_types=mr_member_types,
         kpis=kpis,
+        year_month=year_month
+    )
+
+
+def mr_asset_mapper(sql, payload):
+    """
+    月报 会员资产 sql mapper
+    :param sql:
+    :param payload:
+    :return:
+    """
+    brand_codes = str(payload['brand_code']).strip('[').strip(']')
+    channel_types = str(payload['channel_type']).strip('[').strip(']')
+    member_types = str(payload['member_type']).strip('[').strip(']')
+    year_month = payload['report_time']
+
+    return sql.format(
+        brand_codes=brand_codes,
+        channel_types=channel_types,
+        member_types=member_types,
         year_month=year_month
     )
