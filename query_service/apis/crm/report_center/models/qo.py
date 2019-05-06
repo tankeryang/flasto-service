@@ -19,7 +19,7 @@ monthly_report_sales_qo = ns.model('CrmMonthlyReportSalesQO', {
     'member_type': fields.List(fields.String(
         description="会员类别",
         enum=[
-            '整体会员', '普通会员', 'VIP',
+            '整体会员', '整体会员-普通会员', '整体会员-VIP',
             '新会员', '新会员-普通会员', '新会员-VIP',
             '老会员', '老会员-普通会员', '老会员-VIP'
         ]), example=['新会员-VIP', '老会员-VIP'], required=True),
