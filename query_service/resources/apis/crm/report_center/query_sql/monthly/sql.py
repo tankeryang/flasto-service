@@ -112,7 +112,7 @@ MONTHLY_ASSET = """
             channel_type,
             CASE member_type
                 WHEN 'unconsumed_member_quantity' THEN CONCAT(channel_type, '注册会员')
-                WHEN 'consumed_member_quantity' THEN CONCAT(channel_type, '会员')
+                WHEN 'consumed_member_quantity' THEN CONCAT(channel_type, '有消费会员')
                 WHEN 'member_quantity' THEN '整体会员'
             ELSE NULL END AS member_type,
             member_quantity,
