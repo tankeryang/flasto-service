@@ -86,7 +86,7 @@ class CrmMonthlyReportAssetView(Resource):
 
 
 @ns.route('/MonthlyReport/Active')
-class CrmMonthlyReportAssetView(Resource):
+class CrmMonthlyReportActiveView(Resource):
 
     @ns.doc(security='key')
     @ns.expect(qo.monthly_report_active_qo)
@@ -96,7 +96,7 @@ class CrmMonthlyReportAssetView(Resource):
     @authorized
     def post(self):
         """
-        月报-会员资产查询
+        月报-有效会员查询
         """
         res, err = MonthlyReportActiveQOValidator().load(ns.payload)
 
