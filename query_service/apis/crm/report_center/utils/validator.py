@@ -17,7 +17,6 @@ class MonthlyReportSalesQOValidator(Schema):
     brand_code = fields.List(fields.String(description="品牌编码"), required=True)
     channel_type = fields.List(fields.String(description="渠道"), required=True)
     member_type = fields.List(fields.String(description="会员类型"), required=True)
-    kpi = fields.List(fields.String(description="kpi"), required=True)
     report_time = fields.String(description="报告时间", required=True)
 
 

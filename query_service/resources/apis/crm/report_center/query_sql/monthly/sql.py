@@ -48,7 +48,6 @@ MONTHLY_SALES = """
     WHERE brand_code IN ({brand_codes})
         AND channel_type IN ({channel_types})
         AND mr_member_type IN ({mr_member_types})
-        ANd kpi IN ({kpis})
         AND year_month = '{year_month}'
 """
 

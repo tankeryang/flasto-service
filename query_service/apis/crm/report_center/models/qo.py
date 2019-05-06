@@ -23,19 +23,6 @@ monthly_report_sales_qo = ns.model('CrmMonthlyReportSalesQO', {
             '新会员', '新会员-普通会员', '新会员-VIP',
             '老会员', '老会员-普通会员', '老会员-VIP'
         ]), example=['新会员-VIP', '老会员-VIP'], required=True),
-    'kpi': fields.List(fields.String(
-        description="kpi",
-        enum=[
-            'order_fact_amount_with_coupon',
-            'member_quantity',
-            'order_quantity',
-            'order_item_quantity',
-            'order_amount',
-            'apt',
-            'upt',
-            'apu',
-            'order_discount'
-        ]), example=['order_fact_amount_with_coupon', 'apt'], required=True),
     'report_time': fields.String(description="报告时间(格式为: yyyy-mm)", required=True)
 })
 

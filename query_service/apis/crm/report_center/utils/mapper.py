@@ -76,14 +76,12 @@ def mr_sales_mapper(sql, payload):
     brand_codes = str(payload['brand_code']).strip('[').strip(']')
     channel_types = str(payload['channel_type']).strip('[').strip(']')
     mr_member_types = str(payload['member_type']).strip('[').strip(']')
-    kpis = str(payload['kpi']).strip('[').strip(']')
     year_month = payload['report_time']
 
     return sql.format(
         brand_codes=brand_codes,
         channel_types=channel_types,
         mr_member_types=mr_member_types,
-        kpis=kpis,
         year_month=year_month
     )
 
