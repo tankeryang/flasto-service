@@ -36,6 +36,7 @@ class ParamType:
         'member_manage_store_operation_status': 's',
         'member_register_store': 'd',
         'member_reg_source': 's',
+        'member_last_grade_change_date': 'd',
         'member_last_feedback_date': 'd',
         'member_is_batch_mobile': 'n',
         'member_is_batch_weixin': 'n',

@@ -31,6 +31,13 @@ member_last_feedback_date = ns.model('LastFeedbackConditionModel', {
     'bt': fields.List(fields.Date(description="介于"), example=['2018-09-01', '2018-10-11'])
 })
 
+member_last_grade_change_date = ns.model('LastFeedbackConditionModel', {
+    'lt': fields.Date(description="早于", example='2018-10-11'),
+    'gt': fields.Date(description="晚于", example='2018-10-11'),
+    'eq': fields.Date(description="晚于", example='2018-10-11'),
+    'bt': fields.List(fields.Date(description="介于"), example=['2018-09-01', '2018-10-11'])
+})
+
 member_info_model = ns.model('MemberInfoModel', {
     'member_birthday': fields.Nested(member_birthday, description="会员生日"),
     'member_birthday_month': fields.List(fields.String(description="会员生日月份"), example=['07', '08']),
@@ -43,6 +50,7 @@ member_info_model = ns.model('MemberInfoModel', {
     'member_register_store': fields.List(fields.String(description="会员管理门店"), example=['1101', '1102']),
     'member_reg_source': fields.List(fields.String(description="注册渠道"), example=['weixin']),
     'member_last_feedback_date': fields.Nested(member_last_feedback_date, description="最近一次回访日期"),
+    'member_last_grade_change_date': fields.Nested(member_last_grade_change_date, description="最近一次回访日期"),
     'member_is_batch_mobile': fields.Integer(description="是否绑定手机(1:是/0:否)", example=1, min=0, max=1),
     'member_is_batch_wechat': fields.Integer(description="是否绑定微信(1:是/0:否)", example=1, min=0, max=1),
     'member_is_batch_taobao': fields.Integer(description="是否绑定淘宝(1:是/0:否)", example=1, min=0, max=1)
