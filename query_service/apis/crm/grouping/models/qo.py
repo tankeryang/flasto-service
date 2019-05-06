@@ -24,14 +24,14 @@ member_register_date = ns.model('RegisterDateConditionModel', {
     'bt': fields.List(fields.Date(description="介于"), example=['2018-09-01', '2018-10-11'])
 })
 
-member_last_feedback_date = ns.model('LastFeedbackConditionModel', {
+member_last_feedback_date = ns.model('LastFeedbackDateConditionModel', {
     'lt': fields.Date(description="早于", example='2018-10-11'),
     'gt': fields.Date(description="晚于", example='2018-10-11'),
     'eq': fields.Date(description="晚于", example='2018-10-11'),
     'bt': fields.List(fields.Date(description="介于"), example=['2018-09-01', '2018-10-11'])
 })
 
-member_last_grade_change_date = ns.model('LastFeedbackConditionModel', {
+member_last_grade_change_date = ns.model('LastGradeChangeDateConditionModel', {
     'lt': fields.Date(description="早于", example='2018-10-11'),
     'gt': fields.Date(description="晚于", example='2018-10-11'),
     'eq': fields.Date(description="晚于", example='2018-10-11'),
