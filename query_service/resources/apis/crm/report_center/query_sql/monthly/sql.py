@@ -134,3 +134,56 @@ MONTHLY_ASSET = """
         AND channel_type IN ({channel_types})
         AND member_type IN ({member_types})
 """
+
+MONTHLY_ACTIVE = """
+    WITH i AS (
+        SELECT
+            brand_code,
+            brand_name,
+            member_manage_channel_type                                 AS channel_type,
+            member_no,
+            CAST(SUM(order_fact_amount_with_coupon) AS DECIMAL(38, 2)) AS consumed_amount
+        FROM dws_crm.order_info
+        WHERE is_member = 1
+            AND order_deal_year_month < '{this_year_month}'
+            AND order_deal_year_month >= '{past_year_month}'
+        GROUP BY brand_code, brand_name, member_manage_channel_type, member_no
+    ), j AS (
+        SELECT
+            mi.brand_code,
+            mi.brand_name,
+            mi.channel_type,
+            mi.member_no,
+            CASE
+                WHEN mi.member_first_order_time IS NULL OR i.consumed_amount <= 0 THEN -1
+                WHEN i.consumed_amount > 0 THEN 1
+            ELSE NULL END AS is_consumed
+        FROM dwd_crm.member_info mi
+        LEFT JOIN i ON mi.brand_code = i.brand_code
+            AND mi.brand_name = i.brand_name
+            AND mi.channel_type = i.channel_type
+            AND mi.member_no = i.member_no
+    ), k AS (
+        SELECT
+            brand_code,
+            brand_name,
+            channel_type,
+            '有效会员人数' AS member_type,
+            CAST(SUM(IF(is_consumed = 1, is_consumed, 0)) AS INTEGER) AS member_quantity,
+            CAST(SUBSTR('{this_year_month}', 1, 4) AS INTEGER) AS year,
+            CAST(SUBSTR('{this_year_month}', 6, 2) AS INTEGER) AS month
+        FROM j
+        GROUP BY brand_code, brand_name, channel_type
+    )
+    SELECT
+        brand_code,
+        brand_name,
+        channel_type,
+        member_type,
+        member_quantity,
+        year,
+        month
+    FROM sb
+    WHERE brand_code IN ({brand_codes})
+        AND channel_type IN ({channel_types})
+"""

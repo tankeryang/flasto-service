@@ -9,6 +9,7 @@ from .utils.validator import (
     DailyReportQOValidator,
     MonthlyReportSalesQOValidator,
     MonthlyReportAssetQOValidator,
+    MonthlyReportActiveQOValidator,
 )
 
 from query_service.apis.utils.decorator import authorized
@@ -82,3 +83,26 @@ class CrmMonthlyReportAssetView(Resource):
         else:
             current_app.logger.info("Param: " + str(res))
             return ReportCenterService.get_monthly_report_asset_data(res)
+
+
+@ns.route('/MonthlyReport/Active')
+class CrmMonthlyReportAssetView(Resource):
+
+    @ns.doc(security='key')
+    @ns.expect(qo.monthly_report_active_qo)
+    @ns.marshal_with(ro.monthly_report_active_ro_list)
+    @ns.response(401, "Token authorized error")
+    @ns.response(404, "Not Found")
+    @authorized
+    def post(self):
+        """
+        月报-会员资产查询
+        """
+        res, err = MonthlyReportActiveQOValidator().load(ns.payload)
+
+        if err:
+            current_app.logger.error("Err: " + str(err))
+            return dict(success=False, message=err)
+        else:
+            current_app.logger.info("Param: " + str(res))
+            return ReportCenterService.get_monthly_report_active_data(res)

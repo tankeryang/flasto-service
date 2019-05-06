@@ -104,3 +104,23 @@ def mr_asset_mapper(sql, payload):
         member_types=member_types,
         year_month=year_month
     )
+
+
+def mr_active_mapper(sql, payload):
+    """
+    月报 有效会员 sql mapper
+    :param sql:
+    :param payload:
+    :return:
+    """
+    brand_codes = str(payload['brand_code']).strip('[').strip(']')
+    channel_types = str(payload['channel_type']).strip('[').strip(']')
+    this_year_month = payload['report_time']
+    past_year_month = str(int(this_year_month[:4]) - 1) + this_year_month[4:]
+
+    return sql.format(
+        brand_codes=brand_codes,
+        channel_types=channel_types,
+        this_year_month=this_year_month,
+        past_year_month=past_year_month
+    )
