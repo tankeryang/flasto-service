@@ -183,7 +183,7 @@ MONTHLY_ACTIVE = """
         member_quantity,
         year,
         month
-    FROM sb
+    FROM k
     WHERE brand_code IN ({brand_codes})
         AND channel_type IN ({channel_types})
 """
