@@ -140,11 +140,7 @@ MONTHLY_ACTIVE = """
         SELECT
             brand_code,
             brand_name,
-            CASE member_manage_channel_type
-                WHEN '自营' THEN '自营'
-                WHEN '特许' THEN '特许'
-                WHEN '官网' THEN '官网'
-            ELSE '其他' END                                            AS channel_type,
+            member_manage_channel_type                                 AS channel_type,
             member_no,
             CAST(SUM(order_fact_amount_with_coupon) AS DECIMAL(38, 2)) AS consumed_amount
         FROM dws_crm.order_info
@@ -171,7 +167,11 @@ MONTHLY_ACTIVE = """
         SELECT
             brand_code,
             brand_name,
-            channel_type,
+            CASE channel_type
+                WHEN '自营' THEN '自营'
+                WHEN '特许' THEN '特许'
+                WHEN '官网' THEN '官网'
+            ELSE '其他' END                                           AS channel_type
             '有效会员人数' AS member_type,
             CAST(SUM(IF(is_consumed = 1, is_consumed, 0)) AS INTEGER) AS member_quantity,
             CAST(SUBSTR('{this_year_month}', 1, 4) AS INTEGER) AS year,
