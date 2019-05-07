@@ -83,5 +83,5 @@ class ReportCenterService:
         except (DatabaseError, TypeError) as e:
             current_app.logger.exception(e)
         else:
-            df.sort_values(by=['brand_code', 'channel_type'], inplace=True)
+            df.sort_values(by=['brand_code', 'channel_type_num'], inplace=True)
             return dict(success=True, data=df.to_dict(orient='records'), message="success")

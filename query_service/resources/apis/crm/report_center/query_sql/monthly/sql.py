@@ -180,6 +180,11 @@ MONTHLY_ACTIVE = """
         brand_code,
         brand_name,
         channel_type,
+        CASE channel_type
+            WHEN '自营' THEN 1
+            WHEN '特许' THEN 2
+            WHEN '官网' THEN 3
+        ELSE 4 END   AS channel_type_num,
         '有效会员人数' AS member_type,
         CAST(SUM(IF(is_consumed = 1, is_consumed, 0)) AS INTEGER) AS member_quantity,
         CAST(SUBSTR('{this_year_month}', 1, 4) AS INTEGER) AS year,
