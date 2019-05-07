@@ -42,7 +42,6 @@ monthly_report_asset_qo = ns.model('CrmMonthlyReportAssetQO', {
 
 monthly_report_active_qo = ns.model('CrmMonthlyReportActiveQO', {
     'brand_code': fields.List(fields.String(description="品牌编号"), example=['2', '3', '6'], required=True),
-    'channel_type': fields.List(fields.String(description="渠道"), example=['自营', '特许', '官网'], required=True),
+    'channel_type': fields.List(fields.String(description="渠道"), example=['自营', '特许', '官网', '其他'], required=True),
     'report_time': fields.String(description="报告时间(格式为: yyyy-mm)", required=True)
 })
-
