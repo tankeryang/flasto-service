@@ -171,7 +171,7 @@ MONTHLY_ACTIVE = """
                 WHEN '自营' THEN '自营'
                 WHEN '特许' THEN '特许'
                 WHEN '官网' THEN '官网'
-            ELSE '其他' END                                           AS channel_type
+            ELSE '其他' END                                           AS channel_type,
             '有效会员人数' AS member_type,
             CAST(SUM(IF(is_consumed = 1, is_consumed, 0)) AS INTEGER) AS member_quantity,
             CAST(SUBSTR('{this_year_month}', 1, 4) AS INTEGER) AS year,
