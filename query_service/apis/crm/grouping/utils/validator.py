@@ -31,6 +31,13 @@ class MemberLastFeedbackDate(Schema):
     bt = NotEmptyList(StringDate(description="介于"), length=2)
 
 
+class MemberLastGradeChangeDate(Schema):
+    lt = StringDate(description="早于")
+    gt = StringDate(description="晚于")
+    eq = StringDate(description="等于")
+    bt = NotEmptyList(StringDate(description="介于"), length=2)
+
+
 class MemberInfoModel(Schema):
     member_birthday = fields.Nested(MemberBirthday, description="会员生日")
     member_birthday_month = fields.List(fields.String(description="会员生日月份"))
@@ -41,6 +48,7 @@ class MemberInfoModel(Schema):
     member_manage_store = fields.List(fields.String(description="会员管理门店"))
     member_manage_store_operation_status = fields.List(fields.String(description="会员管理门店状态"))
     member_register_store = fields.List(fields.String(description="会员注册门店"))
+    member_last_grade_change_date = fields.Nested(MemberLastGradeChangeDate, description="最近一次等级变更日期")
     member_last_feedback_date = fields.Nested(MemberLastFeedbackDate, description="最近一次回访日期")
     member_reg_source = fields.List(fields.String(description="注册渠道"))
     member_is_batch_mobile = MinMaxInteger(description="是否绑定手机(1:是/0:否)", min=0, max=1)
