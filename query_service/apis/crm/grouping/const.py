@@ -36,6 +36,7 @@ class ParamType:
         'member_manage_store_operation_status': 's',
         'member_register_store': 'd',
         'member_reg_source': 's',
+        'member_last_grade_change_date': 'd',
         'member_last_feedback_date': 'd',
         'member_is_batch_mobile': 'n',
         'member_is_batch_weixin': 'n',
@@ -107,6 +108,7 @@ class CSV:
         '入会日期',
         '最近消费日期',
         '最近回访日期',
+        '最近等级变动时间',
         '注册来源'
     ]
     

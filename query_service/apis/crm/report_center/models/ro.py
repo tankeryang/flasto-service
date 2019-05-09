@@ -33,3 +33,65 @@ daily_report_list_ro = ns.model('CrmDailyReportListRO', {
     'success': fields.Boolean(description="查询是否成功"),
     'message': fields.String(description="返回结果信息")
 })
+
+
+monthly_report_sales_ro = ns.model('CrmMonthlyReportSalesRO', {
+    'brand_code': fields.String(readonly=True, description="品牌编码"),
+    'brand_name': fields.String(readonly=True, description="品牌名称"),
+    'channel_type': fields.String(readonly=True, description="渠道"),
+    'member_type': fields.String(readonly=True, description="会员类型"),
+    'kpi': fields.String(readonly=True, description="kpi"),
+    'mtd': fields.Float(readonly=True, description="实际(MTD)"),
+    'mtd_tg': fields.Float(readonly=True, description="目标(MTD)"),
+    'mtd_tg_rc': fields.Float(readonly=True, description="达成率(MTD)"),
+    'mtd_ly': fields.Float(readonly=True, description="同期(MTD)"),
+    'mtd_ly_cp': fields.Float(readonly=True, description="同比(MTD)"),
+    'mtd_lm': fields.Float(readonly=True, description="上月(MTD)"),
+    'mtd_lm_cp': fields.Float(readonly=True, description="环比(MTD)"),
+    'qtd': fields.Float(readonly=True, description="实际(QTD)"),
+    'qtd_tg': fields.Float(readonly=True, description="目标(QTD)"),
+    'qtd_tg_rc': fields.Float(readonly=True, description="达成率(QTD)"),
+    'qtd_ly': fields.Float(readonly=True, description="同期(QTD)"),
+    'qtd_ly_cp': fields.Float(readonly=True, description="同比(QTD)"),
+    'ytd': fields.Float(readonly=True, description="实际(YTD)"),
+    'ytd_tg': fields.Float(readonly=True, description="目标(YTD)"),
+    'ytd_tg_rc': fields.Float(readonly=True, description="达成率(YTD)"),
+    'ytd_ly': fields.Float(readonly=True, description="同期(YTD)"),
+    'ytd_ly_cp': fields.Float(readonly=True, description="同比(YTD)"),
+    'report_time': fields.String(readonly=True, description="报告时间(格式为: yyyy-mm)")
+})
+monthly_report_sales_ro_list = ns.model('CrmMonthlyReportSalesListRO', {
+    'data': fields.List(fields.Nested(monthly_report_sales_ro)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
+
+monthly_report_asset_ro = ns.model('CrmMonthlyAssetRO', {
+    'brand_code': fields.String(readonly=True, description="品牌编码"),
+    'brand_name': fields.String(readonly=True, description="品牌名称"),
+    'channel_type': fields.String(readonly=True, description="渠道"),
+    'member_type': fields.String(readonly=True, description="会员类型"),
+    'member_quantity': fields.Integer(readonly=True, description='会员人数'),
+    'year': fields.Integer(readonly=True, description='报告年份'),
+    'month': fields.Integer(readonly=True, description='报告月份')
+})
+monthly_report_asset_ro_list = ns.model('CrmMonthlyReportAssetListRO', {
+    'data': fields.List(fields.Nested(monthly_report_asset_ro)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})
+
+monthly_report_active_ro = ns.model('CrmMonthlyActiveRO', {
+    'brand_code': fields.String(readonly=True, description="品牌编码"),
+    'brand_name': fields.String(readonly=True, description="品牌名称"),
+    'channel_type': fields.String(readonly=True, description="渠道"),
+    'member_type': fields.String(readonly=True, description="会员类型"),
+    'member_quantity': fields.Integer(readonly=True, description='会员人数'),
+    'year': fields.Integer(readonly=True, description='报告年份'),
+    'month': fields.Integer(readonly=True, description='报告月份')
+})
+monthly_report_active_ro_list = ns.model('CrmMonthlyReportActiveListRO', {
+    'data': fields.List(fields.Nested(monthly_report_active_ro)),
+    'success': fields.Boolean(description="查询是否成功"),
+    'message': fields.String(description="返回结果信息")
+})

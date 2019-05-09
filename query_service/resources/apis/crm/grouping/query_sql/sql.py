@@ -121,7 +121,7 @@ MEMBER_GROUPING_COUNT = """
 # 导出分组详情 ===========================================================================================================
 MEMBER_GROUPING_DETAIL_CSV = """
     WITH {with_sql}
-    SELECT DISTINCT
+    SELECT
         mid.channel_type,
         mid.sales_area,
         mid.city,
@@ -143,6 +143,7 @@ MEMBER_GROUPING_DETAIL_CSV = """
         mid.member_register_time,
         mid.member_last_order_time_ty,
         mid.member_last_feedback_time,
+        mid.member_last_grade_change_time,
         mid.member_reg_source
     FROM cdm_crm.member_info_detail mid
     {join_sql}

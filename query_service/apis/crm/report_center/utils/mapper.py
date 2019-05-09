@@ -1,7 +1,6 @@
-def mapper(sql, payload):
+def dr_mapper(sql, payload):
     """
-    payload 参数校验
-    sql 参数填充
+    日报 sql mapper
     :param sql: sql字符串
     :param payload: restplus.Api.payload 传入参数
     :return: 填充后的sql字符串
@@ -64,4 +63,64 @@ def mapper(sql, payload):
         cmail_store_code=cmail_store_code,
         zone_index=zone_index, zone=zone, zones=zones,
         start_date=start_date, end_date=end_date
+    )
+
+
+def mr_sales_mapper(sql, payload):
+    """
+    月报 业绩 sql mapper
+    :param sql:
+    :param payload:
+    :return:
+    """
+    brand_codes = str(payload['brand_code']).strip('[').strip(']')
+    channel_types = str(payload['channel_type']).strip('[').strip(']')
+    mr_member_types = str(payload['member_type']).strip('[').strip(']')
+    year_month = payload['report_time']
+
+    return sql.format(
+        brand_codes=brand_codes,
+        channel_types=channel_types,
+        mr_member_types=mr_member_types,
+        year_month=year_month
+    )
+
+
+def mr_asset_mapper(sql, payload):
+    """
+    月报 会员资产 sql mapper
+    :param sql:
+    :param payload:
+    :return:
+    """
+    brand_codes = str(payload['brand_code']).strip('[').strip(']')
+    channel_types = str(payload['channel_type']).strip('[').strip(']')
+    member_types = str(payload['member_type']).strip('[').strip(']')
+    year_month = payload['report_time']
+
+    return sql.format(
+        brand_codes=brand_codes,
+        channel_types=channel_types,
+        member_types=member_types,
+        year_month=year_month
+    )
+
+
+def mr_active_mapper(sql, payload):
+    """
+    月报 有效会员 sql mapper
+    :param sql:
+    :param payload:
+    :return:
+    """
+    brand_codes = str(payload['brand_code']).strip('[').strip(']')
+    channel_types = str(payload['channel_type']).strip('[').strip(']')
+    this_year_month = payload['report_time']
+    past_year_month = str(int(this_year_month[:4]) - 1) + this_year_month[4:]
+
+    return sql.format(
+        brand_codes=brand_codes,
+        channel_types=channel_types,
+        this_year_month=this_year_month,
+        past_year_month=past_year_month
     )

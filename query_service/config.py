@@ -1,4 +1,5 @@
 import os
+import datetime
 
 
 class Config:
@@ -9,8 +10,8 @@ class Config:
     SQLALCHEMY_COMMIT_TEARDOWN = True
     # log
     LOG_PATH = os.path.join(basedir, 'log')
-    LOG_PATH_ERROR = os.path.join(LOG_PATH, 'error')
     LOG_PATH_INFO = os.path.join(LOG_PATH, 'info')
+    LOG_PATH_ERROR = os.path.join(LOG_PATH, 'error')
     LOG_FORMAT = '%(asctime)s %(levelname) 8s: [%(pathname)s - %(funcName)s:%(lineno)d] [%(processName)s:%(process)d ' \
                  '%(threadName)s] - %(message)s '
     DATE_FORMAT = '[%Y-%m-%d %H:%M:%S]'

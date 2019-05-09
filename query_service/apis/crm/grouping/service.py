@@ -65,19 +65,18 @@ class GroupingService:
 
         try:
             df = pd.read_sql_query(sql=sql, con=con)
-        except (DatabaseError, TypeError) as e:
-            current_app.logger.exception(e)
-            return dict(success=False, message="Internal Server Error")
-        else:
             df.columns = CSV.COLUMNS
-            
+
             now = datetime.datetime.now().strftime('%Y%m%d_%T_%f')
             dir_path = current_app.config['TMP_PATH']
             filename = CSV.FILE_NAME + now + '.csv'
             file_url = current_app.config['FILE_SERVER_URL_PREFIX'] + filename
 
             df.to_csv(dir_path + filename, index=False, encoding='utf_8_sig')
-            
+        except Exception as e:
+            current_app.logger.exception(e)
+            return dict(success=False, message=e)
+        else:
             return dict(success=True, data=file_url, message="success")
     
     @classmethod
